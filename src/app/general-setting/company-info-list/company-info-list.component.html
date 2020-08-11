@@ -33,67 +33,33 @@
         <div  class="example-container mat-elevation-z8 mt-3">
            
           <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="date">
+            <!-- <ng-container matColumnDef="date">
               <mat-header-cell class="minwidth10"  *matHeaderCellDef> Date </mat-header-cell>
               <mat-cell *matCellDef="let row"  class="minwidth10">{{row.dat_journal}} </mat-cell>
             
            
-            </ng-container>
-            <ng-container matColumnDef="branch" >
-              <mat-header-cell  class="minwidth10" *matHeaderCellDef>Branch</mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth10">{{row.vchr_branch_name}} </mat-cell>
+            </ng-container> -->
+            <ng-container matColumnDef="company" >
+              <mat-header-cell  class="minwidth10" *matHeaderCellDef>Comapny Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"  class="minwidth10">{{row.companyName}} </mat-cell>
              
            
             </ng-container>
            
-            <ng-container matColumnDef="journalId">
-              <mat-header-cell class="minwidth10"  *matHeaderCellDef> Journal Id </mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth10">{{row.vchr_jv_num}} </mat-cell>
+            <ng-container matColumnDef="companyStartDate">
+              <mat-header-cell class="minwidth10"  *matHeaderCellDef> Company Start Date</mat-header-cell>
+              <mat-cell *matCellDef="let row"  class="minwidth10">{{row.companyStartDate}} </mat-cell>
              
             </ng-container>
-          
-            <ng-container matColumnDef="debitType">
-              <mat-header-cell class="minwidth13"  *matHeaderCellDef> Debit Type</mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth13">{{row.vchr_debit_type}} </mat-cell>
+         
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button id="edit" title="Edit" class="edit_btn" (click)="editCompany(row)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+              <button id="delete" title="Delete" (click)="deleteCompany(row)" class="delete_btn mr-2"><i class="fa fa-trash" style="color: cornflowerblue;" aria-hidden="true"></i></button>
+            </mat-cell>
+         </ng-container>
     
-            </ng-container>
-          
-            <ng-container matColumnDef="debitDetails">
-              <mat-header-cell class="minwidth10"  *matHeaderCellDef> Debit Details </mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth10">{{row.vchr_debit_name}} </mat-cell>
-          
-           
-            </ng-container>
-           
-            <ng-container matColumnDef="creditType">
-              <mat-header-cell class="minwidth13"  *matHeaderCellDef> Credit Type </mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth13">{{row.vchr_credit_type}} </mat-cell>
-            
-           
-            </ng-container> 
-            
-            <ng-container matColumnDef="creditDetails">
-              <mat-header-cell class="minwidth10"  *matHeaderCellDef> Credit Details </mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth10">{{row.vchr_credit_name}} </mat-cell>
-    
-            </ng-container>
-      
-            <ng-container matColumnDef="amount">
-              <mat-header-cell class="minwidth43"  *matHeaderCellDef> Amount </mat-header-cell>
-              <mat-cell *matCellDef="let row"  class="minwidth43">{{row.dbl_amount}} </mat-cell>
-           
-            </ng-container>
-            <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-              <mat-cell *matCellDef="let row">
-                  <button id="view" title="View" class="view_btn" (click)="viewJournal(row)" class="viewbtn mr-2"><i class="fa fa-eye" style="color: cornflowerblue;" aria-hidden="true"></i></button>
-                  <!-- <button id="edit" title="Edit" class="edit_btn"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
-              </mat-cell>
-          </ng-container>
-      
-          
-          
-          
             <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: lstDisplayedColumns; let i = index;">
             </mat-row>

@@ -26,7 +26,7 @@ export const ROUTES: RouteInfo[] = [
 			},
 			{
 				path: '/general-setting/company-info-list',
-				title: 'Company Information List',
+				title: 'Company List',
 				icon: 'mdi mdi-adjust',
 				class: '',
 				extralink: false,

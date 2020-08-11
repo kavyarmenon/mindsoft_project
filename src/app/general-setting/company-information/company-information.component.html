@@ -2,35 +2,25 @@
     {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
   </button> -->
 
-<mat-horizontal-stepper [linear]="false" #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
   <mat-step  [stepControl]="companyInfoForm">
  
       <ng-template matStepLabel>Company Info</ng-template>
       <div class="form">
 
         <div class="row">
-          <div class="col-lg-12">
-            <h3 class="col-lg-6">Creation Mode</h3>
-            <!-- <div class="TGL-box">
-              <mat-radio-group [formControl]="companyInfoForm.controls['type']">
-                <mat-radio-button class="toggle toggle-left" checked="true" value="1">Company</mat-radio-button>
-                <mat-radio-button class="toggle toggle-right" value="2">Branch</mat-radio-button>
-              </mat-radio-group>
-            </div> -->
-            <div class="toggle_radio col-lg-6">
+          <!-- <div class="col-lg-12"> -->
+            <h3 class="col-md-2 col-2">Creation Mode</h3>
+            
+            <div class="toggle_radio col-sm-2">
               <input type="radio" [(ngModel)]="intOwnToggle" value="0" class="toggle_option" id="first_toggle" name="toggle_option" (change)="ownToggle()">
               <input type="radio" [(ngModel)]="intOwnToggle" value="1" checked class="toggle_option" id="second_toggle" name="toggle_option" (change)="ownToggle()">
-              <!-- <input type="radio" [(ngModel)]="intOwnToggle" value="2" class="toggle_option" id="third_toggle" name="toggle_option" (change)="ownToggle()">
-              <input type="radio" [(ngModel)]="intOwnToggle" value="3" class="toggle_option" id="fourth_toggle" name="toggle_option" (change)="ownToggle()"> -->
               <label for="first_toggle"><p>Company</p></label>
               <label for="second_toggle"><p>Branch</p></label>
-              <!-- <label for="third_toggle"><p>School</p></label>
-              <label for="fourth_toggle"><p>Premium</p></label> -->
               <div class="toggle_option_slider">
               </div>
           </div>
-          </div><!--12-->
-        </div><!--row-->
+        </div>
         <form class="row" >
         <div class="col-md-4" *ngIf="intOwnToggle=='0'">
           <mat-form-field>
@@ -48,7 +38,7 @@
                 *ngIf="companyInfoForm.controls['companyName'].errors.required"
               >
                 You must enter a Company Name.</span
-              >
+              >`
             </mat-error>
           </mat-form-field>
         </div>
@@ -313,7 +303,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Area*"
+            placeholder="Area"
             [formControl]="addressInfoForm.controls['area']"
             [(ngModel)]="strarea"
             value=""
@@ -331,7 +321,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Block*"
+            placeholder="Block"
             [formControl]="addressInfoForm.controls['block']"
             [(ngModel)]="strblock"
             value=""
@@ -349,7 +339,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Street*"
+            placeholder="Street"
             [formControl]="addressInfoForm.controls['street']"
             [(ngModel)]="strstreet"
             value=""
@@ -367,7 +357,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="City*"
+            placeholder="City"
             [formControl]="addressInfoForm.controls['city']"
             [(ngModel)]="strcity"
             value=""
@@ -410,7 +400,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Primary E-mail*"
+            placeholder="Primary E-mail"
             [formControl]="addressInfoForm.controls['primaryEmail']"
             [(ngModel)]="strprimaryEmail"
             value=""
@@ -430,7 +420,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Secondary E-mail*"
+            placeholder="Secondary E-mail"
             [formControl]="addressInfoForm.controls['secondaryEmail']"
             [(ngModel)]="strsecondaryEmail"
             value=""
@@ -478,15 +468,15 @@
       </div>
       <div class="col-md-4">
         <mat-form-field>
-          <input
+          <textarea
             matInput
-            placeholder="Other Information*"
+            placeholder="Other Information"
             [formControl]="addressInfoForm.controls['otherInformation']"
             [(ngModel)]="strOtherInformation"
             value=""
             name="otherInformation"
             #otherInformation
-          />
+          ></textarea>
           <mat-error *ngIf="addressInfoForm.controls['otherInformation'].errors"
             ><span
               *ngIf="
@@ -571,10 +561,10 @@
         </div>
       </div>
     </div>
-      <div >
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="nextClicked()">Next</button>
-      </div>
+    <div class="container" style="margin-left: -28px" >
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext (click)="nextClicked('')">Next</button>
+    </div>
     </form>
   </mat-step>
 
@@ -592,6 +582,8 @@
               <mat-label>Financial Year Start</mat-label>
               <input
                 matInput
+                [(ngModel)]=datFinance
+                readonly
                 [matDatepicker]="picker1"
                 [formControl]="bankInfoForm.controls['finDate']"
               />
@@ -606,7 +598,9 @@
             <mat-form-field appearance="fill">
               <mat-label>Book Start</mat-label>
               <input
+                readonly
                 matInput
+                [(ngModel)]=datBook
                 [matDatepicker]="picker2"
                 [formControl]="bankInfoForm.controls['bookDate']"
               />
@@ -622,6 +616,8 @@
               <mat-label>Company Start</mat-label>
               <input
                 matInput
+                readonly
+                [(ngModel)]=datCompany
                 [matDatepicker]="picker3"
                 [formControl]="bankInfoForm.controls['companyDate']"
               />
@@ -636,7 +632,7 @@
 
         <label>Daily Pay Based On</label>
         <div>
-          <mat-radio-group [formControl]="bankInfoForm.controls['strPay']">
+          <mat-radio-group  [(ngModel)]='strYearOrMonth' [formControl]="bankInfoForm.controls['strPay']">
             <mat-radio-button class="container1" checked="true" value="1">Year</mat-radio-button>
             <mat-radio-button class="container1" value="2">Month</mat-radio-button>
           </mat-radio-group>
@@ -646,17 +642,17 @@
         </div><!--6--> 
         
       </div><!--row-->
-      <div class="row mrgn30">
+      <div class="mrgn30 container row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-lg-12 pdng30">
           <label>Working Days</label> 
-          <input class="textBox-C" placeholder="" type="text" name="" id="">
+          <input [formControl]="bankInfoForm.controls['intWrkDays']" class="textBox-C" placeholder="" [(ngModel)]='intWrkDays' matInput type="number" name="" id="">
         </div><!--6--> 
       </div>
       
       <hr style="border:1px solid #d8dedc;width:100%;margin-top:25px;margin-bottom:40px;">
       
-        <div class="bank-details">
-          <h3>Bank Details</h3>
+    <div class="bank-details container">
+        <h3>Bank Details</h3>
         
       
       <div class="row" *ngFor="let item of lstBankDetails;let i=index">
@@ -688,11 +684,12 @@
           <mat-form-field>
             <input
               matInput
-              type="number"
               placeholder="Account Number"
               value=""
+              onKeyPress="if(this.value.length==10) return false;"
               [(ngModel)]="item.acno"
-              name="acno_{{i}}" 
+              name="acno_{{i}}"
+              type="number" 
               #bankName
             />
             <!-- <mat-error *ngIf="bankInfoForm.controls['acno'].errors"
@@ -702,11 +699,16 @@
             </mat-error> -->
           </mat-form-field>
         </div>
-        <div  *ngIf="i==0" class="col-xl-2 col-md-2">
-          <button id="add_button" title="Add Bank" (click)="addBank()" class="addbtnround float-right mt-3">
+        <div  *ngIf="i==(lstBankDetails.length-1)" class="col-xl-2 col-md-2">
+          <button id="add_button" title="Add Bank" (click)="addBank()" class="view_btn float-right mt-3">
              <i class="fa fa-plus"></i>
           </button>
-      </div>
+        </div>
+        <div  *ngIf="i!=(lstBankDetails.length-1) " class="col-xl-2 col-md-2">
+          <button id="delete_button" title="Delete Bank" (click)="deleteBank(i)" class="delete_btn float-right mt-3">
+            <i class="fa fa-trash"></i>
+          </button>
+       </div>
         
        </div><!--row-->
       </div><!--bank-->
@@ -718,7 +720,7 @@
 
       <div class="next-button">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="nextClicked()">Next</button>
+        <button mat-button #stepper (click)="nextClicked('bank')">Next</button>
       </div>
     </form>
   </mat-step>
@@ -732,7 +734,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Office Head Name*"
+            placeholder="Office Head Name"
             [formControl]="otherInfoForm.controls['headName']"
             [(ngModel)]="strHeadName"
             value=""
@@ -751,7 +753,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Father Name*"
+            placeholder="Father Name"
             [formControl]="otherInfoForm.controls['fatherName']"
             [(ngModel)]="strFatherName"
             value=""
@@ -801,7 +803,10 @@
             [formControl]="otherInfoForm.controls['panNo']"
             [(ngModel)]="strPanNo"
             value=""
+            maxlength="10"
+            minlength="10"
             name="panNo"
+            type="text"
           />
           <mat-error *ngIf="otherInfoForm.controls['panNo'].errors"
             ><span *ngIf="otherInfoForm.controls['panNo'].errors.required">
@@ -815,7 +820,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="TAN No.*"
+            placeholder="TAN No."
             [formControl]="otherInfoForm.controls['tanNo']"
             [(ngModel)]="strTanNo"
             value=""
@@ -833,7 +838,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="CIN*"
+            placeholder="CIN"
             [formControl]="otherInfoForm.controls['cin']"
             [(ngModel)]="strCin"
             value=""
@@ -889,7 +894,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Registration Number*"
+            placeholder="Registration Number"
             [formControl]="otherInfoForm.controls['regNo']"
             [(ngModel)]="strRegNo"
             value=""
@@ -905,7 +910,7 @@
       </div>
       <div class="next-button">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="nextClicked()">Next</button>
+        <button mat-button matStepperNext (click)="nextClicked('other')">Next</button>
       </div>
     </form>
   </mat-step>
@@ -947,6 +952,10 @@
           style="display: none;"
           (change)="handleFileSelect($event)"
         />
+      </div>
+      <div class="row" style="margin: 0 auto;width: 100%; display: flex;justify-content: center;">
+        <img style="max-width: 35%;" [src]="base64textString[0]">
+
       </div>
     </div>
 

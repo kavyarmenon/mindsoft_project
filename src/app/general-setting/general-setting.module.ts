@@ -16,14 +16,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { CompanyInfoListComponent } from './company-info-list/company-info-list.component'; 
+import { CompanyInfoListComponent } from './company-info-list/company-info-list.component';
+import { CompanyInfoEditComponent } from './company-info-edit/company-info-edit.component'; 
+import { MatTableModule } from '@angular/material/table'  
 
 @NgModule({
-  declarations: [CompanyInformationComponent, CompanyInfoListComponent],
+  declarations: [CompanyInformationComponent, CompanyInfoListComponent, CompanyInfoEditComponent],
   imports: [
     CommonModule,
     GeneralSettingRoutingModule,
     MatStepperModule,
+    MatTableModule,
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
