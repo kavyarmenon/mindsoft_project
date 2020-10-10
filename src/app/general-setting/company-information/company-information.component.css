@@ -1198,8 +1198,6 @@ label {
   font-size: 20px;
   margin: 0px 0px 35px;
 }
-.leave-info .nav-tabs > li {
-}
 .leave-info .nav-tabs > li.active > a {
   color: #000 !important;
   border: 1px solid #dddddd !important;
@@ -1231,8 +1229,6 @@ label {
   font-weight: 500;
   background: #fff;
   border-top: 3px solid #75c61f;
-}
-.leave-info .nav-tabs > li a:hover {
 }
 .leave-info .nav-tabs > li > a {
   margin-right: 0px;
