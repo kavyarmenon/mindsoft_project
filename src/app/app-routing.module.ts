@@ -12,24 +12,11 @@ export const Approutes: Routes = [
 			{
 				path: 'general-setting',
 				loadChildren: () => import('./general-setting/general-setting.module').then(m => m.GeneralSettingModule)
+      },
+      {
+				path: 'leave-policy',
+				loadChildren: () => import('./leave-policy/leave-policy.module').then(m => m.LeavePolicyModule)
 			},
-			// {
-			// 	path: 'starter',
-			// 	loadChildren: () => import('./starter/starter.module').then(m => m.StarterModule)
-			// },
-
 		]
 	},
-	// {
-	// 	path: '',
-	// 	component: BlankComponent,
-	// 	children: [
-	// 		{
-	// 			path: 'authentication',
-	// 			loadChildren:
-	// 				'./authentication/authentication.module#AuthenticationModule'
-	// 		}
-	// 	]
-	// },
-	
 ];

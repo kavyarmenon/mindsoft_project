@@ -3,40 +3,44 @@
   </button> -->
 
 <mat-horizontal-stepper [linear]="false" #stepper>
-  <mat-step  [stepControl]="companyInfoForm">
- 
-      <ng-template matStepLabel>Company Info</ng-template>
-      <div class="form">
+  <mat-step [stepControl]="companyInfoForm">
+    <ng-template matStepLabel>Company Info</ng-template>
+    <div class="form">
+      <div class="row">
+        <!-- <div class="col-lg-12"> -->
+        <h3 class="col-md-2 col-2">Creation Mode</h3>
 
-        <div class="row">
-          <div class="col-lg-12">
-            <h3 class="col-lg-6">Creation Mode</h3>
-            <!-- <div class="TGL-box">
-              <mat-radio-group [formControl]="companyInfoForm.controls['type']">
-                <mat-radio-button class="toggle toggle-left" checked="true" value="1">Company</mat-radio-button>
-                <mat-radio-button class="toggle toggle-right" value="2">Branch</mat-radio-button>
-              </mat-radio-group>
-            </div> -->
-            <div class="toggle_radio col-lg-6">
-              <input type="radio" [(ngModel)]="intOwnToggle" value="0" class="toggle_option" id="first_toggle" name="toggle_option" (change)="ownToggle()">
-              <input type="radio" [(ngModel)]="intOwnToggle" value="1" checked class="toggle_option" id="second_toggle" name="toggle_option" (change)="ownToggle()">
-              <!-- <input type="radio" [(ngModel)]="intOwnToggle" value="2" class="toggle_option" id="third_toggle" name="toggle_option" (change)="ownToggle()">
-              <input type="radio" [(ngModel)]="intOwnToggle" value="3" class="toggle_option" id="fourth_toggle" name="toggle_option" (change)="ownToggle()"> -->
-              <label for="first_toggle"><p>Company</p></label>
-              <label for="second_toggle"><p>Branch</p></label>
-              <!-- <label for="third_toggle"><p>School</p></label>
-              <label for="fourth_toggle"><p>Premium</p></label> -->
-              <div class="toggle_option_slider">
-              </div>
-          </div>
-          </div><!--12-->
-        </div><!--row-->
-        <form class="row" >
-        <div class="col-md-4" *ngIf="intOwnToggle=='0'">
-          <mat-form-field>
+        <div class="toggle_radio col-sm-2">
+          <input
+            type="radio"
+            [(ngModel)]="intOwnToggle"
+            value="0"
+            class="toggle_option"
+            id="first_toggle"
+            name="toggle_option"
+            (change)="ownToggle()"
+          />
+          <input
+            type="radio"
+            [(ngModel)]="intOwnToggle"
+            value="1"
+            checked
+            class="toggle_option"
+            id="second_toggle"
+            name="toggle_option"
+            (change)="ownToggle()"
+          />
+          <label for="first_toggle"><p>Company</p></label>
+          <label for="second_toggle"><p>Branch</p></label>
+          <div class="toggle_option_slider"></div>
+        </div>
+      </div>
+      <form class="row">
+        <div class="col-md-4" *ngIf="intOwnToggle == '0'">
+          <mat-form-field appearance="outline">
+            <mat-label>Company Name*</mat-label>
             <input
               matInput
-              placeholder="Company Name*"
               [formControl]="companyInfoForm.controls['companyName']"
               [(ngModel)]="strCompanyName"
               value=""
@@ -48,11 +52,11 @@
                 *ngIf="companyInfoForm.controls['companyName'].errors.required"
               >
                 You must enter a Company Name.</span
-              >
+              >`
             </mat-error>
           </mat-form-field>
         </div>
-        <div class="col-md-4" *ngIf="intOwnToggle=='1'">
+        <div class="col-md-4" *ngIf="intOwnToggle == '1'">
           <mat-form-field>
             <mat-select
               #idPriceTemplate
@@ -106,7 +110,7 @@
             </mat-error>
           </mat-form-field>
         </div> -->
-        <div class="col-md-4" *ngIf="intOwnToggle=='1'">
+        <div class="col-md-4" *ngIf="intOwnToggle == '1'">
           <mat-form-field>
             <input
               matInput
@@ -166,7 +170,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-  
+
         <div class="col-md-4">
           <mat-form-field>
             <mat-select
@@ -272,7 +276,9 @@
             </mat-select>
             <mat-error *ngIf="companyInfoForm.controls['strCompanyType'].errors"
               ><span
-                *ngIf="companyInfoForm.controls['strCompanyType'].errors.required"
+                *ngIf="
+                  companyInfoForm.controls['strCompanyType'].errors.required
+                "
               >
                 You must enter a company type.</span
               >
@@ -291,300 +297,359 @@
               #1
             />
             <mat-error *ngIf="companyInfoForm.controls['website'].errors"
-              ><span *ngIf="companyInfoForm.controls['website'].errors.required">
+              ><span
+                *ngIf="companyInfoForm.controls['website'].errors.required"
+              >
                 You must enter a website.</span
               >
             </mat-error>
           </mat-form-field>
         </div>
-  
+
         <div class="next-button">
           <button mat-button matStepperNext>Next</button>
         </div>
       </form>
-      </div>
+    </div>
   </mat-step>
 
   <mat-step [stepControl]="addressInfoForm">
-    <form class="row form" >
+    <form class="row form">
       <ng-template matStepLabel>Address Info</ng-template>
-      <div class=row>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Area*"
-            [formControl]="addressInfoForm.controls['area']"
-            [(ngModel)]="strarea"
-            value=""
-            name="company"
-            #area
-          />
-          <mat-error *ngIf="addressInfoForm.controls['area'].errors"
-            ><span *ngIf="addressInfoForm.controls['area'].errors.required">
-              You must enter a area.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Block*"
-            [formControl]="addressInfoForm.controls['block']"
-            [(ngModel)]="strblock"
-            value=""
-            name="block"
-            #block
-          />
-          <mat-error *ngIf="addressInfoForm.controls['block'].errors"
-            ><span *ngIf="addressInfoForm.controls['block'].errors.required">
-              You must enter a block.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Street*"
-            [formControl]="addressInfoForm.controls['street']"
-            [(ngModel)]="strstreet"
-            value=""
-            name="street"
-            #street
-          />
-          <mat-error *ngIf="addressInfoForm.controls['street'].errors"
-            ><span *ngIf="addressInfoForm.controls['street'].errors.required">
-              You must enter a street.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="City*"
-            [formControl]="addressInfoForm.controls['city']"
-            [(ngModel)]="strcity"
-            value=""
-            name="city"
-            #city
-          />
-          <mat-error *ngIf="addressInfoForm.controls['city'].errors"
-            ><span *ngIf="addressInfoForm.controls['city'].errors.required">
-              You must enter a city.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <mat-select
-            #idPriceTemplate
-            matInput
-            required
-            [(ngModel)]="intState"
-            name="intState"
-            matInput
-            placeholder="Province/State"
-            [formControl]="addressInfoForm.controls['strState']"
-          >
-            <mat-option
-              *ngFor="let item of lstStateData"
-              [value]="item.stateId"
-              >{{ item.state }}</mat-option
-            >
-          </mat-select>
-          <mat-error *ngIf="addressInfoForm.controls['strState'].errors"
-            ><span *ngIf="addressInfoForm.controls['strState'].errors.required">
-              You must enter a Province/State.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Primary E-mail*"
-            [formControl]="addressInfoForm.controls['primaryEmail']"
-            [(ngModel)]="strprimaryEmail"
-            value=""
-            name="primaryEmail"
-            #primaryEmail
-          />
-          <mat-error *ngIf="addressInfoForm.controls['primaryEmail'].errors"
-            ><span
-              *ngIf="addressInfoForm.controls['primaryEmail'].errors.required"
-            >
-              You must enter a primary E-mail.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Secondary E-mail*"
-            [formControl]="addressInfoForm.controls['secondaryEmail']"
-            [(ngModel)]="strsecondaryEmail"
-            value=""
-            name="secondaryEmail"
-            #secondaryEmail
-          />
-          <mat-error *ngIf="addressInfoForm.controls['secondaryEmail'].errors"
-            ><span
-              *ngIf="addressInfoForm.controls['secondaryEmail'].errors.required"
-            >
-              You must enter a secondary E-mail.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <mat-select
-            #idPriceTemplate
-            matInput
-            required
-            [(ngModel)]="intCompanyIndustry2"
-            name="intCompanyIndustry2"
-            matInput
-            placeholder="Company Industry"
-            [formControl]="addressInfoForm.controls['strCompanyIndustry']"
-          >
-            <mat-option
-              *ngFor="let item of lstIndustry"
-              [value]="item.companyIndustryId"
-              >{{ item.companyIndustryName }}</mat-option
-            >
-          </mat-select>
-          <mat-error
-            *ngIf="addressInfoForm.controls['strCompanyIndustry'].errors"
-            ><span
-              *ngIf="
-                addressInfoForm.controls['strCompanyIndustry'].errors.required
-              "
-            >
-              You must enter a company industry.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Other Information*"
-            [formControl]="addressInfoForm.controls['otherInformation']"
-            [(ngModel)]="strOtherInformation"
-            value=""
-            name="otherInformation"
-            #otherInformation
-          />
-          <mat-error *ngIf="addressInfoForm.controls['otherInformation'].errors"
-            ><span
-              *ngIf="
-                addressInfoForm.controls['otherInformation'].errors.required
-              "
-            >
-              You must enter a other information.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Website"
-            [formControl]="addressInfoForm.controls['website']"
-            [(ngModel)]="strWebsite2"
-            value=""
-            name="website2"
-            #website
-          />
-          <mat-error *ngIf="addressInfoForm.controls['website'].errors"
-            ><span *ngIf="addressInfoForm.controls['website'].errors.required">
-              You must enter a website.</span
-            >
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="week-box">
-      <h5>Weekly off days</h5>
       <div class="row">
-        <div class="day-bax">
-          <h4>Sunday</h4>
-          <label class="pr-box">
-            <input type="checkbox" id=""  [(ngModel)]="blnSunday" value="" checked="checked" [formControl]="addressInfoForm.controls['Sunday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Area"
+              [formControl]="addressInfoForm.controls['area']"
+              [(ngModel)]="strarea"
+              value=""
+              name="company"
+              #area
+            />
+            <mat-error *ngIf="addressInfoForm.controls['area'].errors"
+              ><span *ngIf="addressInfoForm.controls['area'].errors.required">
+                You must enter a area.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="day-bax">
-          <h4>Monday</h4>
-          <label class="pr-box">
-            <input type="checkbox" id=""  [(ngModel)]="blnMonday" value="" checked="checked" [formControl]="addressInfoForm.controls['Monday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Block"
+              [formControl]="addressInfoForm.controls['block']"
+              [(ngModel)]="strblock"
+              value=""
+              name="block"
+              #block
+            />
+            <mat-error *ngIf="addressInfoForm.controls['block'].errors"
+              ><span *ngIf="addressInfoForm.controls['block'].errors.required">
+                You must enter a block.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="day-bax">
-          <h4>Tuesday</h4>
-          <label class="pr-box">
-            <input type="checkbox" id=""  [(ngModel)]="blnTuesday" value="" checked="checked" [formControl]="addressInfoForm.controls['Tuesday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Street"
+              [formControl]="addressInfoForm.controls['street']"
+              [(ngModel)]="strstreet"
+              value=""
+              name="street"
+              #street
+            />
+            <mat-error *ngIf="addressInfoForm.controls['street'].errors"
+              ><span *ngIf="addressInfoForm.controls['street'].errors.required">
+                You must enter a street.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="day-bax">
-          <h4>Wednesday</h4>
-          <label class="pr-box" style="margin-left:26px;">
-            <input type="checkbox"  [(ngModel)]="blnWednesday" id="" value="" checked="checked" [formControl]="addressInfoForm.controls['Wednesday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="City"
+              [formControl]="addressInfoForm.controls['city']"
+              [(ngModel)]="strcity"
+              value=""
+              name="city"
+              #city
+            />
+            <mat-error *ngIf="addressInfoForm.controls['city'].errors"
+              ><span *ngIf="addressInfoForm.controls['city'].errors.required">
+                You must enter a city.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="day-bax">
-          <h4>Thursday</h4>
-          <label class="pr-box">
-            <input type="checkbox" id=""  [(ngModel)]="blnThursday" value="" checked="checked" [formControl]="addressInfoForm.controls['Thursday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-select
+              #idPriceTemplate
+              matInput
+              required
+              [(ngModel)]="intState"
+              name="intState"
+              matInput
+              placeholder="Province/State"
+              [formControl]="addressInfoForm.controls['strState']"
+            >
+              <mat-option
+                *ngFor="let item of lstStateData"
+                [value]="item.stateId"
+                >{{ item.state }}</mat-option
+              >
+            </mat-select>
+            <mat-error *ngIf="addressInfoForm.controls['strState'].errors"
+              ><span
+                *ngIf="addressInfoForm.controls['strState'].errors.required"
+              >
+                You must enter a Province/State.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="day-bax">
-          <h4>Fryday</h4>
-          <label class="pr-box">
-            <input type="checkbox" id=""  [(ngModel)]="blnFriday" value="" checked="checked" [formControl]="addressInfoForm.controls['Friday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Primary E-mail"
+              [formControl]="addressInfoForm.controls['primaryEmail']"
+              [(ngModel)]="strprimaryEmail"
+              value=""
+              name="primaryEmail"
+              #primaryEmail
+            />
+            <mat-error *ngIf="addressInfoForm.controls['primaryEmail'].errors"
+              ><span
+                *ngIf="addressInfoForm.controls['primaryEmail'].errors.required"
+              >
+                You must enter a primary E-mail.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="day-bax">
-          <h4>Saturday</h4>
-          <label class="pr-box">
-            <input type="checkbox" id="" [(ngModel)]="blnSaturday" value="" checked="checked" [formControl]="addressInfoForm.controls['Saturday']">
-            <span class="checkmark"></span>
-          </label>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Secondary E-mail"
+              [formControl]="addressInfoForm.controls['secondaryEmail']"
+              [(ngModel)]="strsecondaryEmail"
+              value=""
+              name="secondaryEmail"
+              #secondaryEmail
+            />
+            <mat-error *ngIf="addressInfoForm.controls['secondaryEmail'].errors"
+              ><span
+                *ngIf="
+                  addressInfoForm.controls['secondaryEmail'].errors.required
+                "
+              >
+                You must enter a secondary E-mail.</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-select
+              #idPriceTemplate
+              matInput
+              required
+              [(ngModel)]="intCompanyIndustry2"
+              name="intCompanyIndustry2"
+              matInput
+              placeholder="Company Industry"
+              [formControl]="addressInfoForm.controls['strCompanyIndustry']"
+            >
+              <mat-option
+                *ngFor="let item of lstIndustry"
+                [value]="item.companyIndustryId"
+                >{{ item.companyIndustryName }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="addressInfoForm.controls['strCompanyIndustry'].errors"
+              ><span
+                *ngIf="
+                  addressInfoForm.controls['strCompanyIndustry'].errors.required
+                "
+              >
+                You must enter a company industry.</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <textarea
+              matInput
+              placeholder="Other Information"
+              [formControl]="addressInfoForm.controls['otherInformation']"
+              [(ngModel)]="strOtherInformation"
+              value=""
+              name="otherInformation"
+              #otherInformation
+            ></textarea>
+            <mat-error
+              *ngIf="addressInfoForm.controls['otherInformation'].errors"
+              ><span
+                *ngIf="
+                  addressInfoForm.controls['otherInformation'].errors.required
+                "
+              >
+                You must enter a other information.</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Website"
+              [formControl]="addressInfoForm.controls['website']"
+              [(ngModel)]="strWebsite2"
+              value=""
+              name="website2"
+              #website
+            />
+            <mat-error *ngIf="addressInfoForm.controls['website'].errors"
+              ><span
+                *ngIf="addressInfoForm.controls['website'].errors.required"
+              >
+                You must enter a website.</span
+              >
+            </mat-error>
+          </mat-form-field>
         </div>
       </div>
-    </div>
-      <div >
+      <div class="week-box">
+        <h5>Weekly off days</h5>
+        <div class="row">
+          <div class="day-bax">
+            <h4>Sunday</h4>
+            <label class="pr-box">
+              <input
+                type="checkbox"
+                id=""
+                [(ngModel)]="blnSunday"
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Sunday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="day-bax">
+            <h4>Monday</h4>
+            <label class="pr-box">
+              <input
+                type="checkbox"
+                id=""
+                [(ngModel)]="blnMonday"
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Monday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="day-bax">
+            <h4>Tuesday</h4>
+            <label class="pr-box">
+              <input
+                type="checkbox"
+                id=""
+                [(ngModel)]="blnTuesday"
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Tuesday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="day-bax">
+            <h4>Wednesday</h4>
+            <label class="pr-box" style="margin-left: 26px">
+              <input
+                type="checkbox"
+                [(ngModel)]="blnWednesday"
+                id=""
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Wednesday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="day-bax">
+            <h4>Thursday</h4>
+            <label class="pr-box">
+              <input
+                type="checkbox"
+                id=""
+                [(ngModel)]="blnThursday"
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Thursday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="day-bax">
+            <h4>Fryday</h4>
+            <label class="pr-box">
+              <input
+                type="checkbox"
+                id=""
+                [(ngModel)]="blnFriday"
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Friday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="day-bax">
+            <h4>Saturday</h4>
+            <label class="pr-box">
+              <input
+                type="checkbox"
+                id=""
+                [(ngModel)]="blnSaturday"
+                value=""
+                checked="checked"
+                [formControl]="addressInfoForm.controls['Saturday']"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="container" style="margin-left: -28px">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="nextClicked()">Next</button>
+        <button mat-button matStepperNext (click)="nextClicked('')">
+          Next
+        </button>
       </div>
     </form>
   </mat-step>
 
   <mat-step [stepControl]="bankInfoForm">
     <form class="row form">
+      <ng-template matStepLabel>Bank Info & Payroll</ng-template>
 
-    <ng-template matStepLabel>Bank Info & Payroll</ng-template>
+      <!-- <div role="tabpanel" class="tab-pane fade " id="BankInfo_Payroll"> -->
 
-    <!-- <div role="tabpanel" class="tab-pane fade " id="BankInfo_Payroll"> -->
-            
       <div class="row mrgn30">
         <div class="col-lg-6 col-md-6 col-sm-6 col-lg-12 pdng30">
           <div class="col-md-4">
@@ -592,6 +657,8 @@
               <mat-label>Financial Year Start</mat-label>
               <input
                 matInput
+                [(ngModel)]="datFinance"
+                readonly
                 [matDatepicker]="picker1"
                 [formControl]="bankInfoForm.controls['finDate']"
               />
@@ -606,7 +673,9 @@
             <mat-form-field appearance="fill">
               <mat-label>Book Start</mat-label>
               <input
+                readonly
                 matInput
+                [(ngModel)]="datBook"
                 [matDatepicker]="picker2"
                 [formControl]="bankInfoForm.controls['bookDate']"
               />
@@ -622,6 +691,8 @@
               <mat-label>Company Start</mat-label>
               <input
                 matInput
+                readonly
+                [(ngModel)]="datCompany"
                 [matDatepicker]="picker3"
                 [formControl]="bankInfoForm.controls['companyDate']"
               />
@@ -633,106 +704,140 @@
             </mat-form-field>
           </div>
 
-
-        <label>Daily Pay Based On</label>
-        <div>
-          <mat-radio-group [formControl]="bankInfoForm.controls['strPay']">
-            <mat-radio-button class="container1" checked="true" value="1">Year</mat-radio-button>
-            <mat-radio-button class="container1" value="2">Month</mat-radio-button>
-          </mat-radio-group>
-        </div>
-       
-
-        </div><!--6--> 
-        
-      </div><!--row-->
-      <div class="row mrgn30">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-lg-12 pdng30">
-          <label>Working Days</label> 
-          <input class="textBox-C" placeholder="" type="text" name="" id="">
-        </div><!--6--> 
-      </div>
-      
-      <hr style="border:1px solid #d8dedc;width:100%;margin-top:25px;margin-bottom:40px;">
-      
-        <div class="bank-details">
-          <h3>Bank Details</h3>
-        
-      
-      <div class="row" *ngFor="let item of lstBankDetails;let i=index">
-        <div class="col-md-6">
-          <mat-form-field>
-            <mat-select
-              #idPriceTemplate
-              matInput
-              required
-              [(ngModel)]="item.bank"
-              name="bank_{{i}}" 
-              matInput
-              placeholder="Bank Name">
-              <mat-option
-                *ngFor="let item of lstBankBranch"
-                [value]="item.bankBranchId"
-                >{{ item.branchName }}</mat-option
+          <label>Daily Pay Based On</label>
+          <div>
+            <mat-radio-group
+              [(ngModel)]="strYearOrMonth"
+              [formControl]="bankInfoForm.controls['strPay']"
+            >
+              <mat-radio-button class="container1" checked="true" value="1"
+                >Year</mat-radio-button
               >
-            </mat-select>
-            <!-- <mat-error *ngIf="bankInfoForm.controls['bank'].errors"
+              <mat-radio-button class="container1" value="2"
+                >Month</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+        </div>
+        <!--6-->
+      </div>
+      <!--row-->
+      <div class="mrgn30 container row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-lg-12 pdng30">
+          <label>Working Days</label>
+          <input
+            [formControl]="bankInfoForm.controls['intWrkDays']"
+            class="textBox-C"
+            placeholder=""
+            [(ngModel)]="intWrkDays"
+            matInput
+            type="number"
+            name=""
+            id=""
+          />
+        </div>
+        <!--6-->
+      </div>
+
+      <hr
+        style="
+          border: 1px solid #d8dedc;
+          width: 100%;
+          margin-top: 25px;
+          margin-bottom: 40px;
+        "
+      />
+
+      <div class="bank-details container">
+        <h3>Bank Details</h3>
+
+        <div class="row" *ngFor="let item of lstBankDetails; let i = index">
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-select
+                #idPriceTemplate
+                matInput
+                required
+                [(ngModel)]="item.bank"
+                name="bank_{{ i }}"
+                matInput
+                placeholder="Bank Name"
+              >
+                <mat-option
+                  *ngFor="let item of lstBankBranch"
+                  [value]="item.bankBranchId"
+                  >{{ item.branchName }}</mat-option
+                >
+              </mat-select>
+              <!-- <mat-error *ngIf="bankInfoForm.controls['bank'].errors"
               ><span *ngIf="bankInfoForm.controls['bank'].errors.required">
                 You must enter a Bank Name.</span
               >
             </mat-error> -->
-          </mat-form-field>
-        </div>
+            </mat-form-field>
+          </div>
 
-        <div class="col-md-4">
-          <mat-form-field>
-            <input
-              matInput
-              type="number"
-              placeholder="Account Number"
-              value=""
-              [(ngModel)]="item.acno"
-              name="acno_{{i}}" 
-              #bankName
-            />
-            <!-- <mat-error *ngIf="bankInfoForm.controls['acno'].errors"
+          <div class="col-md-4">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Account Number"
+                value=""
+                onKeyPress="if(this.value.length==10) return false;"
+                [(ngModel)]="item.acno"
+                name="acno_{{ i }}"
+                type="number"
+                #bankName
+              />
+              <!-- <mat-error *ngIf="bankInfoForm.controls['acno'].errors"
               ><span *ngIf="bankInfoForm.controls['acno'].errors.required">
                 You must enter a Account No.</span
               >
             </mat-error> -->
-          </mat-form-field>
+            </mat-form-field>
+          </div>
+          <div *ngIf="i == lstBankDetails.length - 1" class="col-xl-2 col-md-2">
+            <button
+              id="add_button"
+              title="Add Bank"
+              (click)="addBank()"
+              class="view_btn float-right mt-3"
+            >
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+          <div *ngIf="i != lstBankDetails.length - 1" class="col-xl-2 col-md-2">
+            <button
+              id="delete_button"
+              title="Delete Bank"
+              (click)="deleteBank(i)"
+              class="delete_btn float-right mt-3"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
         </div>
-        <div  *ngIf="i==0" class="col-xl-2 col-md-2">
-          <button id="add_button" title="Add Bank" (click)="addBank()" class="addbtnround float-right mt-3">
-             <i class="fa fa-plus"></i>
-          </button>
+        <!--row-->
       </div>
-        
-       </div><!--row-->
-      </div><!--bank-->
+      <!--bank-->
 
-      
-     
-    <!-- </div> -->
-
+      <!-- </div> -->
 
       <div class="next-button">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="nextClicked()">Next</button>
+        <button mat-button #stepper (click)="nextClicked('bank')">Next</button>
       </div>
     </form>
   </mat-step>
 
   <mat-step [stepControl]="otherInfoForm">
-    <form
-      class="row form"
-    >
+    <form class="row form">
       <ng-template matStepLabel>Other Info</ng-template>
       <div class="col-md-4">
         <mat-form-field>
           <input
             matInput
-            placeholder="Office Head Name*"
+            placeholder="Office Head Name"
             [formControl]="otherInfoForm.controls['headName']"
             [(ngModel)]="strHeadName"
             value=""
@@ -751,7 +856,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Father Name*"
+            placeholder="Father Name"
             [formControl]="otherInfoForm.controls['fatherName']"
             [(ngModel)]="strFatherName"
             value=""
@@ -801,7 +906,10 @@
             [formControl]="otherInfoForm.controls['panNo']"
             [(ngModel)]="strPanNo"
             value=""
+            maxlength="10"
+            minlength="10"
             name="panNo"
+            type="text"
           />
           <mat-error *ngIf="otherInfoForm.controls['panNo'].errors"
             ><span *ngIf="otherInfoForm.controls['panNo'].errors.required">
@@ -815,7 +923,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="TAN No.*"
+            placeholder="TAN No."
             [formControl]="otherInfoForm.controls['tanNo']"
             [(ngModel)]="strTanNo"
             value=""
@@ -833,7 +941,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="CIN*"
+            placeholder="CIN"
             [formControl]="otherInfoForm.controls['cin']"
             [(ngModel)]="strCin"
             value=""
@@ -889,7 +997,7 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="Registration Number*"
+            placeholder="Registration Number"
             [formControl]="otherInfoForm.controls['regNo']"
             [(ngModel)]="strRegNo"
             value=""
@@ -905,16 +1013,16 @@
       </div>
       <div class="next-button">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="nextClicked()">Next</button>
+        <button mat-button matStepperNext (click)="nextClicked('other')">
+          Next
+        </button>
       </div>
     </form>
   </mat-step>
 
   <mat-step>
     <!-- <form class="row"> -->
-    <div
-      class="row form"
-    >
+    <div class="row form">
       <ng-template matStepLabel>Logo</ng-template>
       <div
         style="
@@ -925,7 +1033,7 @@
           margin-left: 40%;
         "
       >
-        <mat-card style="margin-top: 10px; width: 100%;">
+        <mat-card style="margin-top: 10px; width: 100%">
           <mat-card-content>
             Drop files here or click to upload
           </mat-card-content>
@@ -944,9 +1052,20 @@
           name="fileUpload"
           multiple="multiple"
           accept="image/*"
-          style="display: none;"
+          style="display: none"
           (change)="handleFileSelect($event)"
         />
+      </div>
+      <div
+        class="row"
+        style="
+          margin: 0 auto;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        "
+      >
+        <img style="max-width: 35%" [src]="base64textString[0]" />
       </div>
     </div>
 
@@ -961,7 +1080,7 @@
 <!-- Copyright 2020 Google LLC. All Rights Reserved.
       Use of this source code is governed by an MIT-style license that
       can be found in the LICENSE file at http://angular.io/license
-    
+
        <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>

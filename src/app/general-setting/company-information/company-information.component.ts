@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ServerService } from "src/app/server.service";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import swal from "sweetalert2";
+import { MatStepper } from "@angular/material/stepper";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-company-information",
@@ -13,7 +16,7 @@ export class CompanyInformationComponent implements OnInit {
   isLinear = false;
   // firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-
+  @ViewChild("stepper") stepper: MatStepper;
   form: FormGroup;
   companyInfoForm: FormGroup;
   addressInfoForm: FormGroup;
@@ -30,7 +33,7 @@ export class CompanyInformationComponent implements OnInit {
   intCompanyType = null;
   strWebsite1 = "";
   strBranch;
-  intCompanyId
+  intCompanyId;
 
   strarea = "";
   strblock = "";
@@ -46,14 +49,14 @@ export class CompanyInformationComponent implements OnInit {
   strHeadName;
   strFatherName;
   intDesignation;
-  strPanNo;
+  strPanNo = "";
   strTanNo;
   strCin;
   strGst;
   strRoc;
   strRegNo;
   strBank;
-  strAcNo ;
+  strAcNo;
   lstCountryData = [];
   lstStateData = [];
   lstDistrictData = [];
@@ -66,18 +69,23 @@ export class CompanyInformationComponent implements OnInit {
   lstBankBranch = [];
   lstProvince = [];
   lstLeavType = [];
-  lstCompany= [];
-  blnSunday=true
-  blnMonday=true
-  blnTuesday=true
-  blnWednesday=true
-  blnThursday=true
-  blnFriday=true
-  blnSaturday=true
+  lstCompany = [];
+  blnSunday = false;
+  blnMonday = false;
+  blnTuesday = false;
+  blnWednesday = false;
+  blnThursday = false;
+  blnFriday = false;
+  blnSaturday = false;
   base64textString = [];
-  intOwnToggle="1"
+  intOwnToggle = "1";
+  strYearOrMonth = "1";
+  intWrkDays = 0;
 
-  lstBankDetails=[{bank:'',acno:null}]
+  datFinance;
+  datBook;
+  datCompany;
+  lstBankDetails = [{ bank: "", acno: null }];
 
   @ViewChild("fileUpload", { static: false }) fileUpload: ElementRef;
   files = [];
@@ -86,10 +94,14 @@ export class CompanyInformationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     public router: Router,
+    private toastr: ToastrService,
     private serverService: ServerService
   ) {}
 
   ngOnInit() {
+    this.datFinance = new Date();
+    this.datBook = new Date();
+    this.datCompany = new Date();
     this.companyInfoForm = this.formBuilder.group({
       companyName: ["", Validators.required],
       branchName: ["", Validators.required],
@@ -104,15 +116,15 @@ export class CompanyInformationComponent implements OnInit {
     });
 
     this.addressInfoForm = this.formBuilder.group({
-      area: ["", Validators.required],
-      block: ["", Validators.required],
-      street: ["", Validators.required],
-      city: ["", Validators.required],
-      strState: ["", Validators.required],
-      primaryEmail: ["", Validators.required],
-      secondaryEmail: ["", Validators.required],
-      strCompanyIndustry: ["", Validators.required],
-      otherInformation: ["", Validators.required],
+      area: [""],
+      block: [""],
+      street: [""],
+      city: [""],
+      strState: [""],
+      primaryEmail: [""],
+      secondaryEmail: [""],
+      strCompanyIndustry: [""],
+      otherInformation: [""],
       website: [""],
       Sunday: [""],
       Monday: [""],
@@ -128,59 +140,59 @@ export class CompanyInformationComponent implements OnInit {
       bookDate: ["", Validators.required],
       companyDate: ["", Validators.required],
       strPay: ["", Validators.required],
-      // acno: ["", Validators.required],
+      intWrkDays: ["", Validators.required],
       // bank: ["", Validators.required],
     });
 
     this.otherInfoForm = this.formBuilder.group({
-      headName: ["", Validators.required],
-      fatherName: ["", Validators.required],
-      designation: ["", Validators.required],
-      panNo: ["", Validators.required],
-      tanNo: ["", Validators.required],
-      cin: ["", Validators.required],
-      gst: ["", Validators.required],
-      roc: ["", Validators.required],
-      regNo: ["", Validators.required],
+      headName: [""],
+      fatherName: [""],
+      designation: [""],
+      panNo: [""],
+      tanNo: [""],
+      cin: [""],
+      gst: [""],
+      roc: [""],
+      regNo: [""],
     });
 
     this.serverService
-      .getData("api/MasterListAPI/CountryList/")
+      .getData("api-MasterListAPI-CountryList/")
       .subscribe((res: any[]) => {
         this.lstCountryData = res["countryList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/IndustryList/")
+      .getData("api-MasterListAPI-IndustryList/")
       .subscribe((res: any[]) => {
         this.lstIndustry = res["industryList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/TypeList/")
+      .getData("api-MasterListAPI-TypeList/")
       .subscribe((res: any[]) => {
         this.lstType = res["typeList"];
       });
     this.serverService
-      .getData("api/MasterListAPI/StateList/")
+      .getData("api-MasterListAPI-StateList/")
       .subscribe((res: any[]) => {
         this.lstStateData = res["stateList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/DesignationList/")
+      .getData("api-MasterListAPI-DesignationList/")
       .subscribe((res: any[]) => {
         this.lstDesignation = res["designationList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/DepartmentList/")
+      .getData("api-MasterListAPI-DepartmentList/")
       .subscribe((res: any[]) => {
         this.lstDepartment = res["departmentList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/CurrencyList/")
+      .getData("api-MasterListAPI-CurrencyList/")
       .subscribe((res: any[]) => {
         this.lstCurrency = res["currencyList"];
       });
@@ -188,39 +200,95 @@ export class CompanyInformationComponent implements OnInit {
     this.serverService
       .getData("api/CompanyAPI/BankList/")
       .subscribe((res: any[]) => {
-        console.log(res,"dfgsdfsdfffs");
-        
         this.lstBank = res["bankList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/BankBranchList/")
+      .getData("api-MasterListAPI-BankBranchList/")
       .subscribe((res: any[]) => {
         this.lstBankBranch = res["bankbranchList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/ProvinceList/")
+      .getData("api-MasterListAPI-ProvinceList/")
       .subscribe((res: any[]) => {
         this.lstProvince = res["provinceList"];
       });
 
     this.serverService
-      .getData("api/MasterListAPI/LeaveTypeList/")
+      .getData("api-MasterListAPI-LeaveTypeList/")
       .subscribe((res: any[]) => {
         this.lstLeavType = res["leaveTypeList"];
       });
 
-
     this.serverService
-    .getData("api/CompanyAPI/CompanyDDList/")
-    .subscribe((res: any[]) => {
-      this.lstCompany = res["companyList"];
-      console.log(this.lstCompany,"cmny");
-      
-    });
+      .getData("api/CompanyAPI/CompanyDDList/")
+      .subscribe((res: any[]) => {
+        this.lstCompany = res["companyList"];
+      });
   }
-  nextClicked() {}
+  nextClicked(type) {
+    let checkError = false;
+    if (type == "bank") {
+      this.lstBankDetails.forEach((element) => {
+        if (!element.bank) {
+          this.toastr.error("Select Bank Name", "Error!");
+          checkError = true;
+          return false;
+        } else if (!element.acno) {
+          this.toastr.error("Enter Account No", "Error!");
+          checkError = true;
+          return false;
+        } else if (element.acno.toString().length > 10) {
+          this.toastr.error("Enter Account No.", "Error!");
+          return false;
+        }
+      });
+      if (this.datBook < this.datFinance) {
+        this.toastr.error(
+          "Book start date must be greater than the financial year start date",
+          "Error!"
+        );
+        return false;
+      } else if (
+        this.strYearOrMonth == "1" &&
+        (this.intWrkDays < 100 || this.intWrkDays > 366)
+      ) {
+        this.toastr.error(
+          "The no. of working days must be within the range 100-366",
+          "Error!"
+        );
+        return false;
+      } else if (
+        this.strYearOrMonth == "2" &&
+        (this.intWrkDays == 0 || this.intWrkDays > 31)
+      ) {
+        this.toastr.error(
+          "The no.of working days must be greater than zero and less than or equal to 31",
+          "Error!"
+        );
+        return false;
+      } else if (!checkError) {
+        this.stepper.selected.completed = true;
+        this.stepper.next();
+      }
+    } else if (type == "other") {
+      if (this.strPanNo.toString().length != 10) {
+        this.toastr.error("Enter Valid Pan No.", "Error!");
+        return false;
+      }
+      if (!/^[a-zA-Z]{4}/.test(this.strPanNo)) {
+        this.toastr.error(
+          "First four digits of PAN No. should be letter",
+          "Error!"
+        );
+        return false;
+      } else {
+        this.stepper.selected.completed = true;
+        this.stepper.next();
+      }
+    }
+  }
 
   onClick() {
     const fileUpload = this.fileUpload.nativeElement;
@@ -230,38 +298,29 @@ export class CompanyInformationComponent implements OnInit {
     fileUpload.click();
   }
 
-  handleFileSelect(evt){
+  handleFileSelect(evt) {
     var files = evt.target.files;
     var file = files[0];
 
-  if (files && file) {
+    if (files && file) {
       var reader = new FileReader();
 
-      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.onload = this._handleReaderLoaded.bind(this);
 
       reader.readAsBinaryString(file);
+    }
   }
-}
 
-
-
-_handleReaderLoaded(readerEvt) {
-   var binaryString = readerEvt.target.result;
-          // this.base64textString= btoa(binaryString);
-          this.base64textString.push('data:image/png;base64,' + btoa(binaryString));
-
-          console.log(this.base64textString,"image ");
+  _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    // this.base64textString= btoa(binaryString);
+    this.base64textString.push("data:image/png;base64," + btoa(binaryString));
   }
   saveDetail() {
-    console.log(this.companyInfoForm, "aaaa");
-    console.log(this.addressInfoForm, "aaaa");
-    console.log(this.bankInfoForm, "b");
-    console.log(this.imgSrc, "o");
-
     let dctData = {
       Status: "",
       companyInfo: {
-        companyId: this.companyInfoForm.value.strCompanyIndustry, //?
+        companyId: null, //?
         empCode: this.companyInfoForm.value.employerCode, // emp code key?
         companyName: this.companyInfoForm.value.companyName,
         shortName: this.companyInfoForm.value.shortName,
@@ -281,18 +340,15 @@ _handleReaderLoaded(readerEvt) {
         faxNo: "sample string 15", //?
         webSite: this.addressInfoForm.value.website,
         finYrStartDatestr: this.bankInfoForm.value.finDate,
-        finYrStartDate:  this.bankInfoForm.value.finDate, //?
-        daysID: [
-          1,
-          2,
-        ],
+        finYrStartDate: this.bankInfoForm.value.finDate, //?
+        daysID: [],
         bookStartDatestr: this.bankInfoForm.value.bookDate,
-        bookStartDate:this.bankInfoForm.value.bookDate,
+        bookStartDate: this.bankInfoForm.value.bookDate,
         EPID: this.companyInfoForm.value.employerCode, // emp code key?
-        companyStartDate:this.bankInfoForm.value.companyDate,
+        companyStartDate: this.bankInfoForm.value.companyDate,
         companyStartDatestr: this.bankInfoForm.value.companyDate,
         unearnedPolicyId: null, //?
-        OtherInfo: this.addressInfoForm.value.otherInfoForm,
+        OtherInfo: this.addressInfoForm.value.otherInformation,
         companyLogo: this.base64textString[0],
         companyLogobyte: this.imgSrc.size,
         tanNo: this.otherInfoForm.value.tanNo,
@@ -301,11 +357,13 @@ _handleReaderLoaded(readerEvt) {
         panNo: this.otherInfoForm.value.panNo,
         fatherName: this.otherInfoForm.value.fatherName,
         cinNo: this.otherInfoForm.value.cin,
-        gstTIN: this.otherInfoForm.value.gstTIN,
+        gstTIN: this.otherInfoForm.value.gst,
         rocCode: this.otherInfoForm.value.roc,
         registrationNo: this.otherInfoForm.value.regNo,
         isSaved: null, //?
         imageType: this.imgSrc.type,
+        strYearOrMonth: this.strYearOrMonth,
+        workingDays: this.intWrkDays,
       },
       companybankInfo: {
         // CompanyBankAccountID: 1,
@@ -313,56 +371,58 @@ _handleReaderLoaded(readerEvt) {
         // BankBranchID: 1,
         // BankAccountNo: "sample string 3",
       },
-      companyBankList: []
-      //   {
-      //     CompanyBankAccountID: null,
-      //     CompanyID: null,
-      //     BankBranchID:this.strBankName,
-      //     BankAccountNo: this.strAcNo,
-      //   },
-      //   // {
-      //   //   CompanyBankAccountID: null,
-      //   //   CompanyID: null,
-      //   //   BankBranchID: 1,
-      //   //   BankAccountNo: "sample string 3",
-      //   // },
-      // ],
+      companyBankList: [],
     };
 
-
-    if(this.intOwnToggle=="1"){
-      dctData['companyInfo']['isBranch']= 1;
-      dctData['companyInfo']['parentId']= this.intCompanyId ;    
+    if (this.intOwnToggle == "1") {
+      dctData["companyInfo"]["isBranch"] = 1;
+      dctData["companyInfo"]["parentId"] = this.intCompanyId;
+    } else {
+      dctData["companyInfo"]["isBranch"] = 0;
+      dctData["companyInfo"]["parentId"] = null;
     }
-    else{
-      dctData['companyInfo']['isBranch']= 0;
-      dctData['companyInfo']['parentId']=null;
+    if (this.blnSunday) {
+      dctData["companyInfo"]["daysID"].push(1);
     }
-    this.lstBankDetails.forEach((element,index)=> {
-     let dict={}
-     dict['BankBranchID']= element.bank;
-     dict['BankAccountNo']= element.acno;
-     dict['CompanyID']= null;
-     dict['CompanyBankAccountID']= null;
-     dctData['companyBankList'].push(dict)
-      
+    if (this.blnMonday) {
+      dctData["companyInfo"]["daysID"].push(2);
+    }
+    if (this.blnTuesday) {
+      dctData["companyInfo"]["daysID"].push(3);
+    }
+    if (this.blnWednesday) {
+      dctData["companyInfo"]["daysID"].push(4);
+    }
+    if (this.blnThursday) {
+      dctData["companyInfo"]["daysID"].push(5);
+    }
+    if (this.blnFriday) {
+      dctData["companyInfo"]["daysID"].push(6);
+    }
+    if (this.blnSaturday) {
+      dctData["companyInfo"]["daysID"].push(7);
+    }
+    this.lstBankDetails.forEach((element, index) => {
+      let dict = {};
+      dict["BankBranchID"] = element.bank;
+      dict["BankAccountNo"] = element.acno;
+      dict["CompanyID"] = null;
+      //  dict['CompanyBankAccountID']= null;
+      dctData["companyBankList"].push(dict);
     });
 
-    console.log(dctData, this.imgSrc, "save");
     this.serverService
       .postData("api/CompanyAPI/createCompany/", dctData)
       .subscribe((res: any[]) => {
-        this.lstBankBranch = res["bankbranchList"];
+        swal.fire("Success", res["Status"], "success");
+        this.router.navigate(["general-setting/company-info-list/"]);
       });
   }
-  ownToggle(){
-
+  ownToggle() {}
+  addBank() {
+    this.lstBankDetails.push({ bank: "", acno: null });
   }
-  addBank(){
-    console.log(this.lstBankDetails,"befr");
-
-    this.lstBankDetails.push({bank:'',acno:null})
-    console.log(this.lstBankDetails,"aftr");
-    
-    }
+  deleteBank(index) {
+    this.lstBankDetails.splice(index, 1);
+  }
 }

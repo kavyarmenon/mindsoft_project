@@ -10,7 +10,7 @@ export class ServerService {
   header = new HttpHeaders();
 
   //  hostAddress="http://sajusaju-001-site1.atempurl.com/"
-  hostAddress = "http://sajumindsoft-001-site1.btempurl.com/";
+  hostAddress = "http://173.248.132.225:8081/";
   constructor(private http: HttpClient, public router: Router) {
     this.header = this.header.set("Content-Type", "application/json");
   }

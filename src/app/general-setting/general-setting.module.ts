@@ -1,29 +1,36 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { GeneralSettingRoutingModule } from './general-setting-routing.module';
-import { CompanyInformationComponent } from './company-information/company-information.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import { GeneralSettingRoutingModule } from "./general-setting-routing.module";
+import { CompanyInformationComponent } from "./company-information/company-information.component";
+import { MatStepperModule } from "@angular/material/stepper";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { FormsModule,ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { MatSelectModule} from "@angular/material/select";
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSelectModule } from "@angular/material/select";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatCardModule } from "@angular/material/card";
-import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
-import { CompanyInfoListComponent } from './company-info-list/company-info-list.component'; 
+import { MatIconModule } from "@angular/material/icon";
+import { HttpClientModule } from "@angular/common/http";
+import { CompanyInfoListComponent } from "./company-info-list/company-info-list.component";
+import { CompanyInfoEditComponent } from "./company-info-edit/company-info-edit.component";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
-  declarations: [CompanyInformationComponent, CompanyInfoListComponent],
+  declarations: [
+    CompanyInformationComponent,
+    CompanyInfoListComponent,
+    CompanyInfoEditComponent,
+  ],
   imports: [
     CommonModule,
     GeneralSettingRoutingModule,
     MatStepperModule,
+    MatTableModule,
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,12 +43,8 @@ import { CompanyInfoListComponent } from './company-info-list/company-info-list.
     MatCardModule,
     MatIconModule,
     HttpClientModule,
-    MatCheckboxModule
-    
-
+    MatCheckboxModule,
   ],
-  providers: [  
-    MatDatepickerModule,  
-  ],
+  providers: [MatDatepickerModule],
 })
-export class GeneralSettingModule { }
+export class GeneralSettingModule {}

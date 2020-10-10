@@ -17,19 +17,23 @@ export class CompanyInfoListComponent implements OnInit {
 
   datFrom ;
   datTo ;
-
+  data
   lstTableData= [];
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns =['date','branch','journalId','debitType','debitDetails','creditType','creditDetails','amount','action'];
+  lstDisplayedColumns =['company','companyStartDate','action'];
 
 
 
   constructor(private serviceObject : ServerService,
     private toastr: ToastrService,
     public router: Router,
-     ) { }
+     ) {
+      this.dataSource = new MatTableDataSource(
+        this.lstTableData
+      );
+      }
 
   ngOnInit() {
     this.datFrom = new Date();
@@ -45,21 +49,21 @@ export class CompanyInfoListComponent implements OnInit {
       // if (res['status'] == 1)
       // {
         
-        let data= res;
-        console.log(data,"data");
+        this.data= res;
+        console.log(this.data,"data");
         
-        // this.lstTableData=data
-        // if(res == null){
-          this.blnShowData = false;
-        // }
-       
+        if( this.data.length>0){
+          this.blnShowData = true;
+        }
+        this.lstTableData=this.data
+        this.dataSource = new MatTableDataSource(
+          this.lstTableData
+        );
         // else if(this.lstTableData.length > 0){
         //   this.blnShowData = true;
         // }
 
-        this.dataSource = new MatTableDataSource(
-          this.lstTableData
-        );
+       
         // this.dataSource.paginator = this.paginator;
         // this.dataSource.paginator.firstPage();
         // this.dataSource.sort = this.sort;
@@ -80,12 +84,24 @@ export class CompanyInfoListComponent implements OnInit {
 
   }
 
-  viewJournal(item){
+  editCompany(item){
 
-    localStorage.setItem('journalId',item.pk_bint_id);
-    this.router.navigate(['journal/viewjournal/']);
+    localStorage.setItem('companyId',item.companyId);
+    this.router.navigate(['general-setting/company-info-edit/']);
   
 
   }
+  deleteCompany(item){
+
+    this.serviceObject.getData('api/CompanyAPI/DeleteCompany/?companyId='+item.companyId).subscribe(res => {
+      swal.fire('Success',res['Status'], 'success');
+      this.searchData();
+
+    },
+    (error) => {
+      swal.fire('Error!','Server Error!!', 'error');
+    });
+
+    }
 
 }

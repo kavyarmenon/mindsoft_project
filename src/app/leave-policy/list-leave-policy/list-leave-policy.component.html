@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Company Informaion List</h4>
+    <h4 class="card-title">Leave Policy List</h4>
   </div>
 </div>
 
@@ -8,18 +8,18 @@
   <div class="card-body">
     <div class="example-container mat-elevation-z8 mt-3">
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="company">
+        <ng-container matColumnDef="policyName">
           <mat-header-cell class="minwidth10" *matHeaderCellDef
-            >Comapny Name</mat-header-cell
+            > Policy Name</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
             >{{ row.companyName }}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="companyStartDate">
+        <ng-container matColumnDef="applicableFrom">
           <mat-header-cell class="minwidth10" *matHeaderCellDef>
-            Company Start Date</mat-header-cell
+            Applicable From</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
             >{{ row.companyStartDate }}

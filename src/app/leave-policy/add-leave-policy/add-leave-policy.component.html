@@ -1,0 +1,157 @@
+<div class="card" >
+  <div class="card-body">
+    <h4 style="color: black;" class="card-title">Leave Policy</h4>
+  </div>
+  <form class="row" [formGroup]="leavePolicy" style="padding: 20px; background-color: #eef7ff">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Policy Name</mat-label>
+          <input matInput [formControl]="leavePolicy.controls['policyName']"
+         type="text" />
+          <mat-error *ngIf="leavePolicy.controls['policyName'].errors"
+          ><span
+            *ngIf="leavePolicy.controls['policyName'].errors.required"
+          >
+            You must enter a Policy Name.</span
+          >
+        </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Applicale From</mat-label>
+          <input [formControl]="leavePolicy.controls['applicableFrom']" readonly matInput
+          [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="leavePolicy.controls['applicableFrom'].errors"
+          ><span
+            *ngIf="leavePolicy.controls['applicableFrom'].errors.required"
+          >
+            You must select Applicale From Date.</span
+          >
+        </mat-error>
+        </mat-form-field>
+      </div>
+  </form>
+
+  <div class="row" style="background-color: #eef7ff">
+    <h4 style="margin-left: 24px;color: #d10000;"><b>Leave Information</b></h4>
+    <div class="col-md-12" style="padding: 35px">
+      <div class="example-container mat-elevation-z8 mt-3">
+        <table  class="mat-elevation-z8">
+          <tr>
+            <th>Leave Type</th>
+            <th>Days</th>
+            <th>Monthly</th>
+            <th>Carry Forward</th>
+            <th>Encashable Days</th>
+            <th>Period</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let row of lstTableData;let i=index">
+            <td>
+              <mat-select
+              [(ngModel)]="row.leaveTypeName"
+              style="
+                background-color: #eef7ff;
+                padding: 6px;
+                border-radius: 10px;
+              "
+              placeholder=""
+            >
+              <mat-option (onSelectionChange)="leaveTypeChanged(i,type)"
+                *ngFor="let type of lstLeaveType"
+                [value]="type.leaveType"
+              >
+                {{ type.leaveType }}
+              </mat-option>
+            </mat-select></td>
+            <td><input
+              [(ngModel)]="row.days"
+                style="
+                background-color: #eef7ff;
+                padding: 6px;
+                border-radius: 10px;
+                "
+                matInput
+                type="number"
+                placeholder=""
+              /></td>
+            <td>  <input
+              [(ngModel)]="row.monthly"
+                style="
+                background-color: #eef7ff;
+                padding: 6px;
+                border-radius: 10px;
+                "
+                matInput
+                type="number"
+                placeholder=""
+              /></td>
+            <td>  <input
+              [(ngModel)]="row.carryForward"
+                style="
+                background-color: #eef7ff;
+                padding: 6px;
+                border-radius: 10px;
+                "
+                matInput
+                type="number"
+                placeholder=""
+              /></td>
+            <td>  <input
+              [(ngModel)]="row.encDays"
+                style="
+                background-color: #eef7ff;
+                padding: 6px;
+                border-radius: 10px;
+                "
+                matInput
+                type="number"
+                placeholder=""
+              /></td>
+            <td>  <input
+              [(ngModel)]="row.peroid"
+                style="
+                background-color: #eef7ff;
+                padding: 6px;
+                border-radius: 10px;
+                "
+                matInput
+                type="number"
+                placeholder=""
+              /></td>
+              <td style="display:flex !important;
+              justify-content:center!important;">
+                <button *ngIf="lstTableData.length-1===i"
+                id="Add"
+                title="Add"
+                class="add_btn"
+                (click)="addRow(i,row.leaveTypeName)"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+              <button
+              style="margin-left: 6px;"
+                id="delete"
+                title="Delete"
+                (click)="deleteRow(i)"
+                class="delete_btn mr-2"
+              >
+                <i
+                  class="fa fa-trash"
+                  style="color: cornflowerblue"
+                  aria-hidden="true"
+                ></i>
+                </button>
+              </td>
+          </tr>
+        </table>
+   </div>
+   <div class="col-md-12 row" style="margin-top: 50px;margin-left: 40%;">
+    <button type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="saveDetail()">Save</button>
+    <button type="button"  mat-raised-button class="btn btn-secondary m-t-20" (click)="cancel()">Cancel</button>
+</div>
+</div>
