@@ -3,22 +3,21 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ServerService } from "src/app/server.service";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import swal from 'sweetalert2';
-import { DomSanitizer } from '@angular/platform-browser';
+import swal from "sweetalert2";
+import { DomSanitizer } from "@angular/platform-browser";
 import { MatStepper } from "@angular/material/stepper";
-import { ToastrService } from 'ngx-toastr';
-
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-company-info-edit',
-  templateUrl: './company-info-edit.component.html',
-  styleUrls: ['./company-info-edit.component.css']
+  selector: "app-company-info-edit",
+  templateUrl: "./company-info-edit.component.html",
+  styleUrls: ["./company-info-edit.component.css"],
 })
 export class CompanyInfoEditComponent implements OnInit {
   isLinear = false;
   // firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild("stepper") stepper: MatStepper;
 
   form: FormGroup;
   companyInfoForm: FormGroup;
@@ -36,7 +35,7 @@ export class CompanyInfoEditComponent implements OnInit {
   intCompanyType = null;
   strWebsite1 = "";
   strBranch;
-  intCompanyId
+  intCompanyId;
 
   strarea = "";
   strblock = "";
@@ -49,18 +48,17 @@ export class CompanyInfoEditComponent implements OnInit {
   strOtherInformation = "";
   strWebsite2 = "";
 
-  
   strHeadName;
   strFatherName;
   intDesignation;
-  strPanNo='';
+  strPanNo = "";
   strTanNo;
   strCin;
   strGst;
   strRoc;
   strRegNo;
   strBank;
-  strAcNo ;
+  strAcNo;
 
   lstCountryData = [];
   lstStateData = [];
@@ -74,25 +72,25 @@ export class CompanyInfoEditComponent implements OnInit {
   lstBankBranch = [];
   lstProvince = [];
   lstLeavType = [];
-  lstCompany= [];
+  lstCompany = [];
 
-  datFinance
-  datBook
-  datCompany
-  blnSunday=false
-  blnMonday=false
-  blnTuesday=false
-  blnWednesday=false
-  blnThursday=false
-  blnFriday=false
-  blnSaturday=false
+  datFinance;
+  datBook;
+  datCompany;
+  blnSunday = false;
+  blnMonday = false;
+  blnTuesday = false;
+  blnWednesday = false;
+  blnThursday = false;
+  blnFriday = false;
+  blnSaturday = false;
   base64textString = [];
-  intOwnToggle="1"
-  strYearOrMonth='1'
-  intWrkDays=0
-  lstBankDetails=[]
-  companyId=localStorage.getItem('companyId');
-  imagePath
+  intOwnToggle = "1";
+  strYearOrMonth = "1";
+  intWrkDays = 0;
+  lstBankDetails = [];
+  companyId = localStorage.getItem("companyId");
+  imagePath;
   @ViewChild("fileUpload", { static: false }) fileUpload: ElementRef;
   files = [];
   imgSrc;
@@ -106,10 +104,9 @@ export class CompanyInfoEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
-    this.datFinance =new Date();
-    this.datBook =new Date();
-    this.datCompany =new Date();
+    this.datFinance = new Date();
+    this.datBook = new Date();
+    this.datCompany = new Date();
     this.companyInfoForm = this.formBuilder.group({
       companyName: ["", Validators.required],
       branchName: ["", Validators.required],
@@ -229,158 +226,160 @@ export class CompanyInfoEditComponent implements OnInit {
         this.lstLeavType = res["leaveTypeList"];
       });
 
-      this.serverService
+    this.serverService
       .getData("api/CompanyAPI/CompanyDDList/")
       .subscribe((res: any[]) => {
         this.lstCompany = res["companyList"];
-        
       });
 
-      this.getDetails()
-
+    this.getDetails();
   }
-  getDetails(){
+  getDetails() {
     this.serverService
-    .getData("api/CompanyAPI/FindCompanyById?CompanyID="+this.companyId)
-    .subscribe((res: any[]) => {
-      // this.lstCompany = res["companyList"];
-    
-        this.strEmployerCode=res['companyInfo']['EPID']; 
-        this.strCompanyName=res['companyInfo']['companyName']; 
-        this.strShortName=res['companyInfo']['shortName']; 
-        this.strBranchName = res['companyInfo']['branchName']; 
-        this.intCountry = res['companyInfo']['countryId']; 
-        this.intCurrency = res['companyInfo']['currencyId']; 
-        this.intCompanyIndustry1 = res['companyInfo']['companyIndustryId']; 
-        this.intCompanyIndustry2 = res['companyInfo']['companyIndustryId']; 
+      .getData("api/CompanyAPI/FindCompanyById?CompanyID=" + this.companyId)
+      .subscribe((res: any[]) => {
+        // this.lstCompany = res["companyList"];
 
-        this.intCompanyType = res['companyInfo']['companyTypeId']; 
-        // this.strWebsite1 = res['companyInfo']['shortName']; 
-        this.strBranch=res['companyInfo']['branchName']; 
-        this.intCompanyId=res['companyInfo']['shortName']; 
+        this.strEmployerCode = res["companyInfo"]["EPID"];
+        this.strCompanyName = res["companyInfo"]["companyName"];
+        this.strShortName = res["companyInfo"]["shortName"];
+        this.strBranchName = res["companyInfo"]["branchName"];
+        this.intCountry = res["companyInfo"]["countryId"];
+        this.intCurrency = res["companyInfo"]["currencyId"];
+        this.intCompanyIndustry1 = res["companyInfo"]["companyIndustryId"];
+        this.intCompanyIndustry2 = res["companyInfo"]["companyIndustryId"];
 
-        this.strarea = res['companyInfo']['area']; 
-        this.strblock = res['companyInfo']['block']; 
-        this.strstreet = res['companyInfo']['road']; 
-        this.strcity = res['companyInfo']['city']; 
-        this.intState = Number(res['companyInfo']['stateId']); 
-        this.strprimaryEmail = res['companyInfo']['primaryEmail']; 
-        this.strsecondaryEmail = res['companyInfo']['secondaryEmail']; 
-        // this.intCompanyIndustry2 = res['companyInfo']['shortName']; 
-        this.strOtherInformation = res['companyInfo']['OtherInfo']; 
-        this.strWebsite2 = res['companyInfo']['webSite']; 
-        
-        this.strHeadName= res['companyInfo']['officeHeadName']; 
-        this.strFatherName= res['companyInfo']['fatherName']; 
-        this.intDesignation= res['companyInfo']['designationId']; 
-        this.strPanNo= res['companyInfo']['panNo']; 
-        this.strTanNo= res['companyInfo']['tanNo']; 
-        this.strCin= res['companyInfo']['cinNo']; 
-        this.strGst= res['companyInfo']['gstTIN']; 
-        this.strRoc= res['companyInfo']['rocCode']; 
-        this.strRegNo= res['companyInfo']['registrationNo']; 
-        this.intOwnToggle=( res['companyInfo']['isBranch']).toString();
+        this.intCompanyType = res["companyInfo"]["companyTypeId"];
+        // this.strWebsite1 = res['companyInfo']['shortName'];
+        this.strBranch = res["companyInfo"]["branchName"];
+        this.intCompanyId = res["companyInfo"]["shortName"];
 
-        this.datBook= res['companyInfo']['bookStartDatestr']; 
-        this.datCompany= res['companyInfo']['companyStartDatestr']; 
-        this.datFinance= res['companyInfo']['finYrStartDatestr']; 
+        this.strarea = res["companyInfo"]["area"];
+        this.strblock = res["companyInfo"]["block"];
+        this.strstreet = res["companyInfo"]["road"];
+        this.strcity = res["companyInfo"]["city"];
+        this.intState = Number(res["companyInfo"]["stateId"]);
+        this.strprimaryEmail = res["companyInfo"]["primaryEmail"];
+        this.strsecondaryEmail = res["companyInfo"]["secondaryEmail"];
+        // this.intCompanyIndustry2 = res['companyInfo']['shortName'];
+        this.strOtherInformation = res["companyInfo"]["OtherInfo"];
+        this.strWebsite2 = res["companyInfo"]["webSite"];
 
-        this.base64textString[0]=res['companyInfo']['companyLogo'];
-        
-        res['companyInfo']['daysID'].forEach(element => {
-          if(element=='1'){
-            this.blnSunday=true
+        this.strHeadName = res["companyInfo"]["officeHeadName"];
+        this.strFatherName = res["companyInfo"]["fatherName"];
+        this.intDesignation = res["companyInfo"]["designationId"];
+        this.strPanNo = res["companyInfo"]["panNo"];
+        this.strTanNo = res["companyInfo"]["tanNo"];
+        this.strCin = res["companyInfo"]["cinNo"];
+        this.strGst = res["companyInfo"]["gstTIN"];
+        this.strRoc = res["companyInfo"]["rocCode"];
+        this.strRegNo = res["companyInfo"]["registrationNo"];
+        this.intOwnToggle = res["companyInfo"]["isBranch"].toString();
+
+        this.datBook = res["companyInfo"]["bookStartDatestr"];
+        this.datCompany = res["companyInfo"]["companyStartDatestr"];
+        this.datFinance = res["companyInfo"]["finYrStartDatestr"];
+
+        this.base64textString[0] = res["companyInfo"]["companyLogo"];
+
+        res["companyInfo"]["daysID"].forEach((element) => {
+          if (element == "1") {
+            this.blnSunday = true;
           }
-          if(element=='2'){
-            this.blnMonday=true
+          if (element == "2") {
+            this.blnMonday = true;
           }
-          if(element=='3'){
-            this.blnTuesday=true
+          if (element == "3") {
+            this.blnTuesday = true;
           }
-          if(element=='4'){
-            this.blnWednesday=true
+          if (element == "4") {
+            this.blnWednesday = true;
           }
-           if(element=='5'){
-            this.blnThursday=true
+          if (element == "5") {
+            this.blnThursday = true;
           }
-          if(element=='6'){
-            this.blnFriday=true
-          } 
-          if(element=='7'){
-            this.blnSaturday=true
+          if (element == "6") {
+            this.blnFriday = true;
+          }
+          if (element == "7") {
+            this.blnSaturday = true;
           }
         });
-        if(res['companyBankList'].length>0){
-        let lstData= res['companyBankList']
-        lstData.forEach(element => {
-            let dist={}
-            dist['bank']=element.BankBranchID
-            dist['acno']=element.BankAccountNo
-  
-            this.lstBankDetails.push(dist)
-          
-          });
-        }
-        else{
-          this.lstBankDetails.push({'bank':null,'acno':null})
-        }
+        if (res["companyBankList"].length > 0) {
+          let lstData = res["companyBankList"];
+          lstData.forEach((element) => {
+            let dist = {};
+            dist["bank"] = element.BankBranchID;
+            dist["acno"] = element.BankAccountNo;
 
-      
-    });
+            this.lstBankDetails.push(dist);
+          });
+        } else {
+          this.lstBankDetails.push({ bank: null, acno: null });
+        }
+      });
   }
   nextClicked(type) {
-    
-    let checkError=false
-    if(type=='bank'){
-       this.lstBankDetails.forEach(element => {
-          if(!element.bank){
-            this.toastr.error('Select Bank Name', 'Error!');
-            checkError=true
-            return false
-          }
-          else if(!element.acno){
-            this.toastr.error('Enter Account No', 'Error!');
-            checkError=true
-            return false
-          }
-          else if ((element.acno).toString().length>10) {
-            this.toastr.error('Enter Account No.', 'Error!');
-            return false
-          }
-       });
-      if(this.datBook<this.datFinance){
-        this.toastr.error('Book start date must be greater than the financial year start date', 'Error!');
-        return false
-      }
-      else if(this.strYearOrMonth=='1' && (this.intWrkDays<100 || this.intWrkDays>366)){
-        this.toastr.error('The no. of working days must be within the range 100-366', 'Error!');
-        return false
-      }
-      else if(this.strYearOrMonth=='2' && (this.intWrkDays==0 || this.intWrkDays>31)){
-        this.toastr.error('The no.of working days must be greater than zero and less than or equal to 31', 'Error!');
-        return false
-      }
-      else if(!checkError){
+    let checkError = false;
+    if (type == "bank") {
+      this.lstBankDetails.forEach((element) => {
+        if (!element.bank) {
+          this.toastr.error("Select Bank Name", "Error!");
+          checkError = true;
+          return false;
+        } else if (!element.acno) {
+          this.toastr.error("Enter Account No", "Error!");
+          checkError = true;
+          return false;
+        } else if (element.acno.toString().length > 10) {
+          this.toastr.error("Enter Account No.", "Error!");
+          return false;
+        }
+      });
+      if (this.datBook < this.datFinance) {
+        this.toastr.error(
+          "Book start date must be greater than the financial year start date",
+          "Error!"
+        );
+        return false;
+      } else if (
+        this.strYearOrMonth == "1" &&
+        (this.intWrkDays < 100 || this.intWrkDays > 366)
+      ) {
+        this.toastr.error(
+          "The no. of working days must be within the range 100-366",
+          "Error!"
+        );
+        return false;
+      } else if (
+        this.strYearOrMonth == "2" &&
+        (this.intWrkDays == 0 || this.intWrkDays > 31)
+      ) {
+        this.toastr.error(
+          "The no.of working days must be greater than zero and less than or equal to 31",
+          "Error!"
+        );
+        return false;
+      } else if (!checkError) {
         this.stepper.selected.completed = true;
         this.stepper.next();
       }
-    }
-    else if(type=='other'){
-      
-      if ((this.strPanNo).toString().length!=10) {
-        this.toastr.error('Enter Valid Pan No.', 'Error!');
-        return false
+    } else if (type == "other") {
+      if (this.strPanNo.toString().length != 10) {
+        this.toastr.error("Enter Valid Pan No.", "Error!");
+        return false;
       }
-      if (!(/^[a-zA-Z]{4}/).test(this.strPanNo)) {
-        this.toastr.error('First four digits of PAN No. should be letter', 'Error!');
-        return false
-      }
-      else{
+      if (!/^[a-zA-Z]{4}/.test(this.strPanNo)) {
+        this.toastr.error(
+          "First four digits of PAN No. should be letter",
+          "Error!"
+        );
+        return false;
+      } else {
         this.stepper.selected.completed = true;
         this.stepper.next();
       }
-    }
-    else{
+    } else {
       this.stepper.selected.completed = true;
       this.stepper.next();
     }
@@ -394,29 +393,24 @@ export class CompanyInfoEditComponent implements OnInit {
     fileUpload.click();
   }
 
-  handleFileSelect(evt){
-    
+  handleFileSelect(evt) {
     var files = evt.target.files;
     var file = files[0];
 
-  if (files && file) {
+    if (files && file) {
       var reader = new FileReader();
 
-      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.onload = this._handleReaderLoaded.bind(this);
 
       reader.readAsBinaryString(file);
+    }
   }
-}
 
-
-
-_handleReaderLoaded(readerEvt) {
-
-   var binaryString = readerEvt.target.result;
-   this.base64textString[0]='data:image/png;base64,' + btoa(binaryString);
+  _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.base64textString[0] = "data:image/png;base64," + btoa(binaryString);
   }
   saveDetail() {
-
     let dctData = {
       Status: "",
       companyInfo: {
@@ -440,12 +434,12 @@ _handleReaderLoaded(readerEvt) {
         faxNo: "sample string 15", //?
         webSite: this.addressInfoForm.value.website,
         finYrStartDatestr: this.bankInfoForm.value.finDate,
-        finYrStartDate:  this.bankInfoForm.value.finDate, //?
+        finYrStartDate: this.bankInfoForm.value.finDate, //?
         daysID: [],
         bookStartDatestr: this.bankInfoForm.value.bookDate,
-        bookStartDate:this.bankInfoForm.value.bookDate,
+        bookStartDate: this.bankInfoForm.value.bookDate,
         EPID: this.companyInfoForm.value.employerCode, // emp code key?
-        companyStartDate:this.bankInfoForm.value.companyDate,
+        companyStartDate: this.bankInfoForm.value.companyDate,
         companyStartDatestr: this.bankInfoForm.value.companyDate,
         unearnedPolicyId: null, //?
         OtherInfo: this.addressInfoForm.value.otherInfoForm,
@@ -462,70 +456,62 @@ _handleReaderLoaded(readerEvt) {
         registrationNo: this.otherInfoForm.value.regNo,
         isSaved: null, //?
         imageType: null,
-        strYearOrMonth:this.strYearOrMonth,
-        workingDays:this.intWrkDays
+        strYearOrMonth: this.strYearOrMonth,
+        workingDays: this.intWrkDays,
       },
       companybankInfo: {},
-      companyBankList: []
+      companyBankList: [],
     };
 
-
-    if(this.intOwnToggle=="1"){
-      dctData['companyInfo']['isBranch']= 1;
-      dctData['companyInfo']['parentId']= this.intCompanyId ;    
+    if (this.intOwnToggle == "1") {
+      dctData["companyInfo"]["isBranch"] = 1;
+      dctData["companyInfo"]["parentId"] = this.intCompanyId;
+    } else {
+      dctData["companyInfo"]["isBranch"] = 0;
+      dctData["companyInfo"]["parentId"] = null;
     }
-    else{
-      dctData['companyInfo']['isBranch']= 0;
-      dctData['companyInfo']['parentId']=null;
-    }
-    this.lstBankDetails.forEach((element,index)=> {
-     let dict={}
-     dict['BankBranchID']= element.bank;
-     dict['BankAccountNo']= element.acno;
-     dict['CompanyID']= null;
-    //  dict['CompanyBankAccountID']= null;
-     dctData['companyBankList'].push(dict)
-      
+    this.lstBankDetails.forEach((element, index) => {
+      let dict = {};
+      dict["BankBranchID"] = element.bank;
+      dict["BankAccountNo"] = element.acno;
+      dict["CompanyID"] = null;
+      //  dict['CompanyBankAccountID']= null;
+      dctData["companyBankList"].push(dict);
     });
-    if(this.blnSunday){
-      dctData['companyInfo']['daysID'].push(1)
+    if (this.blnSunday) {
+      dctData["companyInfo"]["daysID"].push(1);
     }
-    if(this.blnMonday){
-      dctData['companyInfo']['daysID'].push(2)
+    if (this.blnMonday) {
+      dctData["companyInfo"]["daysID"].push(2);
     }
-    if(this.blnTuesday){
-      dctData['companyInfo']['daysID'].push(3)
+    if (this.blnTuesday) {
+      dctData["companyInfo"]["daysID"].push(3);
     }
-    if(this.blnWednesday){
-      dctData['companyInfo']['daysID'].push(4)
+    if (this.blnWednesday) {
+      dctData["companyInfo"]["daysID"].push(4);
     }
-    if(this.blnThursday){
-      dctData['companyInfo']['daysID'].push(5)
+    if (this.blnThursday) {
+      dctData["companyInfo"]["daysID"].push(5);
     }
-    if(this.blnFriday){
-      dctData['companyInfo']['daysID'].push(6)
+    if (this.blnFriday) {
+      dctData["companyInfo"]["daysID"].push(6);
     }
-    if(this.blnSaturday){
-      dctData['companyInfo']['daysID'].push(7)
+    if (this.blnSaturday) {
+      dctData["companyInfo"]["daysID"].push(7);
     }
 
     this.serverService
       .postData("api/CompanyAPI/createCompany/", dctData)
       .subscribe((res: any[]) => {
-        swal.fire('Success',res['Status'], 'success');
-        this.router.navigate(['general-setting/company-info-list/']);
+        swal.fire("Success", res["Status"], "success");
+        this.router.navigate(["general-setting/company-info-list/"]);
       });
   }
-  ownToggle(){
-
+  ownToggle() {}
+  addBank() {
+    this.lstBankDetails.push({ bank: "", acno: null });
   }
-  addBank()
-  {
-    this.lstBankDetails.push({bank:'',acno:null})
+  deleteBank(index) {
+    this.lstBankDetails.splice(index, 1);
   }
-  deleteBank(index)
-  {
-    this.lstBankDetails.splice(index,1)
-  }
-
 }
