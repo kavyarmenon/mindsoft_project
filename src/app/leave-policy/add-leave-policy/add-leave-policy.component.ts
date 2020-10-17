@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ServerService } from "src/app/server.service";
 import swal from "sweetalert2";
+import * as moment from "moment";
 
 @Component({
   selector: "app-add-leave-policy",
@@ -96,7 +97,9 @@ export class AddLeavePolicyComponent implements OnInit {
         leavePolicyID: null,
         leavePolicyName: this.leavePolicy.get("policyName").value,
         applicableFromstr: this.leavePolicy.get("applicableFrom").value,
-        applicableFrom: "sample string 3",
+        applicableFrom: moment(this.leavePolicy.get("applicableFrom").value)
+          .format("DD/MM/YYYY")
+          .toString(),
       },
       leavePolicyDetail: [],
       //   {
