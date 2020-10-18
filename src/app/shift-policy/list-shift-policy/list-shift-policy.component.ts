@@ -7,17 +7,17 @@ import swal from "sweetalert2";
 import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
-  selector: "app-list-leave-policy",
-  templateUrl: "./list-leave-policy.component.html",
-  styleUrls: ["./list-leave-policy.component.css"],
+  selector: "app-list-shift-policy",
+  templateUrl: "./list-shift-policy.component.html",
+  styleUrls: ["./list-shift-policy.component.css"],
 })
-export class ListLeavePolicyComponent implements OnInit {
+export class ListShiftPolicyComponent implements OnInit {
   data;
   lstTableData = [];
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns = ["policyName", "applicableFrom", "action"];
+  lstDisplayedColumns = ["shiftName", "shiftType", "noOfTiming", "action"];
 
   constructor(
     private serviceObject: ServerService,
@@ -32,12 +32,12 @@ export class ListLeavePolicyComponent implements OnInit {
   }
 
   searchData() {
-    this.serviceObject.getData("api/LeavePolicyAPI/getLeavePolicy/").subscribe(
+    this.serviceObject.getData("api/ShiftPolicyAPI/getShiftPolicy/").subscribe(
       (res) => {
         // if (res['status'] == 1)
         // {
 
-        this.data = res["leavePolicyList"];
+        this.data = res["shiftPolicyList"];
         console.log(this.data, "data");
 
         if (this.data.length > 0) {
@@ -45,20 +45,6 @@ export class ListLeavePolicyComponent implements OnInit {
         }
         this.lstTableData = this.data;
         this.dataSource = new MatTableDataSource(this.lstTableData);
-        // else if(this.lstTableData.length > 0){
-        //   this.blnShowData = true;
-        // }
-
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.paginator.firstPage();
-        // this.dataSource.sort = this.sort;
-
-        // }
-        // else if (res['status'] == 0) {
-        //   swal.fire('Error!','Something went wrong!!', 'error');
-        //   this.blnShowData = true;
-
-        // }
       },
       (error) => {
         swal.fire("Error!", "Server Error!!", "error");

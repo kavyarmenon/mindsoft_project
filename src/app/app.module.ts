@@ -25,6 +25,7 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { MatTableModule } from "@angular/material/table";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -55,6 +56,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     Ng2SearchPipeModule,
     RouterModule.forRoot(Approutes),
     MatTableModule,
+    FlexLayoutModule,
     PerfectScrollbarModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyBUb3jDWJQ28vDJhuQZxkC0NXr_zycm8D0",

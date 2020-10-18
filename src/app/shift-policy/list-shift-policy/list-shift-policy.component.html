@@ -1,28 +1,36 @@
-<div class="card" style="border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
   <div class="card-body">
-    <h4 class="card-title">Leave Policy List</h4>
+    <h2 style="color: black;" class="card-title">List Shift Policy</h2>
   </div>
 </div>
 
-<div class="card" *ngIf="blnShowData">
+<div class="card" *ngIf="blnShowData"  style="background-color: #f3f9fe">
   <div class="card-body">
     <div class="example-container mat-elevation-z8 mt-3">
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="policyName">
+        <ng-container matColumnDef="shiftName">
           <mat-header-cell class="minwidth10" *matHeaderCellDef
-            > Policy Name</mat-header-cell
+            > Shift Name</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
-            >{{ row.leavePolicyName }}
+            >{{ row.shiftPolicyName }}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="applicableFrom">
+        <ng-container matColumnDef="shiftType">
           <mat-header-cell class="minwidth10" *matHeaderCellDef>
-            Applicable From</mat-header-cell
+            Shift Type</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
-            >{{ row.applicableFrom }}
+            >{{ row.shiftType }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="noOfTiming">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef>
+            No Of Timing</mat-header-cell
+          >
+          <mat-cell *matCellDef="let row" class="minwidth10"
+            >{{ row.noOfTiming }}
           </mat-cell>
         </ng-container>
 
@@ -62,6 +70,6 @@
   </div>
 </div>
 
-<div class="card nodata" *ngIf="!blnShowData">
+<div class="card nodata"  style="background-color: #f3f9fe" *ngIf="!blnShowData">
   <h5>NO DATA FOUND</h5>
 </div>

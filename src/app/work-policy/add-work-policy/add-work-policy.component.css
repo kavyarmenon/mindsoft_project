@@ -1,0 +1,22 @@
+th {
+  padding: 16px;
+  background-color: #f3f9fe;
+  width: 200px;
+  color: black;
+  text-align: center;
+}
+td {
+  padding: 16px;
+  background-color: white;
+  width: 200px;
+}
+tr {
+  padding: 16px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

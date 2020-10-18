@@ -1,0 +1,278 @@
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+  <div class="card-body">
+    <h2 style="color: black;" class="card-title">Settlement Policy</h2>
+  </div>
+  <form class="row" [formGroup]="settlementPolicy" style="padding: 20px; background-color: #f3f9fe">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Policy Name</mat-label>
+          <input matInput [formControl]="settlementPolicy.controls['policyName']"
+         type="text" />
+          <mat-error *ngIf="settlementPolicy.controls['policyName'].errors"
+          ><span
+            *ngIf="settlementPolicy.controls['policyName'].errors.required"
+          >
+            You must enter a Policy Name.</span
+          >
+        </mat-error>
+        </mat-form-field>
+      </div>
+  </form>
+  <mat-horizontal-stepper [linear]="false" #stepper  style="background-color: #f3f9fe">
+    <mat-step [stepControl]="normalForm">
+      <ng-template matStepLabel>Normal</ng-template>
+      <form [formGroup]="normalForm">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Calculation Based On</mat-label>
+              <mat-select
+                  [formControl]="normalForm.controls['calcBasedOn']"
+                  placeholder=""
+                >
+                  <mat-option
+                    *ngFor="let type of lstCalcBasedOn"
+                    [value]="type.calculationbasedonId"
+                  >
+                    {{ type.calculationbasedon }}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="normalForm.controls['calcBasedOn'].errors"
+              ><span
+                *ngIf="normalForm.controls['calcBasedOn'].errors.required"
+              >
+                You must select Shift Type.</span
+              >
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- <h5>Excluded From Gross</h5> -->
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Excluded From Gross</mat-label>
+              <mat-select
+                  multiple
+                  [formControl]="normalForm.controls['particulars']"
+                  placeholder=""
+                >
+                  <mat-option
+                    *ngFor="let type of lstParticular"
+                    [value]="type.additionDeductionId"
+                  >
+                    {{ type.particulars}}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="normalForm.controls['particulars'].errors"
+              ><span
+                *ngIf="normalForm.controls['particulars'].errors.required"
+              >
+                You must select Shift Type.</span
+              >
+            </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Calculation Day</mat-label>
+              <mat-select
+                  [formControl]="normalForm.controls['calcDay']"
+                  placeholder=""
+                >
+                  <mat-option
+                    *ngFor="let type of lstCalcDay"
+                    [value]="type.CalculationDayID"
+                  >
+                    {{ type.CalculationDayDescription }}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="normalForm.controls['calcDay'].errors"
+              ><span
+                *ngIf="normalForm.controls['calcDay'].errors.required"
+              >
+                You must select Shift Type.</span
+              >
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4" >
+            <label class="pr-box" style="margin-top: 20px;">
+              <input style="padding: 20px 22px;
+              margin-right: 12px;" type="checkbox" id=""   [formControl]="settlementPolicy.controls['isIncludeEligibleLeave']" value="" checked="checked">
+              <span class="checkmark">Include Eligible Leave </span>
+            </label>
+          </div>
+        </div>
+        <hr>
+        &nbsp;
+        <div class="row" style="width: 100%;">
+          <mat-tab-group>
+            <mat-tab label="Less Than Five">
+              <div class="example-container mat-elevation-z8 mt-3">
+                <table class="table table-border" [ngClass]="{'table-dark': mode}">
+                  <thead class="text-nowrap">
+                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <ng-container formArrayName="tableLessThanRows" *ngFor="let group of getFormControls1.controls ; let i=index">
+                      <tr  [formGroupName]="i">
+                        <td>
+                          <input matInput  style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                          "
+                          formControlName="parameter"
+                          type="text" />
+                        </td>
+                        <td>
+                          <input
+                          formControlName="noOfMonth"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                        <td>
+                           <input
+                           formControlName="noOfDays"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                          <td style="display:flex !important;
+                          justify-content:center!important;">
+                            <button
+                            *ngIf="(getFormControls1.controls.length-1)===i"
+                            id="Add"
+                            title="Add"
+                            class="add_btn"
+                            (click)="addRow(i,'lessThan')"
+                          >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                          <button
+                          style="margin-left: 6px;"
+                            id="delete"
+                            title="Delete"
+                            (click)="deleteRow(i,'lessThan')"
+                            class="delete_btn mr-2"
+                          >
+                            <i
+                              class="fa fa-trash"
+                              style="color: cornflowerblue"
+                              aria-hidden="true"
+                            ></i>
+                            </button>
+                          </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <!-- <div class="action-container">
+                  <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
+                  <button mat-raised-button [disabled]="normalForm.invalid" type="submit" (click)="submitForm()">Submit</button>
+                </div> -->
+           </div>
+            </mat-tab>
+            <mat-tab label="Greater Than Five">
+              <div class="example-container mat-elevation-z8 mt-3">
+                <table class="table table-border" [ngClass]="{'table-dark': mode}">
+                  <thead class="text-nowrap">
+                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls2.controls ; let i=index">
+                      <tr [formGroupName]="i">
+                        <td>
+                          <input matInput  style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                          "
+                          formControlName="parameter"
+                          type="text" />
+                        </td>
+                        <td>
+                          <input
+                          formControlName="noOfMonth"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                        <td>
+                           <input
+                           formControlName="noOfDays"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                          <td style="display:flex !important;
+                          justify-content:center!important;">
+                            <button
+                            *ngIf="(getFormControls2.controls.length-1)===i"
+                            id="Add"
+                            title="Add"
+                            class="add_btn"
+                            (click)="addRow(i,'greaterThan')"
+                          >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                          <button
+                          style="margin-left: 6px;"
+                            id="delete"
+                            title="Delete"
+                            (click)="deleteRow(i,'greaterThan')"
+                            class="delete_btn mr-2"
+                          >
+                            <i
+                              class="fa fa-trash"
+                              style="color: cornflowerblue"
+                              aria-hidden="true"
+                            ></i>
+                            </button>
+                          </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <!-- <div class="action-container">
+                  <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
+                  <button mat-raised-button [disabled]="normalForm.invalid" type="submit" (click)="submitForm()">Submit</button>
+                </div> -->
+           </div>
+            </mat-tab>
+        </mat-tab-group>
+        </div>
+        <div class="next-button">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

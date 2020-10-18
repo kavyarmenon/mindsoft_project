@@ -16,14 +16,14 @@ input[type="number"]::-webkit-outer-spin-button {
 th {
   padding: 16px;
   background-color: #f3f9fe;
-  width: 180px;
+  width: 200px;
   color: black;
   text-align: center;
 }
 td {
   padding: 16px;
   background-color: white;
-  width: 180px;
+  width: 200px;
 }
 tr {
   padding: 16px;
@@ -42,4 +42,10 @@ tr {
   color: #7cc578 !important;
   cursor: pointer;
   padding: 0px !important;
+}
+.day-bax {
+  background: #fff;
+  float: left;
+  padding: 20px 22px;
+  margin-right: 12px;
 }

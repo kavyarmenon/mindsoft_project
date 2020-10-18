@@ -1,0 +1,207 @@
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+  <div class="card-body">
+    <h2 style="color: black;" class="card-title">Work Policy</h2>
+  </div>
+  <form  [formGroup]="workPolicy" style="padding: 15px">
+   <div class="row">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Policy Name</mat-label>
+          <input matInput [formControl]="workPolicy.controls['policyName']"
+        type="text" />
+          <mat-error *ngIf="workPolicy.controls['policyName'].errors"
+          ><span
+            *ngIf="workPolicy.controls['policyName'].errors.required"
+          >
+            You must enter a policy Name.</span
+          >
+        </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>General Shift</mat-label>
+          <mat-select
+              [formControl]="workPolicy.controls['generalShift']"
+              placeholder=""
+            >
+              <mat-option
+                *ngFor="let type of lstGeneralShift"
+                [value]="type.shiftId"
+              >
+                {{ type.shiftName }}
+              </mat-option>
+            </mat-select>
+          <mat-error *ngIf="workPolicy.controls['generalShift'].errors"
+          ><span
+            *ngIf="workPolicy.controls['generalShift'].errors.required"
+          >
+            You must select General Shift.</span
+          >
+        </mat-error>
+        </mat-form-field>
+      </div>
+   </div>
+  </form>
+  <!-- <hr> -->
+    <mat-tab-group style="width: 80%;" [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabChanged($event)" >
+      <mat-tab  label="Policy Details">
+        <div class="example-container mat-elevation-z8 mt-3">
+          <table class="table table-border">
+            <thead class="text-nowrap">
+              <th>Working Day <span class="ui-column-resizer" dragableColumn> </span></th>
+              <th>Day<span class="ui-column-resizer" dragableColumn> </span></th>
+              <th>Day Shift<span class="ui-column-resizer" dragableColumn> </span></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of lstPolicyDetails;let i= index">
+                  <td>
+                    <input
+                    style="
+                    background-color: #f3f9fe;
+                    padding: 6px;
+                    border-radius: 10px;
+                    width: 22px;
+                    height: 22px;
+                    margin-left: 10px;
+                    "
+                    type="checkbox" id=""  [(ngModel)]="row.workingDay" value="" checked="checked">
+                  </td>
+                  <td>
+                    <input
+                      style="
+                      background-color: #f3f9fe;
+                      padding: 6px;
+                      border-radius: 10px;
+                      "
+                      readonly
+                      matInput
+                      placeholder=""
+                      [(ngModel)]="row.day"
+                    />
+                  </td>
+                  <td>
+                    <mat-select
+                    style="
+                    background-color: #f3f9fe;
+                    padding: 6px;
+                    border-radius: 10px;
+                    "
+                    placeholder=""
+                    [(ngModel)]="row.shiftId"
+                  >
+                    <mat-option
+                      *ngFor="let type of lstGeneralShift"
+                      [value]="type.shiftId"
+                    >
+                      {{ type.shiftName }}
+                    </mat-option>
+                  </mat-select>
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+     </div>
+     <div class="col-md-12 row">
+      <button color="primary" mat-raised-button (click)="nextStep()" type="button">Next</button>
+     </div>
+
+      </mat-tab>
+      <mat-tab [disabled]="isFillTab1" label="Policy Consequences">
+        <div class="example-container mat-elevation-z8 mt-3">
+          <table class="table table-border">
+            <thead class="text-nowrap">
+              <th>Consequences <span class="ui-column-resizer" dragableColumn> </span></th>
+              <th>Allowed Days/Month<span class="ui-column-resizer" dragableColumn> </span></th>
+              <th>LOP<span class="ui-column-resizer" dragableColumn> </span></th>
+              <th>Casual<span class="ui-column-resizer" dragableColumn> </span></th>
+              <th>Amount<span class="ui-column-resizer" dragableColumn> </span></th>
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of lstPolicyConsequences;let i= index">
+                  <td>
+                    <input
+                      style="
+                      background-color: #f3f9fe;
+                      padding: 6px;
+                      border-radius: 10px;
+                      "
+                      readonly
+                      matInput
+                      placeholder=""
+                      [(ngModel)]="row.consequences"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="
+                      background-color: #f3f9fe;
+                      padding: 6px;
+                      border-radius: 10px;
+                      "
+                      matInput
+                      placeholder=""
+                      [(ngModel)]="row.allowedDays"
+                    />
+                  </td>
+                  <td>
+                    <mat-select
+                    style="
+                    background-color: #f3f9fe;
+                    padding: 6px;
+                    border-radius: 10px;
+                    "
+                    placeholder=""
+                    [(ngModel)]="row.lop"
+                  >
+                    <mat-option
+                      *ngFor="let type of lstLop"
+                      [value]="type.shiftId"
+                    >
+                      {{ type.shiftName }}
+                    </mat-option>
+                  </mat-select>
+                  </td>
+                  <td>
+                    <mat-select
+                    style="
+                    background-color: #f3f9fe;
+                    padding: 6px;
+                    border-radius: 10px;
+                    "
+                    placeholder=""
+                    [(ngModel)]="row.casual"
+                  >
+                    <mat-option
+                      *ngFor="let type of lstCasual"
+                      [value]="type.shiftId"
+                    >
+                      {{ type.shiftName }}
+                    </mat-option>
+                  </mat-select>
+                  </td>
+                  <td>
+                    <input
+                      style="
+                      background-color: #f3f9fe;
+                      padding: 6px;
+                      border-radius: 10px;
+                      "
+                      matInput
+                      placeholder=""
+                      [(ngModel)]="row.amount"
+                    />
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+     </div>
+     <div class="row">
+      <button color="primary" mat-raised-button class="btn save_btn m-r-10 m-t-20"  (click)="previousStep()" type="button">Previous</button>
+      <button type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="saveDetail()">Save</button>
+     </div>
+      </mat-tab>
+  </mat-tab-group>
+</div>
