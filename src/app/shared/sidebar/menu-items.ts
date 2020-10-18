@@ -80,6 +80,14 @@ export const ROUTES: RouteInfo[] = [
         extralink: false,
         submenu: [],
       },
+      {
+        path: "/work-policy/add-work-policy",
+        title: "Add Work Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
     ],
   },
   // {

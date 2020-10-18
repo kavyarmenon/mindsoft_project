@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { WorkPolicyRoutingModule } from "./work-policy-routing.module";
+import { AddWorkPolicyComponent } from "./add-work-policy/add-work-policy.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -10,24 +12,14 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatStepperModule } from "@angular/material/stepper";
 import { MatTabsModule } from "@angular/material/tabs";
-import { SettlementPolicyRoutingModule } from "./settlement-policy-routing.module";
-import { AddSettlementPolicyComponent } from "./add-settlement-policy/add-settlement-policy.component";
-import { ListSettlementPolicyComponent } from "./list-settlement-policy/list-settlement-policy.component";
-import { EditSettlementPolicyComponent } from "./edit-settlement-policy/edit-settlement-policy.component";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatIconModule } from "@angular/material/icon";
+import { MatStepperModule } from "@angular/material/stepper";
 
 @NgModule({
-  declarations: [
-    AddSettlementPolicyComponent,
-    ListSettlementPolicyComponent,
-    EditSettlementPolicyComponent,
-  ],
+  declarations: [AddWorkPolicyComponent],
   imports: [
     CommonModule,
-    SettlementPolicyRoutingModule,
+    WorkPolicyRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
@@ -39,10 +31,8 @@ import { MatIconModule } from "@angular/material/icon";
     FormsModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatStepperModule,
     MatTabsModule,
-    FlexLayoutModule,
-    MatIconModule,
+    MatStepperModule,
   ],
 })
-export class SettlementPolicyModule {}
+export class WorkPolicyModule {}

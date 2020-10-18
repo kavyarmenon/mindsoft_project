@@ -1,4 +1,4 @@
-<div class="card" style="background-color: #f3f9fe">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
   <div class="card-body">
     <h2 style="color: black;" class="card-title">Settlement Policy</h2>
   </div>
@@ -105,95 +105,169 @@
         </div>
         <hr>
         &nbsp;
-        <div class="row">
+        <div class="row" style="width: 100%;">
           <mat-tab-group>
             <mat-tab label="Less Than Five">
               <div class="example-container mat-elevation-z8 mt-3">
-                <table  class="mat-elevation-z8">
-                  <tr>
-                    <th>Parameter</th>
-                    <th>No Of Days</th>
-                    <th>No of Months</th>
+                <table class="table table-border" [ngClass]="{'table-dark': mode}">
+                  <thead class="text-nowrap">
+                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
                     <th>Action</th>
-                  </tr>
-                  <span  formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
-                    <tr [formGroupName]="i">
-                      <td>
-                        <mat-select
-                        style="
-                        background-color: #f3f9fe;
-                        padding: 6px;
-                        border-radius: 10px;
-                        "
-                       formControlName ="parameter"
-                        placeholder=""
-                      >
-                        <mat-option
-                          *ngFor="let type of lstParameter"
-                          [value]="type.parameter"
-                        >
-                          {{ type.parameter }}
-                        </mat-option>
-                      </mat-select>
-                      </td>
-
-                      <td>
-                        <input
-                        formControlName ="noOfday"
-                          style="
+                  </thead>
+                  <tbody>
+                    <ng-container formArrayName="tableLessThanRows" *ngFor="let group of getFormControls1.controls ; let i=index">
+                      <tr  [formGroupName]="i">
+                        <td>
+                          <input matInput  style="
                           background-color: #f3f9fe;
                           padding: 6px;
                           border-radius: 10px;
                           "
-                          matInput
-                          type="number"
-                          placeholder=""
-                        /></td>
-                      <td>
-                         <input
-                         formControlName ="noOfMonths"
-                          style="
-                          background-color: #f3f9fe;
-                          padding: 6px;
-                          border-radius: 10px;
-                          "
-                          matInput
-                          type="number"
-                          placeholder=""
-                        />
-                      </td>
-                        <td style="display:flex !important;
-                        justify-content:center!important;">
-                          <button
-                          id="Add"
-                          title="Add"
-                          class="add_btn"
-                          (click)="addRow()"
-                        >
-                          <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                        <button
-                        style="margin-left: 6px;"
-                          id="delete"
-                          title="Delete"
-                          (click)="deleteRow(i)"
-                          class="delete_btn mr-2"
-                        >
-                          <i
-                            class="fa fa-trash"
-                            style="color: cornflowerblue"
-                            aria-hidden="true"
-                          ></i>
-                          </button>
+                          formControlName="parameter"
+                          type="text" />
                         </td>
-                    </tr>
-                  </span>
-
+                        <td>
+                          <input
+                          formControlName="noOfMonth"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                        <td>
+                           <input
+                           formControlName="noOfDays"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                          <td style="display:flex !important;
+                          justify-content:center!important;">
+                            <button
+                            *ngIf="(getFormControls1.controls.length-1)===i"
+                            id="Add"
+                            title="Add"
+                            class="add_btn"
+                            (click)="addRow(i,'lessThan')"
+                          >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                          <button
+                          style="margin-left: 6px;"
+                            id="delete"
+                            title="Delete"
+                            (click)="deleteRow(i,'lessThan')"
+                            class="delete_btn mr-2"
+                          >
+                            <i
+                              class="fa fa-trash"
+                              style="color: cornflowerblue"
+                              aria-hidden="true"
+                            ></i>
+                            </button>
+                          </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
                 </table>
+                <!-- <div class="action-container">
+                  <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
+                  <button mat-raised-button [disabled]="normalForm.invalid" type="submit" (click)="submitForm()">Submit</button>
+                </div> -->
            </div>
             </mat-tab>
-            <mat-tab label="Greater Than Five"> Content 2 </mat-tab>
-          </mat-tab-group>
+            <mat-tab label="Greater Than Five">
+              <div class="example-container mat-elevation-z8 mt-3">
+                <table class="table table-border" [ngClass]="{'table-dark': mode}">
+                  <thead class="text-nowrap">
+                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls2.controls ; let i=index">
+                      <tr [formGroupName]="i">
+                        <td>
+                          <input matInput  style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                          "
+                          formControlName="parameter"
+                          type="text" />
+                        </td>
+                        <td>
+                          <input
+                          formControlName="noOfMonth"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                        <td>
+                           <input
+                           formControlName="noOfDays"
+                            style="
+                            background-color: #f3f9fe;
+                            padding: 6px;
+                            border-radius: 10px;
+                            "
+                            matInput
+                            type="number"
+                            placeholder=""
+                          /></td>
+                          <td style="display:flex !important;
+                          justify-content:center!important;">
+                            <button
+                            *ngIf="(getFormControls2.controls.length-1)===i"
+                            id="Add"
+                            title="Add"
+                            class="add_btn"
+                            (click)="addRow(i,'greaterThan')"
+                          >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                          <button
+                          style="margin-left: 6px;"
+                            id="delete"
+                            title="Delete"
+                            (click)="deleteRow(i,'greaterThan')"
+                            class="delete_btn mr-2"
+                          >
+                            <i
+                              class="fa fa-trash"
+                              style="color: cornflowerblue"
+                              aria-hidden="true"
+                            ></i>
+                            </button>
+                          </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <!-- <div class="action-container">
+                  <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
+                  <button mat-raised-button [disabled]="normalForm.invalid" type="submit" (click)="submitForm()">Submit</button>
+                </div> -->
+           </div>
+            </mat-tab>
+        </mat-tab-group>
         </div>
         <div class="next-button">
           <button mat-button matStepperNext>Next</button>

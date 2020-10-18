@@ -27,13 +27,6 @@ export class AddSettlementPolicyComponent implements OnInit {
   lstParticular = [];
   lstCalcDay = [];
   lstParameter = [];
-  // lstTableData = [
-  //   {
-  //     parameter: null,
-  //     noOfday: null,
-  //     noOfMonths: null,
-  //   },
-  // ];
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -42,22 +35,6 @@ export class AddSettlementPolicyComponent implements OnInit {
     private serverService: ServerService
   ) {
     // this.dataSource = new MatTableDataSource(this.lstTableData);
-  }
-
-  initiateForm(): FormGroup {
-    return this.formBuilder.group({
-      parameter: ["", Validators.required],
-      noOfDays: [null, Validators.required],
-      noOfMonth: [null, Validators.required],
-    });
-  }
-  get getFormControls() {
-    const control = this.normalForm.get("tableRows") as FormArray;
-    return control;
-  }
-
-  ngAfterOnInit() {
-    this.control = this.normalForm.get("tableRows") as FormArray;
   }
 
   ngOnInit(): void {
@@ -70,9 +47,12 @@ export class AddSettlementPolicyComponent implements OnInit {
       isLessThanFive: [false],
       particulars: [[], Validators.required],
       isIncludeEligibleLeave: [false, Validators.required],
-      tableRows: this.formBuilder.array([]),
+      tableLessThanRows: this.formBuilder.array([]),
+      tableGreaterThanRows: this.formBuilder.array([]),
     });
-    this.addRow();
+    this.addRow("lessThan");
+    this.addRow("greaterThan");
+
     this.serverService
       .getData("api/DropDownBindingAPI/ddlCalculationBasedOn/")
       .subscribe((res: any[]) => {
@@ -97,16 +77,63 @@ export class AddSettlementPolicyComponent implements OnInit {
         this.lstParameter = res["calculationDayList"];
       });
   }
-  addRow() {
-    const control = this.normalForm.get("tableRows") as FormArray;
-    console.log(this.initiateForm(), "initial");
+  mode: boolean;
+  touchedRows: any;
 
-    control.push(this.initiateForm());
+  ngAfterOnInit() {
+    this.control = this.normalForm.get("tableLessThanRows") as FormArray;
+    this.control = this.normalForm.get("tableGreaterThanRows") as FormArray;
   }
 
-  deleteRow(index) {
-    // this.lstTableData.splice(index, 1);
-    const control = this.normalForm.get("tableRows") as FormArray;
-    control.removeAt(index);
+  initiateForm(): FormGroup {
+    return this.formBuilder.group({
+      parameter: ["", Validators.required],
+      noOfMonth: ["", [Validators.required]],
+      noOfDays: ["", [Validators.required]],
+    });
   }
+
+  addRow(type) {
+    if (type === "lessThan") {
+      const control = this.normalForm.get("tableLessThanRows") as FormArray;
+      control.push(this.initiateForm());
+    } else {
+      const control = this.normalForm.get("tableGreaterThanRows") as FormArray;
+      control.push(this.initiateForm());
+    }
+  }
+
+  deleteRow(index: number, type) {
+    if (type === "lessThan") {
+      const control = this.normalForm.get("tableLessThanRows") as FormArray;
+      control.removeAt(index);
+    } else {
+      const control = this.normalForm.get("tableGreaterThanRows") as FormArray;
+      control.removeAt(index);
+    }
+  }
+  saveUserDetails() {
+    console.log(this.normalForm.value);
+  }
+
+  get getFormControls1() {
+    const control = this.normalForm.get("tableLessThanRows") as FormArray;
+    return control;
+  }
+  get getFormControls2() {
+    const control = this.normalForm.get("tableGreaterThanRows") as FormArray;
+    return control;
+  }
+
+  // submitForm() {
+  //   const control = this.normalForm.get("tableLessThanRows") as FormArray;
+  //   this.touchedRows = control.controls
+  //     .filter((row) => row.touched)
+  //     .map((row) => row.value);
+  //   console.log(this.touchedRows);
+  // }
+
+  // toggleTheme() {
+  //   this.mode = !this.mode;
+  // }
 }

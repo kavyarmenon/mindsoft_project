@@ -41,6 +41,13 @@ export const Approutes: Routes = [
             (m) => m.SettlementPolicyModule
           ),
       },
+      {
+        path: "work-policy",
+        loadChildren: () =>
+          import("./work-policy/work-policy.module").then(
+            (m) => m.WorkPolicyModule
+          ),
+      },
     ],
   },
 ];
