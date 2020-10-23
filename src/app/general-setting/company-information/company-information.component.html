@@ -2,7 +2,7 @@
     {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
   </button> -->
 
-<mat-horizontal-stepper [linear]="false" #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
   <mat-step [stepControl]="companyInfoForm">
     <ng-template matStepLabel>Company Info</ng-template>
     <div class="form">

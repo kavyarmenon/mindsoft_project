@@ -64,7 +64,7 @@ export class ListShiftPolicyComponent implements OnInit {
       )
       .subscribe(
         (res) => {
-          swal.fire("Success", res["Status"], "success");
+          swal.fire("Success", "Data Saved Successfully", "success");
           this.searchData();
         },
         (error) => {

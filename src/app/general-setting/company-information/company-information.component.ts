@@ -414,7 +414,7 @@ export class CompanyInformationComponent implements OnInit {
     this.serverService
       .postData("api/CompanyAPI/createCompany/", dctData)
       .subscribe((res: any[]) => {
-        swal.fire("Success", res["Status"], "success");
+        swal.fire("Success", "Data Saved Successfully", "success");
         this.router.navigate(["general-setting/company-info-list/"]);
       });
   }

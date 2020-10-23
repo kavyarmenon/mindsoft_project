@@ -7,17 +7,17 @@ import swal from "sweetalert2";
 import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
-  selector: "app-list-leave-policy",
-  templateUrl: "./list-leave-policy.component.html",
-  styleUrls: ["./list-leave-policy.component.css"],
+  selector: "app-list-work-policy",
+  templateUrl: "./list-work-policy.component.html",
+  styleUrls: ["./list-work-policy.component.css"],
 })
-export class ListLeavePolicyComponent implements OnInit {
+export class ListWorkPolicyComponent implements OnInit {
   data;
   lstTableData = [];
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns = ["policyName", "applicableFrom", "action"];
+  lstDisplayedColumns = ["policyName", "shiftName", "action"];
 
   constructor(
     private serviceObject: ServerService,
@@ -32,12 +32,12 @@ export class ListLeavePolicyComponent implements OnInit {
   }
 
   searchData() {
-    this.serviceObject.getData("api/LeavePolicyAPI/getLeavePolicy/").subscribe(
+    this.serviceObject.getData("api/WorkPolicyAPI/getWorkPolicy/").subscribe(
       (res) => {
         // if (res['status'] == 1)
         // {
 
-        this.data = res["leavePolicyList"];
+        this.data = res["workPolicyList"];
         console.log(this.data, "data");
 
         if (this.data.length > 0) {

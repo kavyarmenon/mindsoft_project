@@ -48,6 +48,13 @@ export const Approutes: Routes = [
             (m) => m.WorkPolicyModule
           ),
       },
+      {
+        path: "proffesional-tax-policy",
+        loadChildren: () =>
+          import(
+            "./proffesional-tax-policy/proffesional-tax-policy.module"
+          ).then((m) => m.ProffesionalTaxPolicyModule),
+      },
     ],
   },
 ];

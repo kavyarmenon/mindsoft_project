@@ -88,6 +88,14 @@ export const ROUTES: RouteInfo[] = [
         extralink: false,
         submenu: [],
       },
+      {
+        path: "/proffesional-tax-policy/add-proffesional-tax-policy",
+        title: "Add ProffesionabTax Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
     ],
   },
   // {

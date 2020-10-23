@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { WorkPolicyRoutingModule } from "./work-policy-routing.module";
-import { AddWorkPolicyComponent } from "./add-work-policy/add-work-policy.component";
+import { ProffesionalTaxPolicyRoutingModule } from "./proffesional-tax-policy-routing.module";
+import { AddProffesionalTaxPolicyComponent } from "./add-proffesional-tax-policy/add-proffesional-tax-policy.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -14,13 +14,12 @@ import { MatButtonModule } from "@angular/material/button";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatStepperModule } from "@angular/material/stepper";
-import { ListWorkPolicyComponent } from './list-work-policy/list-work-policy.component';
 
 @NgModule({
-  declarations: [AddWorkPolicyComponent, ListWorkPolicyComponent],
+  declarations: [AddProffesionalTaxPolicyComponent],
   imports: [
     CommonModule,
-    WorkPolicyRoutingModule,
+    ProffesionalTaxPolicyRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
@@ -36,4 +35,4 @@ import { ListWorkPolicyComponent } from './list-work-policy/list-work-policy.com
     MatStepperModule,
   ],
 })
-export class WorkPolicyModule {}
+export class ProffesionalTaxPolicyModule {}

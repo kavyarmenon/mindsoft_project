@@ -82,43 +82,82 @@ export class AddShiftPolicyComponent implements OnInit {
     this.lstTableData.splice(index, 1);
   }
   saveDetail() {
-    let dctData = {
-      shiftPolicyName: this.shiftPolicy.get("shiftName").value,
-      shiftTypeID: this.shiftPolicy.get("shiftType").value,
-      noOfTiming: this.shiftPolicy.get("noOfTimings").value,
-      fromTime: this.shiftPolicy.get("fromTime").value,
-      toTime: this.shiftPolicy.get("toTime").value,
-      duration: this.shiftPolicy.get("duration").value,
-      bufferTime: this.shiftPolicy.get("bufferTime").value,
-      isBufferForOT: "",
-      lateComing: this.shiftPolicy.get("lateComing").value,
-      earlyLeaving: this.shiftPolicy.get("earlyLeaving").value,
-      allowedBreakTime: this.shiftPolicy.get("allowedBreakTime").value,
-      minWorkingHour: this.shiftPolicy.get("minWorkingHours").value,
-      isConsequenceApplicable: this.shiftPolicy.get("consequenceApplicable")
-        .value,
-      isOTBasedOnMinWorkingHour: this.shiftPolicy.get("overTimeCalcForMinWrkHr")
-        .value,
-      minTimeForOT: this.shiftPolicy.get("minTimeForOverTime").value,
-      weeklyOTLimit: this.shiftPolicy.get("weeklyOtLimit").value,
-      isIncentive: "",
-      ScheduleFrequency: "",
-      ScheduleDay: "",
-      ScheduleTime: "",
-      ShiftSpanFrom: "",
-      ShiftSpanTo: "",
-      ScheduleDayName: "",
-      shiftRotation: "",
-      shiftPolicyList: this.lstTableData,
-    };
-    console.log(dctData, "dctData");
-
-    this.serverService
-      .postData("api/ShiftPolicyAPI/Create/", dctData)
-      .subscribe((res: any[]) => {
-        swal.fire("Success", res["Status"], "success");
-        this.router.navigate(["shift-policy/list-shift-policy/"]);
+    if (!this.shiftPolicy.get("shiftName").value) {
+      this.toastr.error("Enter Policy Name", "Error!");
+      return false;
+    } else if (!this.shiftPolicy.get("shiftType").value) {
+      this.toastr.error("Choose a Shift Type", "Error!");
+      return false;
+    } else if (!this.shiftPolicy.get("fromTime").value) {
+      this.toastr.error("Choose a From Time", "Error!");
+      return false;
+    } else if (!this.shiftPolicy.get("toTime").value) {
+      this.toastr.error("Choose a To Time", "Error!");
+      return false;
+    } else if (!this.shiftPolicy.get("minWorkingHours").value) {
+      this.toastr.error("Choose a Min Working Hours", "Error!");
+      return false;
+    } else {
+      let HasError = false;
+      this.lstTableData.forEach((element, index) => {
+        let rowNo = index + 1;
+        if (element.shiftName == "") {
+          this.toastr.error("Enter Shift Name for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        } else if (element.fromTime == null) {
+          this.toastr.error("Enter a From Time  for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        } else if (element.toTime == null) {
+          this.toastr.error("Enter a To Time for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        } else if (element.shiftType == null) {
+          this.toastr.error("Choose Shift Type for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        }
       });
+      let dctData = {
+        shiftPolicyName: this.shiftPolicy.get("shiftName").value,
+        shiftTypeID: this.shiftPolicy.get("shiftType").value,
+        noOfTiming: this.shiftPolicy.get("noOfTimings").value,
+        fromTime: this.shiftPolicy.get("fromTime").value,
+        toTime: this.shiftPolicy.get("toTime").value,
+        duration: this.shiftPolicy.get("duration").value,
+        bufferTime: this.shiftPolicy.get("bufferTime").value,
+        isBufferForOT: "",
+        lateComing: this.shiftPolicy.get("lateComing").value,
+        earlyLeaving: this.shiftPolicy.get("earlyLeaving").value,
+        allowedBreakTime: this.shiftPolicy.get("allowedBreakTime").value,
+        minWorkingHour: this.shiftPolicy.get("minWorkingHours").value,
+        isConsequenceApplicable: this.shiftPolicy.get("consequenceApplicable")
+          .value,
+        isOTBasedOnMinWorkingHour: this.shiftPolicy.get(
+          "overTimeCalcForMinWrkHr"
+        ).value,
+        minTimeForOT: this.shiftPolicy.get("minTimeForOverTime").value,
+        weeklyOTLimit: this.shiftPolicy.get("weeklyOtLimit").value,
+        isIncentive: "",
+        ScheduleFrequency: "",
+        ScheduleDay: "",
+        ScheduleTime: "",
+        ShiftSpanFrom: "",
+        ShiftSpanTo: "",
+        ScheduleDayName: "",
+        shiftRotation: "",
+        shiftPolicyList: this.lstTableData,
+      };
+      if (!HasError) {
+        this.serverService
+          .postData("api/ShiftPolicyAPI/Create/", dctData)
+          .subscribe((res: any[]) => {
+            swal.fire("Success", "Data Saved Successfully", "success");
+            this.router.navigate(["shift-policy/list-shift-policy/"]);
+          });
+      }
+    }
   }
   cancel() {}
 }
