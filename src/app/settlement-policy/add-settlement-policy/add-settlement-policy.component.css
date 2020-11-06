@@ -49,3 +49,6 @@ tr {
   padding: 20px 22px;
   margin-right: 12px;
 }
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}

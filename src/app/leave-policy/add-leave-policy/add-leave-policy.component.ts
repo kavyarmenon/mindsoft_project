@@ -91,66 +91,63 @@ export class AddLeavePolicyComponent implements OnInit {
     this.lstTableData.splice(index, 1);
   }
   saveDetail() {
-    let dctData = {
-      Status: "sample string 1",
-      leavePolicyInfo: {
-        leavePolicyID: null,
-        leavePolicyName: this.leavePolicy.get("policyName").value,
-        applicableFromstr: this.leavePolicy.get("applicableFrom").value,
-        applicableFrom: moment(this.leavePolicy.get("applicableFrom").value)
-          .format("DD/MM/YYYY")
-          .toString(),
-      },
-      leavePolicyDetail: [],
-      //   {
-      //     SerialNo: 1,
-      //     LeavePolicyID: 2,
-      //     LeaveTypeID: 3,
-      //     NoOfLeave: 4.0,
-      //     MonthLeave: 5.0,
-      //     CarryForwardLeave: 6.0,
-      //     EncashDays: 7.0,
-      //     Period: 8.0,
-      //   },
-      //   {
-      //     SerialNo: 1,
-      //     LeavePolicyID: 2,
-      //     LeaveTypeID: 3,
-      //     NoOfLeave: 4.0,
-      //     MonthLeave: 5.0,
-      //     CarryForwardLeave: 6.0,
-      //     EncashDays: 7.0,
-      //     Period: 8.0,
-      //   },
-      // ],
-      leavePolicyDetailInfo: {},
-      //   SerialNo: 1,
-      //   LeavePolicyID: 2,
-      //   LeaveTypeID: 3,
-      //   NoOfLeave: 4.0,
-      //   MonthLeave: 5.0,
-      //   CarryForwardLeave: 6.0,
-      //   EncashDays: 7.0,
-      //   Period: 8.0,
-      // },
-    };
-    this.lstTableData.forEach((element) => {
-      let dct = {};
-      dct["LeaveTypeID"] = element.leaveType;
-      dct["NoOfLeave"] = element.days;
-      dct["CarryForwardLeave"] = element.carryForward;
-      dct["EncashDays"] = element.encDays;
-      dct["Period"] = element.peroid;
-      dctData.leavePolicyDetail.push(dct);
-    });
-    console.log(dctData, "dctData");
-
-    this.serverService
-      .postData("api/LeavePolicyAPI/Create/", dctData)
-      .subscribe((res: any[]) => {
-        swal.fire("Success", res["Status"], "success");
-        this.router.navigate(["leave-policy/list-leave-policy/"]);
+    if (!this.leavePolicy.get("policyName").value) {
+      this.toastr.error("Enter Policy Name", "Error!");
+      return false;
+    } else if (this.leavePolicy.get("applicableFrom").value === "") {
+      this.toastr.error("Choose a applicable from date", "Error!");
+      return false;
+    } else {
+      let HasError = false;
+      this.lstTableData.forEach((element, index) => {
+        let rowNo = index + 1;
+        if (element.leaveType == null) {
+          this.toastr.error("Choose a Leave type for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        } else if (element.days == null) {
+          this.toastr.error("Enter a Days for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        } else if (element.monthly == null) {
+          this.toastr.error("Enter a Mothly for row " + rowNo, "Error!");
+          HasError = true;
+          return false;
+        }
       });
+      let dctData = {
+        Status: "sample string 1",
+        leavePolicyInfo: {
+          leavePolicyID: null,
+          leavePolicyName: this.leavePolicy.get("policyName").value,
+          applicableFromstr: this.leavePolicy.get("applicableFrom").value,
+          applicableFrom: moment(this.leavePolicy.get("applicableFrom").value)
+            .format("DD/MM/YYYY")
+            .toString(),
+        },
+        leavePolicyDetail: [],
+        leavePolicyDetailInfo: {},
+      };
+      this.lstTableData.forEach((element) => {
+        let dct = {};
+        dct["LeaveTypeID"] = element.leaveType;
+        dct["NoOfLeave"] = element.days;
+        dct["CarryForwardLeave"] = element.carryForward;
+        dct["EncashDays"] = element.encDays;
+        dct["Period"] = element.peroid;
+        dct["MonthLeave"] = element.monthly;
+
+        dctData.leavePolicyDetail.push(dct);
+      });
+      if (!HasError) {
+        this.serverService
+          .postData("api/LeavePolicyAPI/Create/", dctData)
+          .subscribe((res: any[]) => {
+            swal.fire("Success", "Data Saved Successfully", "success");
+            this.router.navigate(["leave-policy/list-leave-policy/"]);
+          });
+      }
+    }
   }
   cancel() {}
 }

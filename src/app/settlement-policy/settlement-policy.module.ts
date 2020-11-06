@@ -16,7 +16,6 @@ import { SettlementPolicyRoutingModule } from "./settlement-policy-routing.modul
 import { AddSettlementPolicyComponent } from "./add-settlement-policy/add-settlement-policy.component";
 import { ListSettlementPolicyComponent } from "./list-settlement-policy/list-settlement-policy.component";
 import { EditSettlementPolicyComponent } from "./edit-settlement-policy/edit-settlement-policy.component";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
@@ -41,7 +40,6 @@ import { MatIconModule } from "@angular/material/icon";
     ReactiveFormsModule,
     MatStepperModule,
     MatTabsModule,
-    FlexLayoutModule,
     MatIconModule,
   ],
 })

@@ -2,7 +2,7 @@
     {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
   </button> -->
 
-<mat-horizontal-stepper [linear]="false" #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
   <mat-step [stepControl]="companyInfoForm">
     <ng-template matStepLabel>Company Info</ng-template>
     <div class="form">
@@ -732,6 +732,7 @@
             [(ngModel)]="intWrkDays"
             matInput
             type="number"
+            OnlyNumber="true"
             name=""
             id=""
           />
@@ -787,6 +788,7 @@
                 [(ngModel)]="item.acno"
                 name="acno_{{ i }}"
                 type="number"
+                OnlyNumber="true"
                 #bankName
               />
               <!-- <mat-error *ngIf="bankInfoForm.controls['acno'].errors"

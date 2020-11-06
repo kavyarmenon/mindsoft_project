@@ -17,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: [
       {
-        path: "/general-setting/company-info",
+        path: "/general-setting/company-info-list",
         title: "Company Information",
         icon: "mdi mdi-adjust",
         class: "",
@@ -25,32 +25,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: "/general-setting/company-info-list",
-        title: "Company List",
-        icon: "mdi mdi-adjust",
-        class: "",
-        extralink: false,
-        submenu: [],
-      },
-      {
-        path: "/leave-policy/add-leave-policy",
-        title: "Add Leave Policy",
-        icon: "mdi mdi-adjust",
-        class: "",
-        extralink: false,
-        submenu: [],
-      },
-      {
         path: "/leave-policy/list-leave-policy",
-        title: "List Leave Policy",
-        icon: "mdi mdi-adjust",
-        class: "",
-        extralink: false,
-        submenu: [],
-      },
-      {
-        path: "/shift-policy/add-shift-policy",
-        title: "Add Shift Policy",
+        title: "Leave Policy",
         icon: "mdi mdi-adjust",
         class: "",
         extralink: false,
@@ -58,15 +34,7 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: "/shift-policy/list-shift-policy",
-        title: "List Shift Policy",
-        icon: "mdi mdi-adjust",
-        class: "",
-        extralink: false,
-        submenu: [],
-      },
-      {
-        path: "/settlement-policy/add-settlement-policy",
-        title: "Add Settlement Policy",
+        title: "Shift Policy",
         icon: "mdi mdi-adjust",
         class: "",
         extralink: false,
@@ -74,15 +42,89 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: "/settlement-policy/list-settlement-policy",
-        title: "List Settlement Policy",
+        title: "Settlement Policy",
         icon: "mdi mdi-adjust",
         class: "",
         extralink: false,
         submenu: [],
       },
       {
-        path: "/work-policy/add-work-policy",
-        title: "Add Work Policy",
+        path: "/work-policy/list-work-policy",
+        title: "Work Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/proffesional-tax-policy/add-proffesional-tax-policy",
+        title: "ProffesionabTax Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/encash-policy/list-encash-policy",
+        title: "Encashment Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/overtime-policy/list-overtime-policy",
+        title: "Overtime Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/holiday-policy/list-holiday-policy",
+        title: "Holiday Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/absent-policy/list-absent-policy",
+        title: "Absent Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+
+      {
+        path: "/pf-policy/list-pf-policy",
+        title: "PF Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/deduction-policy/list-deduction-policy",
+        title: "Deduction Policy",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+
+      {
+        path: "/salary-template/list-salary-template",
+        title: "Salary Template",
+        icon: "mdi mdi-adjust",
+        class: "",
+        extralink: false,
+        submenu: [],
+      },
+      {
+        path: "/holiday-calender/holiday-calender-container",
+        title: "Holiday Calendar",
         icon: "mdi mdi-adjust",
         class: "",
         extralink: false,
@@ -940,27 +982,5 @@ export const ROUTES: RouteInfo[] = [
   // 			path: '',
   // 			title: 'Second Child',
   // 			icon: 'mdi mdi-octagram',
-  // 			class: 'has-arrow',
-  // 			extralink: false,
-  // 			submenu: [
-  // 				{
-  // 					path: '',
-  // 					title: 'Third 1.1',
-  // 					icon: 'mdi mdi-playlist-plus',
-  // 					class: '',
-  // 					extralink: false,
-  // 					submenu: []
-  // 				},
-  // 				{
-  // 					path: '',
-  // 					title: 'Third 1.2',
-  // 					icon: 'mdi mdi-playlist-plus',
-  // 					class: '',
-  // 					extralink: false,
-  // 					submenu: []
-  // 				}
-  // 			]
-  // 		}
-  // 	]
-  // }
+  //
 ];

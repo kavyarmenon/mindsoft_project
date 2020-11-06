@@ -14,6 +14,7 @@ import { ShiftPolicyRoutingModule } from "./shift-policy-routing.module";
 import { AddShiftPolicyComponent } from "./add-shift-policy/add-shift-policy.component";
 import { ListShiftPolicyComponent } from "./list-shift-policy/list-shift-policy.component";
 import { EditShiftPolicyComponent } from "./edit-shift-policy/edit-shift-policy.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { EditShiftPolicyComponent } from "./edit-shift-policy/edit-shift-policy.
     FormsModule,
     MatButtonModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
 })
 export class ShiftPolicyModule {}

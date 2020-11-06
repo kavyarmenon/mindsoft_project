@@ -48,6 +48,60 @@ export const Approutes: Routes = [
             (m) => m.WorkPolicyModule
           ),
       },
+      {
+        path: "proffesional-tax-policy",
+        loadChildren: () =>
+          import(
+            "./proffesional-tax-policy/proffesional-tax-policy.module"
+          ).then((m) => m.ProffesionalTaxPolicyModule),
+      },
+      {
+        path: "encash-policy",
+        loadChildren: () =>
+          import("./encash-policy/encash-policy.module").then(
+            (m) => m.EncashPolicyModule
+          ),
+      },
+      {
+        path: "overtime-policy",
+        loadChildren: () =>
+          import("./overtime-policy/overtime-policy.module").then(
+            (m) => m.OvertimePolicyModule
+          ),
+      },
+      {
+        path: "holiday-policy",
+        loadChildren: () =>
+          import("./holiday-policy/holiday-policy.module").then(
+            (m) => m.HolidayPolicyModule
+          ),
+      },
+      {
+        path: "absent-policy",
+        loadChildren: () =>
+          import("./absent-policy/absent-policy.module").then(
+            (m) => m.AbsentPolicyModule
+          ),
+      },
+      {
+        path: "pf-policy",
+        loadChildren: () =>
+          import("./pf-policy/pf-policy.module").then((m) => m.PfPolicyModule),
+      },
+      {
+        path: "deduction-policy",
+        loadChildren: () =>
+          import("./deduction-policy/deduction-policy.module").then(
+            (m) => m.DeductionPolicyModule
+          ),
+      },
+      {
+        path: "salary-template",
+        loadChildren: () =>
+          import("./salary-template/salary-template.module").then(
+            (m) => m.SalaryTemplateModule
+          ),
+      },
     ],
   },
 ];

@@ -1,18 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import { MatTableDataSource } from "@angular/material/table";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ServerService } from "src/app/server.service";
-import swal from "sweetalert2";
-import * as moment from "moment";
 import { MatTabChangeEvent } from "@angular/material/tabs";
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-add-work-policy",
@@ -113,23 +106,17 @@ export class AddWorkPolicyComponent implements OnInit {
   ];
   lstLop = [];
   lstCasual = [];
-
+  policyName: "";
+  generalShift: null;
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     public router: Router,
     private toastr: ToastrService,
     private serverService: ServerService
-  ) {
-    // this.dataSource = new MatTableDataSource(this.lstTableData);
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.workPolicy = this.formBuilder.group({
-      policyName: ["", Validators.required],
-      generalShift: ["", Validators.required],
-    });
-
     this.serverService
       .getData("api/DropDownBindingAPI/ddlshift/")
       .subscribe((res: any[]) => {
@@ -137,15 +124,10 @@ export class AddWorkPolicyComponent implements OnInit {
       });
 
     this.serverService
-      .getData("api/DropDownBindingAPI/ddllop/")
+      .getData("api/DropDownBindingAPI/ddlDayTypeList/")
       .subscribe((res: any[]) => {
-        this.lstLop = res["shiftList"];
-      });
-
-    this.serverService
-      .getData("api/DropDownBindingAPI/ddlcasual/")
-      .subscribe((res: any[]) => {
-        this.lstCasual = res["shiftList"];
+        this.lstLop = res["dayTypeList"];
+        this.lstCasual = res["dayTypeList"];
       });
   }
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
@@ -154,18 +136,29 @@ export class AddWorkPolicyComponent implements OnInit {
 
   public nextStep() {
     let isValid = true;
-    for (let i = 0; i < this.lstPolicyDetails.length; i++) {
-      let rowNo = i + 1;
-      if (this.lstPolicyDetails[i].shiftId === null) {
-        this.toastr.error("Select a Shift Type For Row " + rowNo, "Error!");
-        this.isFillTab1 = false;
-        isValid = false;
-        break;
+    if (!this.policyName) {
+      this.toastr.error("Enter Policy Name", "Error!");
+      return false;
+    } else if (!this.generalShift) {
+      this.toastr.error("Choose a General Shift", "Error!");
+      return false;
+    } else {
+      for (let i = 0; i < this.lstPolicyDetails.length; i++) {
+        let rowNo = i + 1;
+        if (
+          this.lstPolicyDetails[i].workingDay &&
+          this.lstPolicyDetails[i].shiftId === null
+        ) {
+          this.toastr.error("Select a Shift Type For Row " + rowNo, "Error!");
+          this.isFillTab1 = false;
+          isValid = false;
+          break;
+        }
       }
-    }
-    if (isValid) {
-      this.isFillTab1 = false;
-      this.selectedIndex += 1;
+      if (isValid) {
+        this.isFillTab1 = false;
+        this.selectedIndex += 1;
+      }
     }
   }
 
@@ -174,9 +167,11 @@ export class AddWorkPolicyComponent implements OnInit {
   }
   saveDetail() {
     let dctData = {
-      workPolicyID: null,
-      workPolicyName: this.workPolicy.get("policyName").value,
-      generalShiftID: this.workPolicy.get("generalShift").value,
+      workPolicyInfo: {
+        workPolicyID: null,
+        workPolicyName: this.policyName,
+        generalShiftID: this.generalShift,
+      },
       alternativeOffDay: null,
       ShiftName: null,
       workPolicyList: [],
@@ -186,10 +181,12 @@ export class AddWorkPolicyComponent implements OnInit {
 
     this.lstPolicyDetails.forEach((element) => {
       let dct = {};
-      dct["DayID"] = element.dayId;
-      dct["WorkPolicyID"] = element.workingDay;
-      dct["ShiftID"] = element.dayId;
-      dctData.workPolicyDetailList.push(dct);
+      if (element.workingDay) {
+        dct["DayID"] = element.dayId;
+        dct["WorkPolicyID"] = null;
+        dct["ShiftID"] = element.dayId;
+        dctData.workPolicyDetailList.push(dct);
+      }
     });
 
     this.lstPolicyConsequences.forEach((element) => {
@@ -206,7 +203,10 @@ export class AddWorkPolicyComponent implements OnInit {
     this.serverService
       .postData("api/WorkPolicyAPI/Create/", dctData)
       .subscribe((res: any[]) => {
-        this.lstGeneralShift = res["shiftList"];
+        if (res["Status"]) {
+          swal.fire("Success", "Data Saved Successfully", "success");
+          this.router.navigate(["work-policy/list-work-policy/"]);
+        }
       });
   }
 }

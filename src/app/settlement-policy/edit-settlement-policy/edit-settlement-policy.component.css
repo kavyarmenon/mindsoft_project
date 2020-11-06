@@ -1,0 +1,54 @@
+.header {
+  background-color: #f3f9fe;
+  font-weight: bolder;
+  font-size: 14px;
+}
+.backgroundColor {
+  background-color: #f3f9fe;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+th {
+  padding: 16px;
+  background-color: #f3f9fe;
+  width: 200px;
+  color: black;
+  text-align: center;
+}
+td {
+  padding: 16px;
+  background-color: white;
+  width: 200px;
+}
+tr {
+  padding: 16px;
+}
+.next-button {
+  margin-top: 36px;
+}
+.add_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.delete_btn {
+  background: none;
+  border: none;
+  color: #7cc578 !important;
+  cursor: pointer;
+  padding: 0px !important;
+}
+.day-bax {
+  background: #fff;
+  float: left;
+  padding: 20px 22px;
+  margin-right: 12px;
+}
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}

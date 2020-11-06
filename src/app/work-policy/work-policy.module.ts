@@ -14,9 +14,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatStepperModule } from "@angular/material/stepper";
+import { ListWorkPolicyComponent } from './list-work-policy/list-work-policy.component';
+import { EditWorkPolicyComponent } from './edit-work-policy/edit-work-policy.component';
 
 @NgModule({
-  declarations: [AddWorkPolicyComponent],
+  declarations: [AddWorkPolicyComponent, ListWorkPolicyComponent, EditWorkPolicyComponent],
   imports: [
     CommonModule,
     WorkPolicyRoutingModule,
