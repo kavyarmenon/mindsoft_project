@@ -1,13 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import { MatTableDataSource } from "@angular/material/table";
+import { FormBuilder } from "@angular/forms";
 import { MatTabChangeEvent } from "@angular/material/tabs";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
@@ -153,6 +146,8 @@ export class AddSettlementPolicyComponent implements OnInit {
     }
   }
   public nextStepOfMatTab(type) {
+    console.log("nextStepOfMatTab", type);
+
     if (type === "normal") {
       let isValid = true;
       if (!this.policyName) {
@@ -230,19 +225,10 @@ export class AddSettlementPolicyComponent implements OnInit {
     }
   }
   nextStepOfStepper(stepper: MatStepper, type) {
+    console.log("nextStepOfStepper", type);
+
     if (type === "normal") {
       let isValid = true;
-      if (!this.calcBasedOnTermination) {
-        this.toastr.error("Select a Calculation Based on", "Error!");
-        this.isFillTab1 = false;
-        isValid = false;
-        return false;
-      } else if (!this.calcDayTermination) {
-        this.toastr.error("Select a Calculation Day", "Error!");
-        this.isFillTab1 = false;
-        isValid = false;
-        return false;
-      }
       for (let i = 0; i < this.lstGreaterThanNormal.length; i++) {
         let rowNo = i + 1;
         if (this.lstGreaterThanNormal[i].parameter === null) {
@@ -267,6 +253,18 @@ export class AddSettlementPolicyComponent implements OnInit {
       }
     } else if (type === "termination") {
       let isValid = true;
+
+      if (!this.calcBasedOnTermination) {
+        this.toastr.error("Select a Calculation Based on", "Error!");
+        this.isFillTab1 = false;
+        isValid = false;
+        return false;
+      } else if (!this.calcDayTermination) {
+        this.toastr.error("Select a Calculation Day", "Error!");
+        this.isFillTab1 = false;
+        isValid = false;
+        return false;
+      }
       for (let i = 0; i < this.lstGreaterThanTermination.length; i++) {
         let rowNo = i + 1;
         if (this.lstGreaterThanTermination[i].parameter === null) {
@@ -314,6 +312,7 @@ export class AddSettlementPolicyComponent implements OnInit {
       gratuityPolicyFiveYr: [],
       gratuityPolicyTer: [],
       gratuityPolicyFiveYrTer: [],
+      excludedIDList: [],
     };
     //Normal
     this.lstLessThanNormal.forEach((element) => {

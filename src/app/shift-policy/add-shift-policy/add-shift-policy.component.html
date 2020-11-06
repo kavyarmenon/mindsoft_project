@@ -1,6 +1,6 @@
 <div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
   <div class="card-body">
-    <h2 style="color: black;" class="card-title">Shift Policy</h2>
+    <h3 style="color: black;" class="card-title">Add Shift Policy</h3>
   </div>
   <form  [formGroup]="shiftPolicy" style="padding: 15px">
    <div class="row">
@@ -62,123 +62,43 @@
    <h4 style="margin-left: 3px;color: #d10000;margin-top: 25px;margin-bottom: 25px;"><b>Shift Timing</b></h4>
    <div class="row">
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>From Time</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['fromTime']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['fromTime'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['fromTime'].errors.required"
-          >
-            You must enter From Time.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['fromTime']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>Late Coming</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['lateComing']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['lateComing'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['lateComing'].errors.required"
-          >
-            You must enter Late Coming.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['lateComing']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>To Time</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['toTime']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['toTime'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['toTime'].errors.required"
-          >
-            You must enter To Time.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['toTime']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>Early Leaving</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['earlyLeaving']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['earlyLeaving'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['earlyLeaving'].errors.required"
-          >
-            You must enter Early Leaving.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['earlyLeaving']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>Duration</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['duration']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['duration'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['duration'].errors.required"
-          >
-            You must enter Duration.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['duration']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>Allowed Break Time</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['allowedBreakTime']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['allowedBreakTime'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['allowedBreakTime'].errors.required"
-          >
-            You must enter Allowed Break Time.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['allowedBreakTime']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>Buffer Time</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['earlyLeaving']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['earlyLeaving'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['earlyLeaving'].errors.required"
-          >
-            You must enter Buffer Time.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['earlyLeaving']"></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-        <mat-form-field appearance="outline">
           <mat-label>Min. Working Hours</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['minWorkingHours']"
-          type="text" />
-          <mat-error *ngIf="shiftPolicy.controls['minWorkingHours'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['minWorkingHours'].errors.required"
-          >
-            You must enter Min. Working Hours.</span
-          >
-        </mat-error>
-        </mat-form-field>
+          <ngb-timepicker  [formControl]="shiftPolicy.controls['minWorkingHours']"></ngb-timepicker>
       </div>
     </div>
     <div class="col-md-6">
@@ -199,33 +119,13 @@
   </div>
    <div class="row">
     <div class="col-md-6">
-      <mat-form-field appearance="outline">
         <mat-label>Min. Time for Over Time</mat-label>
-        <input matInput [formControl]="shiftPolicy.controls['minTimeForOverTime']"
-        type="text" />
-        <mat-error *ngIf="shiftPolicy.controls['minTimeForOverTime'].errors"
-        ><span
-          *ngIf="shiftPolicy.controls['minTimeForOverTime'].errors.required"
-        >
-          You must enter Min. Time for Over Time.</span
-        >
-      </mat-error>
-      </mat-form-field>
+        <ngb-timepicker  [formControl]="shiftPolicy.controls['minTimeForOverTime']"></ngb-timepicker>
     </div>
 
     <div class="col-md-6">
-      <mat-form-field appearance="outline">
         <mat-label>Weekly OT Limit (Hrs)</mat-label>
-        <input matInput [formControl]="shiftPolicy.controls['weeklyOtLimit']"
-        type="text" />
-        <mat-error *ngIf="shiftPolicy.controls['weeklyOtLimit'].errors"
-        ><span
-          *ngIf="shiftPolicy.controls['weeklyOtLimit'].errors.required"
-        >
-          You must enter Weekly OT Limit(Hrs).</span
-        >
-      </mat-error>
-      </mat-form-field>
+        <ngb-timepicker  [formControl]="shiftPolicy.controls['weeklyOtLimit']"></ngb-timepicker>
     </div>
    </div>
   </form>
@@ -263,6 +163,7 @@
                 "
                 matInput
                 type="number"
+                OnlyNumber="true"
                 placeholder=""
               /></td>
             <td>
@@ -275,6 +176,7 @@
                 "
                 matInput
                 type="number"
+                OnlyNumber="true"
                 placeholder=""
               /></td>
             <td>
@@ -287,6 +189,7 @@
                 "
                 matInput
                 type="number"
+                OnlyNumber="true"
                 placeholder=""
               />
              </td>

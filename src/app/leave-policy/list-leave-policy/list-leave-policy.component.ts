@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import * as moment from "moment";
 import { ServerService } from "../../server.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
@@ -78,7 +77,7 @@ export class ListLeavePolicyComponent implements OnInit {
       )
       .subscribe(
         (res) => {
-          swal.fire("Success", "Data Saved Successfully", "success");
+          swal.fire("Success", "Delete Successfully", "success");
           this.searchData();
         },
         (error) => {

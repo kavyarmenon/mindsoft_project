@@ -51,20 +51,19 @@ export class ListShiftPolicyComponent implements OnInit {
       }
     );
   }
-
   editCompany(item) {
-    localStorage.setItem("leavePolicyID", item.leavePolicyID);
-    this.router.navigate(["leave-policy/edit-leave-policy/"]);
+    localStorage.setItem("shiftPolicyID", item.shiftPolicyID);
+    this.router.navigate(["shift-policy/edit-shift-policy/"]);
   }
   deleteCompany(item) {
     this.serviceObject
       .getData(
-        "apiLeavePolicyAPI/DeleteLeavePolicy/?leavePolicyID=" +
-          item.leavePolicyID
+        "api/ShiftPolicyAPI/DeleteShiftPolicy/shiftPolicyID=" +
+          item.shiftPolicyID
       )
       .subscribe(
         (res) => {
-          swal.fire("Success", "Data Saved Successfully", "success");
+          swal.fire("Success", "Delete Successfully", "success");
           this.searchData();
         },
         (error) => {

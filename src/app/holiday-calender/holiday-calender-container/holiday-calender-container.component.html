@@ -1,0 +1,16 @@
+<pre>
+  {{appointments|json}}
+  </pre>
+  <app-calender [appointments]="appointments" 
+    (requestNewAppointment)="onRequestNewAppointment($event)"
+    (requestUpdateAppointment)="onRequestUpdateAppointment($event)"
+    (appointmentUpdated)="onAppointmentUpdated($event)">
+  </app-calender>
+  <app-holiday-details
+    *ngIf="appointmentDetail" 
+    [isNew]="isNew" 
+    [appointment]="appointmentDetail" 
+    (add)="onAdd($event)"
+    (update)="onUpdate($event)"
+    (close)="onCloseAppointmentDetail()">
+  </app-holiday-details>

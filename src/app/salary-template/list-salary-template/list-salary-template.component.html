@@ -1,0 +1,68 @@
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px;padding: 23px;">
+  <div class="row">
+    <h3  style="color: black;" class="card-title">Salary Template List</h3>
+    <div style="margin-left: 72%;" ><button  type="button"  mat-raised-button color="primary" [routerLink]="['/salary-template/add-salary-template/']">Add</button></div>
+  </div>
+</div>
+
+<div class="card" *ngIf="blnShowData">
+  <div class="card-body">
+    <div class="example-container mat-elevation-z8 mt-3">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="policyName">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef
+            > Policy Name</mat-header-cell
+          >
+          <mat-cell *matCellDef="let row" class="minwidth10"
+            >{{ row.leavePolicyName }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="applicableFrom">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef>
+            Applicable From</mat-header-cell
+          >
+          <mat-cell *matCellDef="let row" class="minwidth10"
+            >{{ row.applicableFrom }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              id="edit"
+              title="Edit"
+              class="edit_btn"
+              (click)="editCompany(row)"
+            >
+              <i class="fa fa-edit" aria-hidden="true"></i>
+            </button>
+            <button
+              id="delete"
+              title="Delete"
+              (click)="deleteCompany(row)"
+              class="delete_btn mr-2"
+            >
+              <i
+                class="fa fa-trash"
+                style="color: cornflowerblue"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="lstDisplayedColumns"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: lstDisplayedColumns; let i = index"
+        >
+        </mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>
+
+<div class="card nodata" *ngIf="!blnShowData">
+  <h5>NO DATA FOUND</h5>
+</div>

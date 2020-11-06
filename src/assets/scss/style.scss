@@ -1,7 +1,8 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
+/* Add application styles & imports to this file! */
+@import "~fullcalendar/dist/fullcalendar.css";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -19,7 +20,11 @@ $nice-admin-angular-accent: mat-palette($mat-pink, A200, A100, A400);
 $nice-admin-angular-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$nice-admin-angular-theme: mat-light-theme($nice-admin-angular-primary, $nice-admin-angular-accent, $nice-admin-angular-warn);
+$nice-admin-angular-theme: mat-light-theme(
+  $nice-admin-angular-primary,
+  $nice-admin-angular-accent,
+  $nice-admin-angular-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -32,39 +37,39 @@ Author: Niravjoshi / Wrappixel
 File: scss
 */
 
-@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900");
 //(Required file)
-@import 'variable';
+@import "variable";
 
 //Theme colors
-@import 'theme-colors/dark-theme';
+@import "theme-colors/dark-theme";
 
 // Import Bootstrap source files (Required file)
 @import "bootstrap/bootstrap";
 
 //This is for the components (Required file)
-@import 'components';
+@import "components";
 
 //This is for the pages (if you are not using some pages you can remove that style from pages folder)
-@import 'pages';
+@import "pages";
 
 //This is for the widgets (Required file)
-@import 'widgets/widgets';
+@import "widgets/widgets";
 
 //This is for the responsive (Required file)
-@import 'responsive';
+@import "responsive";
 
 //In This scss you can write your scss
-@import 'custom';
+@import "custom";
 
 //This is for the icons (Required file)
-@import 'icons/font-awesome/css/fontawesome-all.css';
-@import 'icons/simple-line-icons/css/simple-line-icons.css';
-@import 'icons/weather-icons/css/weather-icons.min.css';
-@import 'icons/themify-icons/themify-icons.css';
-@import 'icons/flag-icon-css/flag-icon.min.css';
+@import "icons/font-awesome/css/fontawesome-all.css";
+@import "icons/simple-line-icons/css/simple-line-icons.css";
+@import "icons/weather-icons/css/weather-icons.min.css";
+@import "icons/themify-icons/themify-icons.css";
+@import "icons/flag-icon-css/flag-icon.min.css";
 @import "icons/material-design-iconic-font/css/materialdesignicons.min.css";
 @import "icons/crypto-icons/cryptocoins.css";
 
 // this is for the perfect scrollbar
-@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";

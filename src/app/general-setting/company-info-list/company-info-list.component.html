@@ -1,6 +1,7 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
-  <div class="card-body">
-    <h2 style="color: black;" class="card-title">Company Information List</h2>
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px;padding: 23px;">
+  <div class="row">
+    <h3  style="color: black;" class="card-title">Company Information List</h3>
+    <div style="margin-left: 70%;" ><button  type="button"  mat-raised-button color="primary" [routerLink]="['/general-setting/company-info/']">Add</button></div>
   </div>
 </div>
 <div class="card" *ngIf="blnShowData">

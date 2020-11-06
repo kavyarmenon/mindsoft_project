@@ -67,18 +67,17 @@ export class ListWorkPolicyComponent implements OnInit {
   }
 
   editCompany(item) {
-    localStorage.setItem("leavePolicyID", item.leavePolicyID);
-    this.router.navigate(["leave-policy/edit-leave-policy/"]);
+    localStorage.setItem("workPolicyID", item.workPolicyID);
+    this.router.navigate(["work-policy/edit-work-policy/"]);
   }
   deleteCompany(item) {
     this.serviceObject
       .getData(
-        "apiLeavePolicyAPI/DeleteLeavePolicy/?leavePolicyID=" +
-          item.leavePolicyID
+        "api/WorkPolicyAPI/DeleteWorkPolicy?workPolicyID=" + item.workPolicyID
       )
       .subscribe(
         (res) => {
-          swal.fire("Success", "Data Saved Successfully", "success");
+          swal.fire("Success", "Data Deleted Successfully", "success");
           this.searchData();
         },
         (error) => {

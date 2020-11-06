@@ -135,6 +135,8 @@ export class AddLeavePolicyComponent implements OnInit {
         dct["CarryForwardLeave"] = element.carryForward;
         dct["EncashDays"] = element.encDays;
         dct["Period"] = element.peroid;
+        dct["MonthLeave"] = element.monthly;
+
         dctData.leavePolicyDetail.push(dct);
       });
       if (!HasError) {
