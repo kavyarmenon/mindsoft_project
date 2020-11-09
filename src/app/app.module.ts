@@ -25,9 +25,6 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { MatTableModule } from "@angular/material/table";
-import { HolidayCalenderContainerComponent } from './holiday-calender/holiday-calender-container/holiday-calender-container.component';
-import { CalenderComponent } from './holiday-calender/calender/calender.component';
-import { HolidayDetailsComponent } from './holiday-calender/holiday-details/holiday-details.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -45,9 +42,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // NavigationComponent,
     BreadcrumbComponent,
     SidebarComponent,
-    HolidayCalenderContainerComponent,
-    CalenderComponent,
-    HolidayDetailsComponent,
   ],
   imports: [
     CommonModule,

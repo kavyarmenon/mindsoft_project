@@ -123,7 +123,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: "/holiday-calender/holiday-calender-container",
+        path: "/holiday-calendar/calendar",
         title: "Holiday Calendar",
         icon: "mdi mdi-adjust",
         class: "",

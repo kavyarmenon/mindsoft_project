@@ -102,6 +102,13 @@ export const Approutes: Routes = [
             (m) => m.SalaryTemplateModule
           ),
       },
+      {
+        path: "holiday-calendar",
+        loadChildren: () =>
+          import("./holiday-calendar/holiday-calendar.module").then(
+            (m) => m.HolidayCalendarModule
+          ),
+      },
     ],
   },
 ];
