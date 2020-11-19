@@ -42,7 +42,8 @@ export class AddSettlementPolicyComponent implements OnInit {
       noOfDays: null,
     },
   ];
-  particularsId;
+  particularsIdNormal;
+  particularsIdTermination;
   lstCalcBasedOn = [];
   lstParticular = [];
   lstCalcDay = [];
@@ -312,7 +313,7 @@ export class AddSettlementPolicyComponent implements OnInit {
       gratuityPolicyFiveYr: [],
       gratuityPolicyTer: [],
       gratuityPolicyFiveYrTer: [],
-      excludedIDList: [],
+      excludedIDList: this.particularsIdNormal,
     };
     //Normal
     this.lstLessThanNormal.forEach((element) => {
@@ -365,7 +366,7 @@ export class AddSettlementPolicyComponent implements OnInit {
       .subscribe((res: any[]) => {
         if (res["Status"]) {
           swal.fire("Success", "Data Saved Successfully", "success");
-          this.router.navigate(["work-policy/list-work-policy/"]);
+          this.router.navigate(["settlement-policy/list-settlement-policy/"]);
         }
       });
   }

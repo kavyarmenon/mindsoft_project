@@ -79,14 +79,17 @@ export class AddEncashPolicyComponent implements OnInit {
         calculationPercentage: null,
         isRateOnly: this.encashPolicy.get("isRatePerDay").value,
         encashRate: this.encashPolicy.get("encashRate").value,
+        AdditionDeductionID: this.encashPolicy.get("particularId").value,
       };
       this.serverService
-        .postData("api/EncashPolicyAPI/Create/", dctData)
+        .postData("api/EncashPolicyAPI/Create/", { encashPolicy: dctData })
         .subscribe((res: any[]) => {
           swal.fire("Success", "Data Saved Successfully", "success");
           this.router.navigate(["encash-policy/list-encash-policy/"]);
         });
     }
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["encash-policy/list-encash-policy/"]);
+  }
 }

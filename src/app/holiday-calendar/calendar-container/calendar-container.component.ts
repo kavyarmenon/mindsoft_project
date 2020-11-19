@@ -14,6 +14,7 @@ import {
   isSameMonth,
   addHours,
 } from "date-fns";
+import * as moment from "moment";
 import { Subject } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
@@ -24,61 +25,24 @@ import {
   CalendarView,
 } from "angular-calendar";
 import { ServerService } from "src/app/server.service";
+import { event } from "jquery";
+import Swal from "sweetalert2";
 
 const colors: any = [
   {
     primary: "#ad2121",
   },
   {
-    primary: "#1e90ff",
-  },
-  {
-    primary: "#e3bc08",
-  },
-  {
     primary: "#492c36",
   },
   {
-    primary: "#a74b6b",
+    primary: "#ff0000",
   },
   {
-    primary: "#22403d",
+    primary: "#ffa500",
   },
   {
-    primary: "#bada55",
-  },
-  {
-    primary: "#845422",
-  },
-  {
-    primary: "#7df9ff",
-  },
-  {
-    primary: "#0095b6",
-  },
-  {
-    primary: "#0892d0",
-  },
-  {
-    primary: "#295f48",
-  },
-  {
-    primary: "#0000A0",
-  },
-  {
-    primary: "#800080",
-  },
-  {
-    primary: "#808000",
-  },
-  {
-    primary: "#342D7E",
-  },
-  {
-    primary: "#254117",
-  },
-  {
-    primary: "#306754",
+    primary: "#0000ff",
   },
 ];
 @Component({
@@ -96,26 +60,8 @@ export class CalendarContainerComponent {
   lsHolidayType = [];
   viewDate: Date = new Date();
   dctHoliday = {};
-  lstColors = [
-    "#ad2121",
-    "#1e90ff",
-    "#e3bc08",
-    "#492c36",
-    "#a74b6b",
-    "#22403d",
-    "#bada55",
-    "#845422",
-    "#7df9ff",
-    "#0095b6",
-    "#0892d0",
-    "#295f48",
-    "#0000A0",
-    "#800080",
-    "#808000",
-    "#342D7E",
-    "#254117",
-    "#306754",
-  ];
+  lstHoliday = [];
+  blnLoadCompleted = false;
   lst = [
     {
       actions: [
@@ -123,16 +69,17 @@ export class CalendarContainerComponent {
           label: '<i class="fa fa-fw fa-times"></i>',
           onClick: ({ event }: { event: CalendarEvent }): void => {
             this.events = this.events.filter((iEvent) => iEvent !== event);
-            console.log("Event deleted", event);
+            // console.log("Event deleted", event);
           },
         },
       ],
-      color: { primary: "#1e90ff" },
+      color: { primary: "#ad2121" },
       draggable: true,
       resizable: { beforeStart: true, afterEnd: true },
       start: "Mon Nov 7 2020 00:00:00 GMT+0530 (India Standard Time)",
       title: "Christmax",
       colorIndex: null,
+      type: null,
     },
     {
       actions: [
@@ -140,16 +87,17 @@ export class CalendarContainerComponent {
           label: '<i class="fa fa-fw fa-times"></i>',
           onClick: ({ event }: { event: CalendarEvent }): void => {
             this.events = this.events.filter((iEvent) => iEvent !== event);
-            console.log("Event deleted", event);
+            // console.log("Event deleted", event);
           },
         },
       ],
-      color: { primary: "#1e90ff" },
+      color: { primary: "#ad2121" },
       draggable: true,
       resizable: { beforeStart: true, afterEnd: true },
       start: "Mon Nov 16 2020 00:00:00 GMT+0530 (India Standard Time)",
       title: "Gandi Jayandhi",
       colorIndex: null,
+      type: null,
     },
     {
       actions: [
@@ -157,16 +105,17 @@ export class CalendarContainerComponent {
           label: '<i class="fa fa-fw fa-times"></i>',
           onClick: ({ event }: { event: CalendarEvent }): void => {
             this.events = this.events.filter((iEvent) => iEvent !== event);
-            console.log("Event deleted", event);
+            // console.log("Event deleted", event);
           },
         },
       ],
-      color: { primary: "#e3bc08" },
+      color: { primary: "#ad2121" },
       draggable: true,
       resizable: { beforeStart: true, afterEnd: true },
       start: " Wed Nov 25 2020 00:00:00 GMT+0530 (India Standard Time)",
       title: "Dipavali",
       colorIndex: null,
+      type: null,
     },
   ];
   colorIndex = 0;
@@ -195,10 +144,7 @@ export class CalendarContainerComponent {
   events = [];
   activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal, private serverService: ServerService) {
-    this.initializeYesterday();
-    this.initializeEvents();
-  }
+  constructor(private modal: NgbModal, private serverService: ServerService) {}
   ngOnInit(): void {
     this.serverService
       .getData("api/DropDownBindingAPI/ddlStateList/")
@@ -215,25 +161,25 @@ export class CalendarContainerComponent {
       .subscribe((res: any[]) => {
         this.lsHolidayType = res["HolidayTypeList"];
       });
+    this.blnLoadCompleted = false;
   }
 
   fetchDetails() {
     this.serverService
       .getData("api/HolidayCalendarAPI/GetHolidayList/?stateID=" + this.stateId)
       .subscribe((res: any[]) => {
-        console.log(res, "holiday calander");
+        this.lstHoliday = res["holidayList"];
+        this.initializeYesterday();
+        this.initializeEvents();
       });
   }
   changeHolidayType(index) {
-    if (this.events[index].type == 1) {
-      this.events[index].color.primary = "#ff0000";
-    } else if (this.events[index].type == 2) {
-      this.events[index].color.primary = "#ffa500";
-    } else if (this.events[index].type == 3) {
-      this.events[index].color.primary = "#0000ff";
-    }
+    console.log("djbcjdsbch", this.events[index].type);
+
+    let dctData = { primary: "" };
+    dctData.primary = this.events[index].type.color;
+    this.events[index].color = JSON.parse(JSON.stringify(dctData));
     this.storeHoliday();
-    console.log(index, this.events[index].type, this.events, "change holiday");
   }
   private initializeYesterday() {
     this.yesterday = new Date();
@@ -241,26 +187,21 @@ export class CalendarContainerComponent {
   }
 
   private initializeEvents() {
-    this.lst.forEach((element) => {
-      for (let index = 0; index < Object.keys(colors).length; index++) {
-        // console.log(
-        //   element.color.primary,
-        //   colors[index]["primary"],
-        //   index,
-        //   "check vlues"
-        // );
-
-        if (element.color.primary === colors[index]["primary"]) {
-          element.colorIndex = index;
-        }
-      }
-      // this.dctHoliday[element.start] = element.title;
+    this.lstHoliday.forEach((element) => {
       this.events.push({
-        title: element.title,
+        title: element.description,
         colorIndex: null,
-        color: colors[element.colorIndex],
-        start: new Date(element.start),
+        color: { primary: element.color },
+        start: new Date(element.holidayDatestr),
         draggable: true,
+        type: {
+          color: element.color,
+          holidayTypeID: element.holidayTypeID,
+          holidayTypeName: element.holidayTypeName,
+          HolidayTypeList: null,
+          IsSaved: false,
+          Status: 0,
+        },
         resizable: { beforeStart: true, afterEnd: true },
         actions: [
           {
@@ -272,83 +213,9 @@ export class CalendarContainerComponent {
         ],
       });
     });
+    console.log(this.events, "backensd");
+
     this.storeHoliday();
-
-    console.log(this.events, this.dctHoliday, "list");
-
-    // this.events = [
-    //   {
-    //     title: "Deletable event",
-    //     colorIndex: null,
-    //     color: colors[0],
-    //     start: this.yesterday,
-    //     actions: [
-    //       {
-    //         label: '<i class="fa fa-fw fa-times"></i>',
-    //         onClick: ({ event }: { event: CalendarEvent }): void => {
-    //           this.events = this.events.filter((iEvent) => iEvent !== event);
-    //           console.log("Event deleted", event);
-    //         },
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     actions: [
-    //       {
-    //         label: '<i class="fa fa-fw fa-times"></i>',
-    //         onClick: ({ event }: { event: CalendarEvent }): void => {
-    //           this.events = this.events.filter((iEvent) => iEvent !== event);
-    //           console.log("Event deleted", event);
-    //         },
-    //       },
-    //     ],
-    //     draggable: true,
-    //     color: colors[0],
-    //     start: new Date(
-    //       " Sat Nov 07 2020 14:20:49 GMT+0530 (India Standard Time)"
-    //     ),
-    //     title: "Deletable event",
-    //     colorIndex: null,
-    //   },
-    //   {
-    //     actions: [
-    //       {
-    //         label: '<i class="fa fa-fw fa-times"></i>',
-    //         onClick: ({ event }: { event: CalendarEvent }): void => {
-    //           this.events = this.events.filter((iEvent) => iEvent !== event);
-    //           console.log("Event deleted", event);
-    //         },
-    //       },
-    //     ],
-    //     color: colors[0],
-    //     draggable: true,
-    //     resizable: { beforeStart: true, afterEnd: true },
-    //     start: new Date(
-    //       "Mon Nov 16 2020 00:00:00 GMT+0530 (India Standard Time)"
-    //     ),
-    //     title: "New event",
-    //     colorIndex: null,
-    //   },
-    //   {
-    //     actions: [
-    //       {
-    //         label: '<i class="fa fa-fw fa-times"></i>',
-    //         onClick: ({ event }: { event: CalendarEvent }): void => {
-    //           this.events = this.events.filter((iEvent) => iEvent !== event);
-    //           console.log("Event deleted", event);
-    //         },
-    //       },
-    //     ],
-    //     color: colors[0],
-    //     draggable: true,
-    //     resizable: { beforeStart: true, afterEnd: true },
-    //     start: new Date(
-    //       " Wed Nov 25 2020 00:00:00 GMT+0530 (India Standard Time)"
-    //     ),
-    //     title: "New event",
-    //     colorIndex: null,
-    //   },
-    // ];
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -382,26 +249,25 @@ export class CalendarContainerComponent {
       return iEvent;
     });
     this.handleEvent("Dropped or resized", event);
-    console.log("check 6", this.events);
     this.storeHoliday();
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    console.log(event, "event");
+    this.storeHoliday();
+
+    // console.log(event, "event");
   }
   storeHoliday() {
     this.dctHoliday = {};
     this.events.forEach((element) => {
-      console.log(element, "ekleemtn");
-
       this.dctHoliday[element.start] = {};
       this.dctHoliday[element.start]["title"] = element.title;
       this.dctHoliday[element.start]["color"] = element.color.primary;
     });
-    console.log(this.dctHoliday, "holiday");
+    this.blnLoadCompleted = true;
   }
   addEvent(): void {
-    if (this.colorIndex >= 17) {
+    if (this.colorIndex >= 3) {
       this.colorIndex = 0;
     } else {
       this.colorIndex++;
@@ -412,14 +278,19 @@ export class CalendarContainerComponent {
         title: "New event",
         start: startOfDay(new Date()),
         // end: endOfDay(new Date()),
-        color: colors[this.colorIndex],
+        color: { primary: this.lsHolidayType[0].color },
         draggable: true,
+        type: {
+          color: this.lsHolidayType[0].color,
+          holidayTypeID: this.lsHolidayType[0].holidayTypeID,
+          holidayTypeName: this.lsHolidayType[0].holidayTypeName,
+        },
         actions: [
           {
             label: '<i class="fa fa-fw fa-times"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
               this.events = this.events.filter((iEvent) => iEvent !== event);
-              console.log("Event deleted", event);
+              // console.log("Event deleted", event);
             },
           },
         ],
@@ -429,35 +300,47 @@ export class CalendarContainerComponent {
         },
       },
     ];
-    console.log("check 4", this.events);
     this.storeHoliday();
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
-    console.log("check 3", this.events);
+    this.storeHoliday();
   }
 
   setView(view: CalendarView) {
-    console.log("check 2");
-
     this.view = view;
     this.storeHoliday();
   }
 
   closeOpenMonthViewDay() {
-    console.log("check 1");
     this.activeDayIsOpen = false;
   }
-  changeColor(event) {
-    // console.log("color changes", this.colorIndex, event);
+  saveEvent() {
+    let dctData = {};
+    // dctData["stateID"] = this.stateId;
+    dctData["holidayList"] = [];
 
-    event.color.primary = colors[this.colorIndex]["primary"];
-    if (this.colorIndex >= 17) {
-      this.colorIndex = 0;
-    } else {
-      this.colorIndex++;
-    }
-    this.storeHoliday();
+    this.events.forEach((element) => {
+      let dct = {};
+      dct["holidayID"] = null;
+      dct["stateID"] = this.stateId;
+      dct["description"] = element.title;
+      dct["holidayDate"] = moment(element.start)
+        .format("DD/MM/YYYY")
+        .toString();
+      dct["holidayDatestr"] = null;
+      dct["holidayTypeID"] = element.type.holidayTypeID;
+      dctData["holidayList"].push(dct);
+    });
+    console.log(this.events, dctData, "save data");
+
+    this.serverService
+      .postData("api/HolidayCalendarAPI/Create", dctData["holidayList"])
+      .subscribe((res: any[]) => {
+        if (res["status"] == "Success") {
+          Swal.fire("Success", "Data Saved Successfully", "success");
+        }
+      });
   }
 }

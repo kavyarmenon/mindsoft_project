@@ -58,7 +58,7 @@ export class ListShiftPolicyComponent implements OnInit {
   deleteCompany(item) {
     this.serviceObject
       .getData(
-        "api/ShiftPolicyAPI/DeleteShiftPolicy/shiftPolicyID=" +
+        "api/ShiftPolicyAPI/DeleteShiftPolicy?shiftPolicyID=" +
           item.shiftPolicyID
       )
       .subscribe(

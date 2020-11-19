@@ -25,6 +25,8 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Sunday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
     {
       workingDay: false,
@@ -32,6 +34,8 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Monday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
     {
       workingDay: false,
@@ -39,6 +43,8 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Tuesday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
     {
       workingDay: false,
@@ -46,6 +52,8 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Wednesday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
     {
       workingDay: false,
@@ -53,6 +61,8 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Thursday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
     {
       workingDay: false,
@@ -60,6 +70,8 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Friday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
     {
       workingDay: false,
@@ -67,42 +79,48 @@ export class EditWorkPolicyComponent implements OnInit {
       day: "Saturday",
       shiftId: null,
       shift: "",
+      WorkPolicyID: null,
+      WorkPolicyDetID: null,
     },
   ];
   lstConsequences = ["Break Time", "Early Leaving", "Late Coming", "Work Time"];
   lstPolicyConsequences = [
-    //   {
-    //     consequences: "Break Time",
-    //     consequencesId: 1,
-    //     allowedDays: "",
-    //     lop: null,
-    //     casual: null,
-    //     amount: null,
-    //   },
-    //   {
-    //     consequences: "Early Leaving",
-    //     consequencesId: 2,
-    //     allowedDays: "",
-    //     lop: null,
-    //     casual: null,
-    //     amount: null,
-    //   },
-    //   {
-    //     consequences: "Late Coming",
-    //     consequencesId: 3,
-    //     allowedDays: "",
-    //     lop: null,
-    //     casual: null,
-    //     amount: null,
-    //   },
-    //   {
-    //     consequences: "Work Time",
-    //     consequencesId: 4,
-    //     allowedDays: "",
-    //     lop: null,
-    //     casual: null,
-    //     amount: null,
-    //   },
+    {
+      consequences: "Break Time",
+      consequencesId: 1,
+      allowedDays: "",
+      lop: null,
+      casual: null,
+      amount: null,
+      WorkPolicyID: null,
+    },
+    {
+      consequences: "Early Leaving",
+      consequencesId: 2,
+      allowedDays: "",
+      lop: null,
+      casual: null,
+      amount: null,
+      WorkPolicyID: null,
+    },
+    {
+      consequences: "Late Coming",
+      consequencesId: 3,
+      allowedDays: "",
+      lop: null,
+      casual: null,
+      amount: null,
+      WorkPolicyID: null,
+    },
+    {
+      consequences: "Work Time",
+      consequencesId: 4,
+      allowedDays: "",
+      lop: null,
+      casual: null,
+      amount: null,
+      WorkPolicyID: null,
+    },
   ];
   lstLop = [];
   lstCasual = [];
@@ -140,24 +158,26 @@ export class EditWorkPolicyComponent implements OnInit {
         this.policyName = res["workPolicyInfo"]["workPolicyName"];
         this.generalShift = res["workPolicyInfo"]["generalShiftID"];
 
-        // res['workPolicyDetailList'].forEach((element) => {
-        //     let dct = {};
-        //     if (element.workingDay) {
-        //       dct["dayId"] = element.DayID;
-        //       dct["dayId"] = element.ShiftID;
-        //       this.lstPolicyDetails.push(dct);
-        //     }
-        //   });
+        res["workPolicyDetailList"].forEach((element) => {
+          this.lstPolicyDetails.find((item) => {
+            if (item.dayId === element.DayID) {
+              item.shiftId = element.ShiftID;
+              item.WorkPolicyDetID = element.WorkPolicyDetID;
+              item.WorkPolicyID = element.WorkPolicyID;
+            }
+          });
+        });
 
         res["workPolicyConseqList"].forEach((element) => {
-          let dct = {};
-          dct["consequencesId"] = element.ConsequenceID;
-          dct["consequences"] = this.lstConsequences[element.ConsequenceID];
-          dct["allowedDays"] = element.AllowedDaysPerMonth;
-          dct["lop"] = element.LOP;
-          dct["casual"] = element.Casual;
-          dct["amount"] = element.Amount;
-          this.lstPolicyConsequences.push(dct);
+          this.lstPolicyConsequences.find((item) => {
+            if (item.consequencesId === element.ConsequenceID) {
+              item.amount = element.Amount;
+              item.WorkPolicyID = element.WorkPolicyID;
+              item.lop = element.LOP;
+              item.casual = element.Casual;
+              item.allowedDays = element.AllowedDaysPerMonth;
+            }
+          });
         });
       });
   }

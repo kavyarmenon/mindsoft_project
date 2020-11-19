@@ -15,7 +15,7 @@ export class ListDeductionPolicyComponent implements OnInit {
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns = ["policyName", "applicableFrom", "action"];
+  lstDisplayedColumns = ["policyName", "effectFrom", "action"];
 
   constructor(
     private serviceObject: ServerService,
@@ -37,7 +37,7 @@ export class ListDeductionPolicyComponent implements OnInit {
           // if (res['status'] == 1)
           // {
 
-          this.data = res["deductFromList"];
+          this.data = res["deductionInfoList"];
           console.log(this.data, "data");
 
           if (this.data.length > 0) {

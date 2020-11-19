@@ -16,7 +16,7 @@ export class ListSalaryTemplateComponent implements OnInit {
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns = ["policyName", "applicableFrom", "action"];
+  lstDisplayedColumns = ["templateName", "action"];
 
   constructor(
     private serviceObject: ServerService,
@@ -38,7 +38,7 @@ export class ListSalaryTemplateComponent implements OnInit {
           // if (res['status'] == 1)
           // {
 
-          this.data = res["leavePolicyList"];
+          this.data = res["templateList"];
           console.log(this.data, "data");
 
           if (this.data.length > 0) {
@@ -75,7 +75,7 @@ export class ListSalaryTemplateComponent implements OnInit {
     this.serviceObject
       .getData(
         "api/SalaryTemplateAPI/DeleteSalaryTemplate/?salaryTemplateID=" +
-          item.salaryTemplateInfo.templateID
+          item.templateID
       )
       .subscribe(
         (res) => {

@@ -23,7 +23,7 @@ export class AddAbsentPolicyComponent implements OnInit {
   lstCalcDay = [];
   policyName;
 
-  mergeParticularId;
+  mergeParticularId = [];
   mergeCalcBasedOnId;
   mergeCalcDayId;
   mergeIsRateOnly = false;
@@ -34,7 +34,7 @@ export class AddAbsentPolicyComponent implements OnInit {
   mergeHourPerDay;
   mergeRate;
 
-  absentParticularId;
+  absentParticularId = [];
   absentCalcBasedOnId;
   absentCalcDayId;
   absentIsRateOnly = false;
@@ -76,6 +76,8 @@ export class AddAbsentPolicyComponent implements OnInit {
       });
   }
   saveDetail() {
+    console.log(this.absentHourPerDay, "time");
+
     if (!this.policyName) {
       this.toastr.error("Enter Policy Name", "Error!");
       return false;
@@ -96,13 +98,13 @@ export class AddAbsentPolicyComponent implements OnInit {
             isRateOnly: this.absentIsRateOnly,
             absentRate: this.absentRate,
             isRateBasedOnHour: this.absentIsRateBasedOnHour,
-            hoursPerDay: this.absentHourPerDay,
+            hoursPerDay: JSON.stringify(this.absentHourPerDay),
             absentType: 1,
-            isHourBasedShift: this.absentIsRateBasedOnHour,
+            isHourBasedShift: null,
             fixedAmount: null,
             percentage: null,
             policyTypeId: null,
-            AdditionDeductionId: null,
+            AdditionDeductionId: this.absentParticularId,
           },
           {
             calculationID: this.mergeCalcDayId,
@@ -110,13 +112,13 @@ export class AddAbsentPolicyComponent implements OnInit {
             isRateOnly: this.mergeIsRateOnly,
             absentRate: this.mergeRate,
             isRateBasedOnHour: this.mergeIsRateBasedOnHour,
-            hoursPerDay: this.mergeHourPerDay,
+            hoursPerDay: JSON.stringify(this.mergeHourPerDay),
             absentType: 2,
-            isHourBasedShift: this.mergeIsRateBasedOnHour,
+            isHourBasedShift: null,
             fixedAmount: null,
             percentage: null,
             policyTypeId: null,
-            AdditionDeductionId: null,
+            AdditionDeductionId: this.mergeParticularId,
           },
         ],
       };
@@ -128,5 +130,7 @@ export class AddAbsentPolicyComponent implements OnInit {
         });
     }
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["absent-policy/list-absent-policy/"]);
+  }
 }

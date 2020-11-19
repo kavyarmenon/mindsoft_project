@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { element } from "protractor";
 import { ServerService } from "src/app/server.service";
+import Swal from "sweetalert2";
 @Component({
   selector: "app-add-proffesional-tax-policy",
   templateUrl: "./add-proffesional-tax-policy.component.html",
@@ -49,7 +50,19 @@ export class AddProffesionalTaxPolicyComponent implements OnInit {
         "api/ProfessionalTaxAPI/getStateWiseTaxById?StateID=" + this.stateId
       )
       .subscribe((res: any[]) => {
-        console.log("check");
+        this.lstTableData = res["taxList"];
+        if (this.lstTableData.length === 0) {
+          this.lstTableData = [
+            {
+              StateID: null,
+              id: null,
+              range: null,
+              rangeFrom: null,
+              rangeTo: null,
+              taxAmount: null,
+            },
+          ];
+        }
       });
   }
 
@@ -81,8 +94,33 @@ export class AddProffesionalTaxPolicyComponent implements OnInit {
     this.serverService
       .postData("api/ProfessionalTaxAPI/Update/", dctData)
       .subscribe((res: any[]) => {
-        console.log("check");
+        if (res["Status"]) {
+          Swal.fire("Success", "Data Saved Successfully", "success");
+          this.stateId = null;
+          this.lstTableData = [
+            {
+              StateID: null,
+              id: null,
+              range: null,
+              rangeFrom: null,
+              rangeTo: null,
+              taxAmount: null,
+            },
+          ];
+        }
       });
   }
-  cancel() {}
+  cancel() {
+    this.stateId = null;
+    this.lstTableData = [
+      {
+        StateID: null,
+        id: null,
+        range: null,
+        rangeFrom: null,
+        rangeTo: null,
+        taxAmount: null,
+      },
+    ];
+  }
 }

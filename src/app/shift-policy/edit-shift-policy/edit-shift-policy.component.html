@@ -1,21 +1,22 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black;" class="card-title">Shift Policy</h3>
+    <h3 style="color: black" class="card-title">Edit Shift Policy</h3>
   </div>
-  <form  [formGroup]="shiftPolicy" style="padding: 15px">
-   <div class="row">
+  <form [formGroup]="shiftPolicy" style="padding: 15px">
+    <div class="row">
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Shift Name</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['shiftName']"
-        type="text" />
+          <input
+            matInput
+            [formControl]="shiftPolicy.controls['shiftName']"
+            type="text"
+          />
           <mat-error *ngIf="shiftPolicy.controls['shiftName'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['shiftName'].errors.required"
-          >
-            You must enter a Shift Name.</span
-          >
-        </mat-error>
+            ><span *ngIf="shiftPolicy.controls['shiftName'].errors.required">
+              You must enter a Shift Name.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -23,197 +24,233 @@
         <mat-form-field appearance="outline">
           <mat-label>Shift Type</mat-label>
           <mat-select
-              [formControl]="shiftPolicy.controls['shiftType']"
-              placeholder=""
+            [formControl]="shiftPolicy.controls['shiftType']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstShiftType"
+              [value]="type.shiftTypeId"
             >
-              <mat-option
-                *ngFor="let type of lstShiftType"
-                [value]="type.shiftType"
-              >
-                {{ type.shiftType }}
-              </mat-option>
-            </mat-select>
+              {{ type.shiftType }}
+            </mat-option>
+          </mat-select>
           <mat-error *ngIf="shiftPolicy.controls['shiftType'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['shiftType'].errors.required"
-          >
-            You must select Shift Type.</span
-          >
-        </mat-error>
+            ><span *ngIf="shiftPolicy.controls['shiftType'].errors.required">
+              You must select Shift Type.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
 
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>No of Timings</mat-label>
-          <input matInput [formControl]="shiftPolicy.controls['noOfTimings']"
-          type="text" />
+          <input
+            matInput
+            [formControl]="shiftPolicy.controls['noOfTimings']"
+            type="text"
+          />
           <mat-error *ngIf="shiftPolicy.controls['noOfTimings'].errors"
-          ><span
-            *ngIf="shiftPolicy.controls['noOfTimings'].errors.required"
-          >
-            You must enter No Of Timings.</span
-          >
-        </mat-error>
+            ><span *ngIf="shiftPolicy.controls['noOfTimings'].errors.required">
+              You must enter No Of Timings.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
-   </div>
-   <hr>
-   <h4 style="margin-left: 3px;color: #d10000;margin-top: 25px;margin-bottom: 25px;"><b>Shift Timing</b></h4>
-   <div class="row">
+    </div>
+    <hr />
+    <h4
+      style="
+        margin-left: 3px;
+        color: #d10000;
+        margin-top: 25px;
+        margin-bottom: 25px;
+      "
+    >
+      <b>Shift Timing</b>
+    </h4>
+    <div class="row">
       <div class="col-md-3">
-          <mat-label>From Time</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['fromTime']"></ngb-timepicker>
+        <mat-label>From Time</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['fromTime']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>Late Coming</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['lateComing']"></ngb-timepicker>
+        <mat-label>Late Coming</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['lateComing']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>To Time</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['toTime']"></ngb-timepicker>
+        <mat-label>To Time</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['toTime']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>Early Leaving</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['earlyLeaving']"></ngb-timepicker>
+        <mat-label>Early Leaving</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['earlyLeaving']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>Duration</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['duration']"></ngb-timepicker>
+        <mat-label>Duration</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['duration']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>Allowed Break Time</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['allowedBreakTime']"></ngb-timepicker>
+        <mat-label>Allowed Break Time</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['allowedBreakTime']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>Buffer Time</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['earlyLeaving']"></ngb-timepicker>
+        <mat-label>Buffer Time</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['earlyLeaving']"
+        ></ngb-timepicker>
       </div>
 
       <div class="col-md-3">
-          <mat-label>Min. Working Hours</mat-label>
-          <ngb-timepicker  [formControl]="shiftPolicy.controls['minWorkingHours']"></ngb-timepicker>
+        <mat-label>Min. Working Hours</mat-label>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['minWorkingHours']"
+        ></ngb-timepicker>
       </div>
     </div>
     <div class="col-md-6">
       <label class="pr-box">
-        <input style="padding: 20px 22px;
-        margin-right: 12px;" type="checkbox" id=""   [formControl]="shiftPolicy.controls['consequenceApplicable']" value="" checked="checked">
+        <input
+          style="padding: 20px 22px; margin-right: 12px"
+          type="checkbox"
+          id=""
+          [formControl]="shiftPolicy.controls['consequenceApplicable']"
+          value=""
+          checked="checked"
+        />
         <span class="checkmark">Consequence Applicable </span>
       </label>
     </div>
-   <hr>
-   <h4 style="margin-left: 3px;color: #d10000;margin-top: 25px;margin-bottom: 25px;"><b>Over Time Criteria</b></h4>
-   <div >
-    <label class="pr-box">
-      <input style="padding: 20px 22px;
-      margin-right: 12px;" type="checkbox" id=""  [formControl]="shiftPolicy.controls['overTimeCalcForMinWrkHr']" value="" checked="checked">
-      <span class="checkmark">Over Time Calculation Bades On Mininmum Working Hours </span>
-    </label>
-  </div>
-   <div class="row">
-    <div class="col-md-6">
-      <mat-form-field appearance="outline">
+    <hr />
+    <h4
+      style="
+        margin-left: 3px;
+        color: #d10000;
+        margin-top: 25px;
+        margin-bottom: 25px;
+      "
+    >
+      <b>Over Time Criteria</b>
+    </h4>
+    <div>
+      <label class="pr-box">
+        <input
+          style="padding: 20px 22px; margin-right: 12px"
+          type="checkbox"
+          id=""
+          [formControl]="shiftPolicy.controls['overTimeCalcForMinWrkHr']"
+          value=""
+          checked="checked"
+        />
+        <span class="checkmark"
+          >Over Time Calculation Bades On Mininmum Working Hours
+        </span>
+      </label>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
         <mat-label>Min. Time for Over Time</mat-label>
-        <input matInput [formControl]="shiftPolicy.controls['minTimeForOverTime']"
-        type="text" />
-        <mat-error *ngIf="shiftPolicy.controls['minTimeForOverTime'].errors"
-        ><span
-          *ngIf="shiftPolicy.controls['minTimeForOverTime'].errors.required"
-        >
-          You must enter Min. Time for Over Time.</span
-        >
-      </mat-error>
-      </mat-form-field>
-    </div>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['minTimeForOverTime']"
+        ></ngb-timepicker>
+      </div>
 
-    <div class="col-md-6">
-      <mat-form-field appearance="outline">
+      <div class="col-md-6">
         <mat-label>Weekly OT Limit (Hrs)</mat-label>
-        <input matInput [formControl]="shiftPolicy.controls['weeklyOtLimit']"
-        type="text" />
-        <mat-error *ngIf="shiftPolicy.controls['weeklyOtLimit'].errors"
-        ><span
-          *ngIf="shiftPolicy.controls['weeklyOtLimit'].errors.required"
-        >
-          You must enter Weekly OT Limit(Hrs).</span
-        >
-      </mat-error>
-      </mat-form-field>
+        <ngb-timepicker
+          [formControl]="shiftPolicy.controls['weeklyOtLimit']"
+        ></ngb-timepicker>
+      </div>
     </div>
-   </div>
   </form>
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <h4 style="margin-left: 24px;color: #d10000;"><b>Shift Details</b></h4>
+  <div class="row" *ngIf="shiftPolicy.controls['shiftType'].value == 3">
+    <h4 style="margin-left: 24px; color: #d10000"><b>Shift Details</b></h4>
     <div class="col-md-12" style="padding: 35px">
       <div class="example-container mat-elevation-z8 mt-3">
-        <table  class="mat-elevation-z8">
+        <table class="mat-elevation-z8">
           <tr>
             <th>Shift Name</th>
             <th>From</th>
             <th>To</th>
             <th>Duration</th>
-            <th>Shift Type</th>
             <th>Action</th>
           </tr>
-          <tr *ngFor="let row of lstTableData;let i=index">
+          <tr *ngFor="let row of lstTableData; let i = index">
             <td>
-              <input matInput  style="
-              background-color: #f3f9fe;
-              padding: 6px;
-              border-radius: 10px;
-              " [(ngModel)]="row.shiftName"
-              type="text" />
+              <input
+                matInput
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                [(ngModel)]="row.shiftName"
+                type="text"
+              />
             </td>
             <td>
               <input
-              [(ngModel)]="row.fromTime"
+                [(ngModel)]="row.fromTime"
                 style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
-                "
-                matInput
-                type="number"
-                OnlyNumber="true"
-                placeholder=""
-              /></td>
-            <td>
-               <input
-              [(ngModel)]="row.toTime"
-                style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
-                "
-                matInput
-                type="number"
-                OnlyNumber="true"
-                placeholder=""
-              /></td>
-            <td>
-              <input
-              [(ngModel)]="row.duration"
-                style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
                 "
                 matInput
                 type="number"
                 OnlyNumber="true"
                 placeholder=""
               />
-             </td>
-             <td>
+            </td>
+            <td>
+              <input
+                [(ngModel)]="row.toTime"
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                matInput
+                type="number"
+                OnlyNumber="true"
+                placeholder=""
+              />
+            </td>
+            <td>
+              <input
+                [(ngModel)]="row.duration"
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                matInput
+                type="number"
+                OnlyNumber="true"
+                placeholder=""
+              />
+            </td>
+            <!-- <td>
               <mat-select
               style="
               background-color: #f3f9fe;
@@ -230,19 +267,24 @@
                 {{ type.shiftType }}
               </mat-option>
             </mat-select>
-            </td>
-              <td style="display:flex !important;
-              justify-content:center!important;">
-                <button *ngIf="lstTableData.length-1===i"
+            </td> -->
+            <td
+              style="
+                display: flex !important;
+                justify-content: center !important;
+              "
+            >
+              <button
+                *ngIf="lstTableData.length - 1 === i"
                 id="Add"
                 title="Add"
                 class="add_btn"
-                (click)="addRow(i,row)"
+                (click)="addRow(i, row)"
               >
                 <i class="fa fa-plus" aria-hidden="true"></i>
               </button>
               <button
-              style="margin-left: 6px;"
+                style="margin-left: 6px"
                 id="delete"
                 title="Delete"
                 (click)="deleteRow(i)"
@@ -253,13 +295,30 @@
                   style="color: cornflowerblue"
                   aria-hidden="true"
                 ></i>
-                </button>
-              </td>
+              </button>
+            </td>
           </tr>
         </table>
-   </div>
-   <div class="col-md-12 row" style="margin-top: 50px;margin-left: 40%;">
-    <button type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="saveDetail()">Save</button>
-    <button type="button"  mat-raised-button class="btn btn-secondary m-t-20" (click)="cancel()">Cancel</button>
-</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 row" style="margin-top: 50px; margin-left: 40%">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      class="btn save_btn m-r-10 m-t-20"
+      (click)="saveDetail()"
+    >
+      Save
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      class="btn btn-secondary m-t-20"
+      (click)="cancel()"
+    >
+      Cancel
+    </button>
+  </div>
 </div>

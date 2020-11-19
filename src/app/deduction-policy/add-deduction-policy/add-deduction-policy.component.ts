@@ -62,6 +62,11 @@ export class AddDeductionPolicyComponent implements OnInit {
       .subscribe((res: any[]) => {
         this.lstParameterName = res["particularsList"];
       });
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlExcludefromGrossSalary/")
+      .subscribe((res: any[]) => {
+        this.lstParticular = res["particularsList"];
+      });
   }
   saveDetail() {
     if (this.deductionPolicy.invalid) {
@@ -86,6 +91,7 @@ export class AddDeductionPolicyComponent implements OnInit {
         .value,
       employeeContribution: this.deductionPolicy.get("employeeContribution")
         .value,
+      AdditionDeductionID: this.deductionPolicy.get("particularId").value,
     };
 
     this.serverService
@@ -95,5 +101,7 @@ export class AddDeductionPolicyComponent implements OnInit {
         this.router.navigate(["deduction-policy/list-deduction-policy/"]);
       });
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["deduction-policy/list-deduction-policy/"]);
+  }
 }

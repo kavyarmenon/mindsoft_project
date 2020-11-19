@@ -62,36 +62,58 @@ export class EditPfPolicyComponent implements OnInit {
       .subscribe((res: any[]) => {
         this.lstParameterValue = res["parameterValueList"];
       });
-    // this.serverService
-    // .getData("api/DropDownBindingAPI/parameterValueDDList/")
-    // .subscribe((res: any[]) => {
-    //   this.lstParameterValue = res["particularsList"];
-    // });
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlAdditionList/")
+      .subscribe((res: any[]) => {
+        this.lstParameterName = res["particularsList"];
+      });
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlExcludefromGrossSalary/")
+      .subscribe((res: any[]) => {
+        this.lstParticular = res["particularsList"];
+      });
     this.getEditData();
   }
   getEditData() {
     this.serverService
       .getData("api/PFPolicyAPI/getPFPolicyById/?pfPolicyID=" + this.pfPolicyID)
       .subscribe((res) => {
-        this.pfPolicy.setValue(["pfPolicyID"]);
-        this.pfPolicy.get("pfPolicyName").setValue(res["pfPolicyName"]);
-        this.pfPolicy.get("effectFrom").setValue(res["effectFrom"]);
-        this.pfPolicy.get("deductFrom").setValue(res["deductFrom"]);
-        this.pfPolicy.get("fixedAmount").setValue(res["fixedAmount"]);
-        this.pfPolicy.get("parameterName").setValue(res["parameterName"]);
-        this.pfPolicy.get("parameterValue").setValue(res["parameterValue"]);
-        this.pfPolicy.get("Amount").setValue(res["Amount"]);
-        this.pfPolicy.get("rateOnly").setValue(res["rateOnly"]);
+        this.pfPolicy.get("deductionId").setValue(res["pfPolicy"]["deduction"]);
+        this.pfPolicy
+          .get("pfPolicyName")
+          .setValue(res["pfPolicy"]["pfPolicyName"]);
+        this.pfPolicy
+          .get("effectFrom")
+          .setValue(res["pfPolicy"]["effectFromstr"]);
+        this.pfPolicy
+          .get("deductFrom")
+          .setValue(res["pfPolicy"]["deductFromType"]);
+        this.pfPolicy
+          .get("fixedAmount")
+          .setValue(res["pfPolicy"]["fixedAmount"]);
+        this.pfPolicy
+          .get("parameterName")
+          .setValue(res["pfPolicy"]["parameterName"]);
+        this.pfPolicy
+          .get("parameterValue")
+          .setValue(res["pfPolicy"]["parameterValue"]);
+        this.pfPolicy.get("Amount").setValue(res["pfPolicy"]["Amount"]);
+        this.pfPolicy.get("rateOnly").setValue(res["pfPolicy"]["rateOnly"]);
         this.pfPolicy
           .get("employerContribution")
-          .setValue(res["employerContribution"]);
+          .setValue(res["pfPolicy"]["employerContribution"]);
         this.pfPolicy
           .get("employeeContribution")
-          .setValue(res["employeeContribution"]);
-        this.pfPolicy.get("epsEmployer").setValue(res["epsEmployer"]);
-        this.pfPolicy.get("edli").setValue(res["edli"]);
-        this.pfPolicy.get("epfAdmin").setValue(res["epfAdmin"]);
-        this.pfPolicy.get("edliAdmin").setValue(res["edliAdmin"]);
+          .setValue(res["pfPolicy"]["employeeContribution"]);
+        this.pfPolicy
+          .get("epsEmployer")
+          .setValue(res["pfPolicy"]["epsEmployer"]);
+        this.pfPolicy.get("edli").setValue(res["pfPolicy"]["edli"]);
+        this.pfPolicy.get("epfAdmin").setValue(res["pfPolicy"]["epfAdmin"]);
+        this.pfPolicy.get("edliAdmin").setValue(res["pfPolicy"]["edliAdmin"]);
+        this.pfPolicy
+          .get("particularId")
+          .setValue(res["pfPolicy"]["AdditionDeductionID"]);
       });
   }
   saveDetail() {
@@ -102,7 +124,7 @@ export class EditPfPolicyComponent implements OnInit {
     }
 
     let dctData = {
-      pfPolicyID: null,
+      pfPolicyID: this.pfPolicyID,
       pfPolicyName: this.pfPolicy.get("pfPolicyName").value,
       effectFrom: this.pfPolicy.get("effectFrom").value,
       deductFrom: this.pfPolicy.get("deductFrom").value,
@@ -117,6 +139,7 @@ export class EditPfPolicyComponent implements OnInit {
       edli: this.pfPolicy.get("edli").value,
       epfAdmin: this.pfPolicy.get("epfAdmin").value,
       edliAdmin: this.pfPolicy.get("edliAdmin").value,
+      AdditionDeductionID: this.pfPolicy.get("particularId").value,
     };
     console.log("click save");
 
@@ -127,5 +150,7 @@ export class EditPfPolicyComponent implements OnInit {
         this.router.navigate(["pf-policy/list-pf-policy/"]);
       });
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["pf-policy/list-pf-policy/"]);
+  }
 }

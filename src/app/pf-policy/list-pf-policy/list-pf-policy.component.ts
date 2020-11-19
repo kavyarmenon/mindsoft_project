@@ -17,7 +17,7 @@ export class ListPfPolicyComponent implements OnInit {
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns = ["policyName", "applicableFrom", "action"];
+  lstDisplayedColumns = ["policyName", "effectFrom", "action"];
 
   constructor(
     private serviceObject: ServerService,
@@ -37,7 +37,7 @@ export class ListPfPolicyComponent implements OnInit {
         // if (res['status'] == 1)
         // {
 
-        this.data = res["leavePolicyList"];
+        this.data = res["pfPolicyList"];
         console.log(this.data, "data");
 
         if (this.data.length > 0) {

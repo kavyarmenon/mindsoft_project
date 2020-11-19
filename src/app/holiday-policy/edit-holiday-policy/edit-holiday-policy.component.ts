@@ -33,6 +33,8 @@ export class EditHolidayPolicyComponent implements OnInit {
       isHourPerDay: [false],
       calcPercentage: null,
       isHolidayRate: [false],
+      hoursPerDay: [null],
+      holidayRate: [null],
     });
     this.serverService
       .getData("api/DropDownBindingAPI/ddlCalculationBasedOn/")
@@ -62,14 +64,18 @@ export class EditHolidayPolicyComponent implements OnInit {
       .subscribe((res) => {
         this.holidayPolicy.get("policyName").setValue(res["holidayPolicyName"]);
         this.holidayPolicy.get("calcDayId").setValue(res["isCompanyBasedOn"]);
-        this.holidayPolicy.get("isHourPerDay").setValue(res["hoursPerDay"]);
+        this.holidayPolicy.get("hoursPerDay").setValue(res["hoursPerDay"]);
+        this.holidayPolicy
+          .get("particularId")
+          .setValue(res["AdditionDeductionID"]);
+
         this.holidayPolicy
           .get("calcBasedOnId")
           .setValue(res["calculationBasedOn"]);
         this.holidayPolicy
           .get("calcPercentage")
           .setValue(res["calculationPercentage"]);
-        this.holidayPolicy.get("isHolidayRate").setValue(res["holidayRate"]);
+        this.holidayPolicy.get("holidayRate").setValue(res["holidayRate"]);
       });
   }
   saveDetail() {
@@ -85,11 +91,14 @@ export class EditHolidayPolicyComponent implements OnInit {
         holidayPolicyName: this.holidayPolicy.get("policyName").value,
         isCompanyBasedOn: this.holidayPolicy.get("calcDayId").value,
         isRateBasedOnHour: null,
-        hoursPerDay: this.holidayPolicy.get("isHourPerDay").value,
+        hoursPerDay: this.holidayPolicy.get("hoursPerDay").value,
         calculationBasedOn: this.holidayPolicy.get("calcBasedOnId").value,
-        calculationPercentage: this.holidayPolicy.get("calcPercentage").value,
+        calculationPercentage: Number(
+          this.holidayPolicy.get("calcPercentage").value
+        ),
         isRateOnly: null,
-        holidayRate: this.holidayPolicy.get("isHolidayRate").value,
+        holidayRate: this.holidayPolicy.get("holidayRate").value,
+        AdditionDeductionID: this.holidayPolicy.get("particularId").value,
       };
 
       this.serverService
@@ -100,5 +109,7 @@ export class EditHolidayPolicyComponent implements OnInit {
         });
     }
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["holiday-policy/list-holiday-policy/"]);
+  }
 }

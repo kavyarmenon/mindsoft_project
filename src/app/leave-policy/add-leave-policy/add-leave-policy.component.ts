@@ -149,5 +149,7 @@ export class AddLeavePolicyComponent implements OnInit {
       }
     }
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["leave-policy/list-leave-policy/"]);
+  }
 }

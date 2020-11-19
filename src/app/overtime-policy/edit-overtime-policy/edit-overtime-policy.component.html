@@ -1,19 +1,21 @@
 <div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black" class="card-title">Edit Holiday Policy</h3>
+    <h3 style="color: black" class="card-title">Edit OverTime Policy</h3>
   </div>
-  <form [formGroup]="holidayPolicy" style="padding: 15px">
+  <form [formGroup]="overTimePolicy" style="padding: 15px">
     <div class="row">
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Policy Name</mat-label>
           <input
             matInput
-            [formControl]="holidayPolicy.controls['policyName']"
+            [formControl]="overTimePolicy.controls['policyName']"
             type="text"
           />
-          <mat-error *ngIf="holidayPolicy.controls['policyName'].errors"
-            ><span *ngIf="holidayPolicy.controls['policyName'].errors.required">
+          <mat-error *ngIf="overTimePolicy.controls['policyName'].errors"
+            ><span
+              *ngIf="overTimePolicy.controls['policyName'].errors.required"
+            >
               You must enter a Policy Name.</span
             >
           </mat-error>
@@ -24,7 +26,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Calculation Based On</mat-label>
           <mat-select
-            [formControl]="holidayPolicy.controls['calcBasedOnId']"
+            [formControl]="overTimePolicy.controls['calcBasedOnId']"
             placeholder=""
           >
             <mat-option
@@ -34,9 +36,9 @@
               {{ type.calculationbasedon }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="holidayPolicy.controls['calcBasedOnId'].errors"
+          <mat-error *ngIf="overTimePolicy.controls['calcBasedOnId'].errors"
             ><span
-              *ngIf="holidayPolicy.controls['calcBasedOnId'].errors.required"
+              *ngIf="overTimePolicy.controls['calcBasedOnId'].errors.required"
             >
               You must select Calculation Based On .</span
             >
@@ -46,13 +48,13 @@
       <!-- Excluded from gross only for calc based on is gross salary-->
       <div
         class="col-md-4"
-        *ngIf="holidayPolicy.get('calcBasedOnId').value === 2"
+        *ngIf="overTimePolicy.get('calcBasedOnId').value === 2"
       >
         <mat-form-field appearance="outline">
           <mat-label>Excluded From Gross</mat-label>
           <mat-select
             multiple
-            [formControl]="holidayPolicy.controls['particularId']"
+            [formControl]="overTimePolicy.controls['particularId']"
             placeholder=""
           >
             <mat-option
@@ -69,7 +71,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Calculation Day</mat-label>
           <mat-select
-            [formControl]="holidayPolicy.controls['calcDayId']"
+            [formControl]="overTimePolicy.controls['calcDayId']"
             placeholder=""
           >
             <mat-option
@@ -79,8 +81,8 @@
               {{ type.CalculationDayDescription }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="holidayPolicy.controls['calcDayId'].errors"
-            ><span *ngIf="holidayPolicy.controls['calcDayId'].errors.required">
+          <mat-error *ngIf="overTimePolicy.controls['calcDayId'].errors"
+            ><span *ngIf="overTimePolicy.controls['calcDayId'].errors.required">
               You must select Calculation Day.</span
             >
           </mat-error>
@@ -94,12 +96,12 @@
             matInput
             type="number"
             OnlyNumber="true"
-            [formControl]="holidayPolicy.controls['calcPercentage']"
+            [formControl]="overTimePolicy.controls['calcPercentage']"
             type="text"
           />
-          <mat-error *ngIf="holidayPolicy.controls['calcPercentage'].errors"
+          <mat-error *ngIf="overTimePolicy.controls['calcPercentage'].errors"
             ><span
-              *ngIf="holidayPolicy.controls['calcPercentage'].errors.required"
+              *ngIf="overTimePolicy.controls['calcPercentage'].errors.required"
             >
               You must enter a Calculation Percentage.</span
             >
@@ -107,71 +109,46 @@
         </mat-form-field>
       </div>
 
-      <!-- <div class="col-md-4">
-        <label class="pr-box" style="margin-top: 20px">
-          <input
-            style="padding: 20px 22px; margin-right: 12px"
-            type="checkbox"
-            id=""
-            [formControl]="holidayPolicy.controls['isHourPerDay']"
-            value=""
-            checked="checked"
-          />
-          <span class="checkmark">Hour Per Day</span>
-        </label>
-      </div> -->
-
       <div class="col-md-4">
         <mat-form-field appearance="outline">
-          <mat-label>Hour Per Day</mat-label>
+          <mat-label>Overtime Rate</mat-label>
           <input
             matInput
             type="number"
             OnlyNumber="true"
-            [formControl]="holidayPolicy.controls['hoursPerDay']"
+            [formControl]="overTimePolicy.controls['overtimeRate']"
             type="text"
           />
-          <mat-error *ngIf="holidayPolicy.controls['hoursPerDay'].errors"
+          <mat-error *ngIf="overTimePolicy.controls['overtimeRate'].errors"
             ><span
-              *ngIf="holidayPolicy.controls['hoursPerDay'].errors.required"
+              *ngIf="overTimePolicy.controls['overtimeRate'].errors.required"
             >
-              You must enter a Hour Per Day.</span
+              You must enter a Overtime Rate.</span
             >
           </mat-error>
         </mat-form-field>
       </div>
-      <!--
+
+      <div class="col-md-4">
+        <mat-label>Working Hour</mat-label>
+
+        <ngb-timepicker
+          [formControl]="overTimePolicy.controls['workingHour']"
+        ></ngb-timepicker>
+      </div>
+
       <div class="col-md-4">
         <label class="pr-box" style="margin-top: 20px">
           <input
             style="padding: 20px 22px; margin-right: 12px"
             type="checkbox"
             id=""
-            [formControl]="holidayPolicy.controls['isHolidayRate']"
+            [formControl]="overTimePolicy.controls['isRateOnly']"
             value=""
             checked="checked"
           />
-          <span class="checkmark">Holiday Rate </span>
+          <span class="checkmark">Rate Only </span>
         </label>
-      </div> -->
-      <div class="col-md-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Holiday Rate </mat-label>
-          <input
-            matInput
-            type="number"
-            OnlyNumber="true"
-            [formControl]="holidayPolicy.controls['holidayRate']"
-            type="text"
-          />
-          <mat-error *ngIf="holidayPolicy.controls['holidayRate'].errors"
-            ><span
-              *ngIf="holidayPolicy.controls['holidayRate'].errors.required"
-            >
-              You must enter a Holiday Rate .</span
-            >
-          </mat-error>
-        </mat-form-field>
       </div>
     </div>
     <div class="col-md-12 row" style="margin-top: 50px; margin-left: 40%">

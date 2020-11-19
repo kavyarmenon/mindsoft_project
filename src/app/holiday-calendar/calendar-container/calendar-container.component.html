@@ -71,19 +71,22 @@
 
 <h3>
   Edit events
+  <button class="btn btn-primary float-right" (click)="saveEvent()">
+    Save
+  </button>
   <button class="btn btn-primary float-right" (click)="addEvent()">
     Add new
   </button>
   <div class="clearfix"></div>
 </h3>
 
-<div class="table-responsive">
+<div *ngIf="blnLoadCompleted" class="table-responsive">
   <table class="table table-bordered">
     <thead>
       <tr>
         <th>Title</th>
         <th>Holiday Type</th>
-        <th>Starts at</th>
+        <th>Date</th>
         <th>Remove</th>
       </tr>
     </thead>
@@ -101,13 +104,10 @@
         <td>
           <mat-select
             [(ngModel)]="event.type"
-            placeholder=""
             (ngModelChange)="changeHolidayType(i)"
+            placeholder=""
           >
-            <mat-option
-              *ngFor="let type of lsHolidayType"
-              [value]="type.holidayTypeID"
-            >
+            <mat-option *ngFor="let type of lsHolidayType" [value]="type">
               {{ type.holidayTypeName }}
             </mat-option>
           </mat-select>

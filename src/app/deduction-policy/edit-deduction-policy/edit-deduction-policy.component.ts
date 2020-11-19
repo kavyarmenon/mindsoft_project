@@ -58,11 +58,17 @@ export class EditDeductionPolicyComponent implements OnInit {
       .subscribe((res: any[]) => {
         this.lstParameterValue = res["parameterValueList"];
       });
-    // this.serverService
-    // .getData("api/DropDownBindingAPI/parameterValueDDList/")
-    // .subscribe((res: any[]) => {
-    //   this.lstParameterValue = res["particularsList"];
-    // });
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlAdditionList/")
+      .subscribe((res: any[]) => {
+        this.lstParameterName = res["particularsList"];
+      });
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlExcludefromGrossSalary/")
+      .subscribe((res: any[]) => {
+        this.lstParticular = res["particularsList"];
+      });
+
     this.getEditData();
   }
   getEditData() {
@@ -74,24 +80,34 @@ export class EditDeductionPolicyComponent implements OnInit {
       .subscribe((res) => {
         this.deductionPolicy
           .get("deductionPolicyName")
-          .setValue(res["deductionPolicyName"]);
-        this.deductionPolicy.get("effectFrom").setValue(res["effectFromstr"]);
-        this.deductionPolicy.get("effectFrom").setValue(res["effectFrom"]);
-        this.deductionPolicy.get("deductionId").setValue(res["deductionId"]);
-        this.deductionPolicy.get("basedOn").setValue(res["basedOn"]);
+          .setValue(res["deductionInfo"]["deductionPolicyName"]);
+        this.deductionPolicy
+          .get("effectFrom")
+          .setValue(res["deductionInfo"]["effectFromstr"]);
+        this.deductionPolicy
+          .get("deductionId")
+          .setValue(res["deductionInfo"]["deductionId"]);
+        this.deductionPolicy
+          .get("basedOn")
+          .setValue(res["deductionInfo"]["basedOn"]);
         this.deductionPolicy
           .get("parameterName")
-          .setValue(res["parameterName"]);
+          .setValue(res["deductionInfo"]["parameterName"]);
         this.deductionPolicy
           .get("parameterValue")
-          .setValue(res["parameterValue"]);
-        this.deductionPolicy.get("Amount").setValue(res["Amount"]);
+          .setValue(res["deductionInfo"]["parameterValue"]);
+        this.deductionPolicy
+          .get("Amount")
+          .setValue(res["deductionInfo"]["Amount"]);
         this.deductionPolicy
           .get("employerContribution")
-          .setValue(res["employerContribution"]);
+          .setValue(res["deductionInfo"]["employerContribution"]);
         this.deductionPolicy
           .get("employeeContribution")
-          .setValue(res["employeeContribution"]);
+          .setValue(res["deductionInfo"]["employeeContribution"]);
+        this.deductionPolicy
+          .get("particularId")
+          .setValue(res["deductionInfo"]["AdditionDeductionID"]);
       });
   }
   saveDetail() {
@@ -117,6 +133,7 @@ export class EditDeductionPolicyComponent implements OnInit {
         .value,
       employeeContribution: this.deductionPolicy.get("employeeContribution")
         .value,
+      AdditionDeductionID: this.deductionPolicy.get("particularId").value,
     };
 
     this.serverService
@@ -126,5 +143,7 @@ export class EditDeductionPolicyComponent implements OnInit {
         this.router.navigate(["deduction-policy/list-deduction-policy/"]);
       });
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["deduction-policy/list-deduction-policy/"]);
+  }
 }

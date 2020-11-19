@@ -159,5 +159,7 @@ export class EditLeavePolicyComponent implements OnInit {
       }
     }
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["leave-policy/list-leave-policy/"]);
+  }
 }

@@ -72,7 +72,7 @@ export class ListLeavePolicyComponent implements OnInit {
   deleteCompany(item) {
     this.serviceObject
       .getData(
-        "apiLeavePolicyAPI/DeleteLeavePolicy/?leavePolicyID=" +
+        "api/LeavePolicyAPI/DeleteLeavePolicy?leavePolicyID=" +
           item.leavePolicyID
       )
       .subscribe(

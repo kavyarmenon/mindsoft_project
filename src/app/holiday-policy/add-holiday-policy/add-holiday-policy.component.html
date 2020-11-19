@@ -1,21 +1,22 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black;" class="card-title">Holiday Policy</h3>
+    <h3 style="color: black" class="card-title">Holiday Policy</h3>
   </div>
-  <form  [formGroup]="holidayPolicy" style="padding: 15px">
-   <div class="row">
+  <form [formGroup]="holidayPolicy" style="padding: 15px">
+    <div class="row">
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Policy Name</mat-label>
-          <input matInput [formControl]="holidayPolicy.controls['policyName']"
-        type="text" />
+          <input
+            matInput
+            [formControl]="holidayPolicy.controls['policyName']"
+            type="text"
+          />
           <mat-error *ngIf="holidayPolicy.controls['policyName'].errors"
-          ><span
-            *ngIf="holidayPolicy.controls['policyName'].errors.required"
-          >
-            You must enter a Policy Name.</span
-          >
-        </mat-error>
+            ><span *ngIf="holidayPolicy.controls['policyName'].errors.required">
+              You must enter a Policy Name.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -23,17 +24,17 @@
         <mat-form-field appearance="outline">
           <mat-label>Calculation Based On</mat-label>
           <mat-select
-          [formControl]="holidayPolicy.controls['calcBasedOnId']"
-              placeholder=""
+            [formControl]="holidayPolicy.controls['calcBasedOnId']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstCalcBasedOn"
+              [value]="type.calculationbasedonId"
             >
-              <mat-option
-                *ngFor="let type of lstCalcBasedOn"
-                [value]="type.calculationbasedonId"
-              >
-                {{ type.calculationbasedon }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="holidayPolicy.controls['calcBasedOnId'].errors"
+              {{ type.calculationbasedon }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="holidayPolicy.controls['calcBasedOnId'].errors"
             ><span
               *ngIf="holidayPolicy.controls['calcBasedOnId'].errors.required"
             >
@@ -43,21 +44,24 @@
         </mat-form-field>
       </div>
       <!-- Excluded from gross only for calc based on is gross salary-->
-      <div class="col-md-4" *ngIf="holidayPolicy.get('calcBasedOnId').value===2">
+      <div
+        class="col-md-4"
+        *ngIf="holidayPolicy.get('calcBasedOnId').value === 2"
+      >
         <mat-form-field appearance="outline">
           <mat-label>Excluded From Gross</mat-label>
           <mat-select
-              multiple
-              [formControl]="holidayPolicy.controls['particularId']"
-              placeholder=""
+            multiple
+            [formControl]="holidayPolicy.controls['particularId']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstParticular"
+              [value]="type.additionDeductionId"
             >
-              <mat-option
-                *ngFor="let type of lstParticular"
-                [value]="type.additionDeductionId"
-              >
-                {{ type.particulars}}
-              </mat-option>
-            </mat-select>
+              {{ type.particulars }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
@@ -65,20 +69,18 @@
         <mat-form-field appearance="outline">
           <mat-label>Calculation Day</mat-label>
           <mat-select
-          [formControl]="holidayPolicy.controls['calcDayId']"
-              placeholder=""
+            [formControl]="holidayPolicy.controls['calcDayId']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstCalcDay"
+              [value]="type.CalculationDayID"
             >
-              <mat-option
-                *ngFor="let type of lstCalcDay"
-                [value]="type.CalculationDayID"
-              >
-                {{ type.CalculationDayDescription }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="holidayPolicy.controls['calcDayId'].errors"
-            ><span
-              *ngIf="holidayPolicy.controls['calcDayId'].errors.required"
-            >
+              {{ type.CalculationDayDescription }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="holidayPolicy.controls['calcDayId'].errors"
+            ><span *ngIf="holidayPolicy.controls['calcDayId'].errors.required">
               You must select Calculation Day.</span
             >
           </mat-error>
@@ -88,38 +90,108 @@
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Calculation Percentage</mat-label>
-          <input matInput type="number" OnlyNumber="true" [formControl]="holidayPolicy.controls['calcPercentage']"
-        type="text" />
+          <input
+            matInput
+            type="number"
+            OnlyNumber="true"
+            [formControl]="holidayPolicy.controls['calcPercentage']"
+            type="text"
+          />
           <mat-error *ngIf="holidayPolicy.controls['calcPercentage'].errors"
-          ><span
-            *ngIf="holidayPolicy.controls['calcPercentage'].errors.required"
-          >
-            You must enter a Calculation Percentage.</span
-          >
-        </mat-error>
+            ><span
+              *ngIf="holidayPolicy.controls['calcPercentage'].errors.required"
+            >
+              You must enter a Calculation Percentage.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
 
-      <div class="col-md-4" >
-        <label class="pr-box" style="margin-top: 20px;">
-          <input style="padding: 20px 22px;
-          margin-right: 12px;" type="checkbox" id="" [formControl]="holidayPolicy.controls['isHourPerDay']" value="" checked="checked">
+      <!-- <div class="col-md-4">
+        <label class="pr-box" style="margin-top: 20px">
+          <input
+            style="padding: 20px 22px; margin-right: 12px"
+            type="checkbox"
+            id=""
+            [formControl]="holidayPolicy.controls['isHourPerDay']"
+            value=""
+            checked="checked"
+          />
           <span class="checkmark">Hour Per Day</span>
         </label>
-      </div>
+      </div> -->
 
-      <div class="col-md-4" >
-        <label class="pr-box" style="margin-top: 20px;">
-          <input style="padding: 20px 22px;
-          margin-right: 12px;" type="checkbox" id="" [formControl]="holidayPolicy.controls['isHolidayRate']" value="" checked="checked">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Hour Per Day</mat-label>
+          <input
+            matInput
+            type="number"
+            OnlyNumber="true"
+            [formControl]="holidayPolicy.controls['hoursPerDay']"
+            type="text"
+          />
+          <mat-error *ngIf="holidayPolicy.controls['hoursPerDay'].errors"
+            ><span
+              *ngIf="holidayPolicy.controls['hoursPerDay'].errors.required"
+            >
+              You must enter a Hour Per Day.</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <!--
+      <div class="col-md-4">
+        <label class="pr-box" style="margin-top: 20px">
+          <input
+            style="padding: 20px 22px; margin-right: 12px"
+            type="checkbox"
+            id=""
+            [formControl]="holidayPolicy.controls['isHolidayRate']"
+            value=""
+            checked="checked"
+          />
           <span class="checkmark">Holiday Rate </span>
         </label>
-      </div
-      >
+      </div> -->
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Holiday Rate </mat-label>
+          <input
+            matInput
+            type="number"
+            OnlyNumber="true"
+            [formControl]="holidayPolicy.controls['holidayRate']"
+            type="text"
+          />
+          <mat-error *ngIf="holidayPolicy.controls['holidayRate'].errors"
+            ><span
+              *ngIf="holidayPolicy.controls['holidayRate'].errors.required"
+            >
+              You must enter a Holiday Rate .</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-md-12 row" style="margin-top: 50px;margin-left: 40%;">
-      <button type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="saveDetail()">Save</button>
-      <button type="button"  mat-raised-button class="btn btn-secondary m-t-20" (click)="cancel()">Cancel</button>
-   </div>
+    <div class="col-md-12 row" style="margin-top: 50px; margin-left: 40%">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        class="btn save_btn m-r-10 m-t-20"
+        (click)="saveDetail()"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        class="btn btn-secondary m-t-20"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </div>

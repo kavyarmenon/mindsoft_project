@@ -5,6 +5,8 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ServerService } from "src/app/server.service";
 import swal from "sweetalert2";
+import * as moment from "moment";
+
 @Component({
   selector: "app-add-pf-policy",
   templateUrl: "./add-pf-policy.component.html",
@@ -57,6 +59,11 @@ export class AddPfPolicyComponent implements OnInit {
         this.lstDeduction = res["particularsList"];
       });
     this.serverService
+      .getData("api/DropDownBindingAPI/ddlExcludefromGrossSalary/")
+      .subscribe((res: any[]) => {
+        this.lstParticular = res["particularsList"];
+      });
+    this.serverService
       .getData("api/DropDownBindingAPI/parameterValueDDList/")
       .subscribe((res: any[]) => {
         this.lstParameterValue = res["parameterValueList"];
@@ -77,7 +84,9 @@ export class AddPfPolicyComponent implements OnInit {
     let dctData = {
       pfPolicyID: null,
       pfPolicyName: this.pfPolicy.get("pfPolicyName").value,
-      effectFrom: this.pfPolicy.get("effectFrom").value,
+      effectFrom: moment(this.pfPolicy.get("effectFrom").value)
+        .format("DD/MM/YYYY")
+        .toString(),
       deductFrom: this.pfPolicy.get("deductFrom").value,
       fixedAmount: this.pfPolicy.get("fixedAmount").value,
       parameterName: this.pfPolicy.get("parameterName").value,
@@ -90,6 +99,7 @@ export class AddPfPolicyComponent implements OnInit {
       edli: this.pfPolicy.get("edli").value,
       epfAdmin: this.pfPolicy.get("epfAdmin").value,
       edliAdmin: this.pfPolicy.get("edliAdmin").value,
+      AdditionDeductionID: this.pfPolicy.get("particularId").value,
     };
     console.log("click save");
 
@@ -100,5 +110,7 @@ export class AddPfPolicyComponent implements OnInit {
         this.router.navigate(["pf-policy/list-pf-policy/"]);
       });
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["pf-policy/list-pf-policy/"]);
+  }
 }

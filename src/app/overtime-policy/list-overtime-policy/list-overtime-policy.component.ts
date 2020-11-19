@@ -17,7 +17,7 @@ export class ListOvertimePolicyComponent implements OnInit {
   dataSource;
   blnShowData = false;
 
-  lstDisplayedColumns = ["policyName", "applicableFrom", "action"];
+  lstDisplayedColumns = ["policyName", "workingHr", "action"];
 
   constructor(
     private serviceObject: ServerService,
@@ -39,7 +39,7 @@ export class ListOvertimePolicyComponent implements OnInit {
           // if (res['status'] == 1)
           // {
 
-          this.data = res["leavePolicyList"];
+          this.data = res["overtimeMasterList"];
           console.log(this.data, "data");
 
           if (this.data.length > 0) {
@@ -69,18 +69,20 @@ export class ListOvertimePolicyComponent implements OnInit {
   }
 
   editCompany(item) {
-    localStorage.setItem("leavePolicyID", item.leavePolicyID);
-    this.router.navigate(["leave-policy/edit-leave-policy/"]);
+    localStorage.setItem("overtimePolicyId", item.overtimePolicyId);
+    this.router.navigate(["overtime-policy/edit-overtime-policy/"]);
   }
   deleteCompany(item) {
+    console.log(item, item.overtimePolicyId, "item delete");
+
     this.serviceObject
       .getData(
-        "apiLeavePolicyAPI/DeleteLeavePolicy/?leavePolicyID=" +
-          item.leavePolicyID
+        "api/OvertimePolicyAPI/DeleteOvertimePolicy/?overtimePolicyId=" +
+          item.overtimePolicyId
       )
       .subscribe(
         (res) => {
-          swal.fire("Success", "Data Saved Successfully", "success");
+          swal.fire("Success", "Data Deleted Successfully", "success");
           this.searchData();
         },
         (error) => {

@@ -1,1 +1,256 @@
-<p>edit-salary-template works!</p>
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
+  <div class="card-body">
+    <h3 style="color: black" class="card-title">Edit Salary Template</h3>
+  </div>
+  <!-- <div style="padding: 15px"> -->
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name" type="text" />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Encash Policy</mat-label>
+        <mat-select [(ngModel)]="encashPolicy" placeholder="">
+          <mat-option
+            *ngFor="let type of lstEncashPolicy"
+            [value]="type.encashPolicyID"
+          >
+            {{ type.encashPolicyName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Absent Policy</mat-label>
+        <mat-select [(ngModel)]="absentPolicy" placeholder="">
+          <mat-option
+            *ngFor="let type of lstAbsentPolicy"
+            [value]="type.absentPolicyID"
+          >
+            {{ type.absentPolicyName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Holiday Policy</mat-label>
+        <mat-select [(ngModel)]="holidayPolicy" placeholder="">
+          <mat-option
+            *ngFor="let type of lstHolidayPolicy"
+            [value]="type.holidayPolicyID"
+          >
+            {{ type.holidayPolicyName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="outline">
+        <mat-label>OverTime Policy</mat-label>
+        <mat-select [(ngModel)]="overTimePolicy" placeholder="">
+          <mat-option
+            *ngFor="let type of lstOverTimePolicy"
+            [value]="type.overtimePolicyID"
+          >
+            {{ type.overtimePolicyName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- <hr> -->
+  <mat-tab-group
+    style="width: 80%"
+    [(selectedIndex)]="selectedIndex"
+    (selectedTabChange)="tabChanged($event)"
+  >
+    <mat-tab label="Addition">
+      <table class="table table-border">
+        <thead class="text-nowrap">
+          <th>
+            Particular <span class="ui-column-resizer" dragableColumn> </span>
+          </th>
+          <th>
+            Percentage<span class="ui-column-resizer" dragableColumn> </span>
+          </th>
+          <th>Action<span class="ui-column-resizer" dragableColumn> </span></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of lstAdditionDetails; let i = index">
+            <td>
+              <mat-select
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                placeholder=""
+                [(ngModel)]="row.particularId"
+              >
+                <mat-option
+                  *ngFor="let type of lstParticular"
+                  [value]="type.additionDeductionId"
+                >
+                  {{ type.particulars }}
+                </mat-option>
+              </mat-select>
+            </td>
+            <td>
+              <input
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                matInput
+                placeholder=""
+                [(ngModel)]="row.percentage"
+              />
+            </td>
+            <td
+              style="
+                display: flex !important;
+                justify-content: center !important;
+              "
+            >
+              <button
+                *ngIf="lstAdditionDetails.length - 1 === i"
+                id="Add"
+                title="Add"
+                class="add_btn"
+                (click)="addRow(i, 'addition')"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+              <button
+                style="margin-left: 6px"
+                id="delete"
+                title="Delete"
+                (click)="deleteRow(i, 'addition')"
+                class="delete_btn mr-2"
+              >
+                <i
+                  class="fa fa-trash"
+                  style="color: cornflowerblue"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-md-12 row">
+        <button
+          color="primary"
+          mat-raised-button
+          (click)="nextStep()"
+          type="button"
+        >
+          Next
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Deduction">
+      <table class="table table-border">
+        <thead class="text-nowrap">
+          <th>
+            Particular <span class="ui-column-resizer" dragableColumn> </span>
+          </th>
+          <th>
+            Percentage<span class="ui-column-resizer" dragableColumn> </span>
+          </th>
+          <th>Action<span class="ui-column-resizer" dragableColumn> </span></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of lstDeductionDetails; let i = index">
+            <td>
+              <mat-select
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                placeholder=""
+                [(ngModel)]="row.particularId"
+              >
+                <mat-option
+                  *ngFor="let type of lstParticular"
+                  [value]="type.additionDeductionId"
+                >
+                  {{ type.particulars }}
+                </mat-option>
+              </mat-select>
+            </td>
+            <td>
+              <input
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                matInput
+                placeholder=""
+                [(ngModel)]="row.percentage"
+              />
+            </td>
+            <td
+              style="
+                display: flex !important;
+                justify-content: center !important;
+              "
+            >
+              <button
+                *ngIf="lstDeductionDetails.length - 1 === i"
+                id="Add"
+                title="Add"
+                class="add_btn"
+                (click)="addRow(i, 'deduction')"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+              <button
+                style="margin-left: 6px"
+                id="delete"
+                title="Delete"
+                (click)="deleteRow(i, 'deduction')"
+                class="delete_btn mr-2"
+              >
+                <i
+                  class="fa fa-trash"
+                  style="color: cornflowerblue"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <button
+          color="primary"
+          mat-raised-button
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="previousStep()"
+          type="button"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="saveDetail()"
+        >
+          Save
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

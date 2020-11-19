@@ -1,507 +1,630 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black;" class="card-title">Edit Settlement Policy</h3>
+    <h3 style="color: black" class="card-title">Add Settlement Policy</h3>
   </div>
-  <div class="row"  style="padding: 20px; background-color: #f3f9fe">
-      <div class="col-md-12">
-        <mat-form-field appearance="outline">
-          <mat-label>Policy Name</mat-label>
-          <input matInput [(ngModel)]="policyName"
-         type="text" />
-        </mat-form-field>
-      </div>
+  <div class="row" style="padding: 20px; background-color: #f3f9fe">
+    <div class="col-md-12">
+      <mat-form-field appearance="outline">
+        <mat-label>Policy Name</mat-label>
+        <input matInput [(ngModel)]="policyName" type="text" />
+      </mat-form-field>
+    </div>
   </div>
-  <mat-horizontal-stepper  [linear]="true" #stepper  style="background-color: #f3f9fe">
-    <mat-step >
+  <mat-horizontal-stepper
+    [linear]="true"
+    #stepper
+    style="background-color: #f3f9fe"
+  >
+    <mat-step>
       <ng-template matStepLabel>Normal</ng-template>
-        <div class="row">
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Based On</mat-label>
-              <mat-select
-                 [(ngModel)]="calcBasedOnNormal"
-                  placeholder=""
-                >
-                  <mat-option
-                    *ngFor="let type of lstCalcBasedOn"
-                    [value]="type.calculationbasedonId"
-                  >
-                    {{ type.calculationbasedon }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-          <!-- Excluded from gross only for calc based on is gross salary-->
-          <div class="col-md-4" *ngIf="calcBasedOnNormal===2">
-            <mat-form-field appearance="outline">
-              <mat-label>Excluded From Gross</mat-label>
-              <mat-select
-                  multiple
-                  [(ngModel)]="particularsId"
-                  placeholder=""
-                >
-                  <mat-option
-                    *ngFor="let type of lstParticular"
-                    [value]="type.additionDeductionId"
-                  >
-                    {{ type.particulars}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Day</mat-label>
-              <mat-select
-              [(ngModel)]="calcDayNormal"
-                  placeholder=""
-                >
-                  <mat-option
-                    *ngFor="let type of lstCalcDay"
-                    [value]="type.CalculationDayID"
-                  >
-                    {{ type.CalculationDayDescription }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-4" >
-            <label class="pr-box" style="margin-top: 20px;">
-              <input style="padding: 20px 22px;
-              margin-right: 12px;" type="checkbox" id=""  [(ngModel)]="isIncludeEligibleLeaveNormal" value="" checked="checked">
-              <span class="checkmark">Include Eligible Leave </span>
-            </label>
-          </div>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Calculation Based On</mat-label>
+            <mat-select [(ngModel)]="calcBasedOnNormal" placeholder="">
+              <mat-option
+                *ngFor="let type of lstCalcBasedOn"
+                [value]="type.calculationbasedonId"
+              >
+                {{ type.calculationbasedon }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <hr>
-        &nbsp;
-        <div class="row" style="width: 100%;">
-          <mat-tab-group [(selectedIndex)]="selectedIndexOfNormal" (selectedTabChange)="tabChanged($event,'normal')" >
-            <mat-tab label="Less Than Five">
-              <div class="example-container mat-elevation-z8 mt-3">
-                <table class="table table-border" >
-                  <thead class="text-nowrap">
-                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let row of lstLessThanNormal; let i =index">
-                        <td>
-                           <mat-select
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            [(ngModel)]="row.parameter"
-                              placeholder=""
-                            >
-                            <mat-option
-                              *ngFor="let type of lstParameter"
-                              [value]="type.parameterValueId"
-                            >
-                              {{ type.parameterValue }}
-                            </mat-option>
-                          </mat-select>
-                        </td>
-                        <td>
-                          <input
-                         [(ngModel)]="row.noOfMonth"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                        <td>
-                           <input
-                          [(ngModel)]="row.noOfDays"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                          <td style="display:flex !important;
-                          justify-content:center!important;">
-                            <button
-                            *ngIf="(lstLessThanNormal.length-1)===i"
-                            id="Add"
-                            title="Add"
-                            class="add_btn"
-                            (click)="addRow('normal','lessThan')"
-                          >
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                          </button>
-                          <button
-                          style="margin-left: 6px;"
-                            id="delete"
-                            title="Delete"
-                            (click)="deleteRow(i,'normal','lessThan')"
-                            class="delete_btn mr-2"
-                          >
-                            <i
-                              class="fa fa-trash"
-                              style="color: cornflowerblue"
-                              aria-hidden="true"
-                            ></i>
-                            </button>
-                          </td>
-                      </tr>
-                  </tbody>
-                </table>
-           </div>
-            </mat-tab>
-            <mat-tab [disabled]="isFillTab1" label="Greater Than Five">
-              <div class="example-container mat-elevation-z8 mt-3">
-                <table class="table table-border" >
-                  <thead class="text-nowrap">
-                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                      <tr  *ngFor="let row of lstGreaterThanNormal ; let i =index">
-                        <td>
-                             <mat-select
-                              style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            [(ngModel)]="row.parameter"
-                              placeholder=""
-                            >
-                            <mat-option
-                              *ngFor="let type of lstParameter"
-                              [value]="type.parameterValueId"
-                            >
-                              {{ type.parameterValue }}
-                            </mat-option>
-                          </mat-select>
-                        </td>
-                        <td>
-                          <input
-                           [(ngModel)]="row.noOfMonth"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                        <td>
-                           <input
-                            [(ngModel)]="row.noOfDays"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                          <td style="display:flex !important;
-                          justify-content:center!important;">
-                            <button
-                            *ngIf="(lstGreaterThanNormal.length-1)===i"
-                            id="Add"
-                            title="Add"
-                            class="add_btn"
-                            (click)="addRow('normal','greaterThan')"
-                          >
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                          </button>
-                          <button
-                          style="margin-left: 6px;"
-                            id="delete"
-                            title="Delete"
-                            (click)="deleteRow(i,'normal','greaterThan')"
-                            class="delete_btn mr-2"
-                          >
-                            <i
-                              class="fa fa-trash"
-                              style="color: cornflowerblue"
-                              aria-hidden="true"
-                            ></i>
-                            </button>
-                          </td>
-                      </tr>
-                  </tbody>
-                </table>
-              </div>
-            </mat-tab>
+        <!-- Excluded from gross only for calc based on is gross salary-->
+        <div class="col-md-4" *ngIf="calcBasedOnNormal === 2">
+          <mat-form-field appearance="outline">
+            <mat-label>Excluded From Gross</mat-label>
+            <mat-select
+              multiple
+              [(ngModel)]="particularsIdNormal"
+              placeholder=""
+            >
+              <mat-option
+                *ngFor="let type of lstParticular"
+                [value]="type.additionDeductionId"
+              >
+                {{ type.particulars }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Calculation Day</mat-label>
+            <mat-select [(ngModel)]="calcDayNormal" placeholder="">
+              <mat-option
+                *ngFor="let type of lstCalcDay"
+                [value]="type.CalculationDayID"
+              >
+                {{ type.CalculationDayDescription }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <label class="pr-box" style="margin-top: 20px">
+            <input
+              style="padding: 20px 22px; margin-right: 12px"
+              type="checkbox"
+              id=""
+              [(ngModel)]="isIncludeEligibleLeaveNormal"
+              value=""
+              checked="checked"
+            />
+            <span class="checkmark">Include Eligible Leave </span>
+          </label>
+        </div>
+      </div>
+      <hr />
+      &nbsp;
+      <div class="row" style="width: 100%">
+        <mat-tab-group
+          [(selectedIndex)]="selectedIndexOfNormal"
+          (selectedTabChange)="tabChanged($event, 'normal')"
+        >
+          <mat-tab label="Less Than Five">
+            <div class="example-container mat-elevation-z8 mt-3">
+              <table class="table table-border">
+                <thead class="text-nowrap">
+                  <th>
+                    Parameter
+                    <span class="ui-column-resizer" dragableColumn> </span>
+                  </th>
+                  <th>
+                    No of Month<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>
+                    No of Days<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of lstLessThanNormal; let i = index">
+                    <td>
+                      <mat-select
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        [(ngModel)]="row.parameter"
+                        placeholder=""
+                      >
+                        <mat-option
+                          *ngFor="let type of lstParameter"
+                          [value]="type.parameterValueId"
+                        >
+                          {{ type.parameterValue }}
+                        </mat-option>
+                      </mat-select>
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfMonth"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfDays"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td
+                      style="
+                        display: flex !important;
+                        justify-content: center !important;
+                      "
+                    >
+                      <button
+                        *ngIf="lstLessThanNormal.length - 1 === i"
+                        id="Add"
+                        title="Add"
+                        class="add_btn"
+                        (click)="addRow('normal', 'lessThan')"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                      <button
+                        style="margin-left: 6px"
+                        id="delete"
+                        title="Delete"
+                        (click)="deleteRow(i, 'normal', 'lessThan')"
+                        class="delete_btn mr-2"
+                      >
+                        <i
+                          class="fa fa-trash"
+                          style="color: cornflowerblue"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
+          <mat-tab [disabled]="isFillTab1" label="Greater Than Five">
+            <div class="example-container mat-elevation-z8 mt-3">
+              <table class="table table-border">
+                <thead class="text-nowrap">
+                  <th>
+                    Parameter
+                    <span class="ui-column-resizer" dragableColumn> </span>
+                  </th>
+                  <th>
+                    No of Month<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>
+                    No of Days<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of lstGreaterThanNormal; let i = index">
+                    <td>
+                      <mat-select
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        [(ngModel)]="row.parameter"
+                        placeholder=""
+                      >
+                        <mat-option
+                          *ngFor="let type of lstParameter"
+                          [value]="type.parameterValueId"
+                        >
+                          {{ type.parameterValue }}
+                        </mat-option>
+                      </mat-select>
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfMonth"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfDays"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td
+                      style="
+                        display: flex !important;
+                        justify-content: center !important;
+                      "
+                    >
+                      <button
+                        *ngIf="lstGreaterThanNormal.length - 1 === i"
+                        id="Add"
+                        title="Add"
+                        class="add_btn"
+                        (click)="addRow('normal', 'greaterThan')"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                      <button
+                        style="margin-left: 6px"
+                        id="delete"
+                        title="Delete"
+                        (click)="deleteRow(i, 'normal', 'greaterThan')"
+                        class="delete_btn mr-2"
+                      >
+                        <i
+                          class="fa fa-trash"
+                          style="color: cornflowerblue"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
         </mat-tab-group>
-        </div>
-        <div class="next-button">
-          <button *ngIf="selectedIndexOfNormal===1" color="primary" mat-raised-button class="btn save_btn m-r-10 m-t-20"  (click)="previousStep('normal')" type="button">Previous</button>
-          <button *ngIf="selectedIndexOfNormal===1" type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="nextStepOfStepper(stepper,'normal')">Next</button>
-          <button *ngIf="selectedIndexOfNormal===0" type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20"  (click)="nextStepOfMatTab('normal')">Next</button>
-
-        </div>
+      </div>
+      <div class="next-button">
+        <button
+          *ngIf="selectedIndexOfNormal === 1"
+          color="primary"
+          mat-raised-button
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="previousStep('normal')"
+          type="button"
+        >
+          Previous
+        </button>
+        <button
+          *ngIf="selectedIndexOfNormal === 1"
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="nextStepOfStepper(stepper, 'normal')"
+        >
+          Next
+        </button>
+        <button
+          *ngIf="selectedIndexOfNormal === 0"
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="nextStepOfMatTab('normal')"
+        >
+          Next
+        </button>
+      </div>
     </mat-step>
 
-    <mat-step >
+    <mat-step>
       <ng-template matStepLabel>Termination</ng-template>
-        <div class="row">
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Based On</mat-label>
-              <mat-select
-                 [(ngModel)]="calcBasedOnTermination"
-                  placeholder=""
-                >
-                  <mat-option
-                    *ngFor="let type of lstCalcBasedOn"
-                    [value]="type.calculationbasedonId"
-                  >
-                    {{ type.calculationbasedon }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-          <!-- <h5>Excluded From Gross</h5> -->
-          <div class="col-md-4" *ngIf="calcBasedOnTermination===2">
-            <mat-form-field appearance="outline">
-              <mat-label>Excluded From Gross</mat-label>
-              <mat-select
-                  multiple
-                  [(ngModel)]="particularsId"
-                  placeholder=""
-                >
-                  <mat-option
-                    *ngFor="let type of lstParticular"
-                    [value]="type.additionDeductionId"
-                  >
-                    {{ type.particulars}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Day</mat-label>
-              <mat-select
-              [(ngModel)]="calcDayTermination"
-                  placeholder=""
-                >
-                  <mat-option
-                    *ngFor="let type of lstCalcDay"
-                    [value]="type.CalculationDayID"
-                  >
-                    {{ type.CalculationDayDescription }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-4" >
-            <label class="pr-box" style="margin-top: 20px;">
-              <input style="padding: 20px 22px;
-              margin-right: 12px;" type="checkbox" id=""  [(ngModel)]="isIncludeEligibleLeaveTermination" value="" checked="checked">
-              <span class="checkmark">Include Eligible Leave </span>
-            </label>
-          </div>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Calculation Based On</mat-label>
+            <mat-select [(ngModel)]="calcBasedOnTermination" placeholder="">
+              <mat-option
+                *ngFor="let type of lstCalcBasedOn"
+                [value]="type.calculationbasedonId"
+              >
+                {{ type.calculationbasedon }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <hr>
-        &nbsp;
-        <div class="row" style="width: 100%;">
-          <mat-tab-group [(selectedIndex)]="selectedIndexOfTermination" (selectedTabChange)="tabChanged($event,'termination')" >
-            <mat-tab label="Less Than Five">
-              <div class="example-container mat-elevation-z8 mt-3">
-                <table class="table table-border" >
-                  <thead class="text-nowrap">
-                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let row of lstLessThanTermination; let i =index">
-                        <td>
-                          <mat-select
-                           style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            [(ngModel)]="row.parameter"
-                              placeholder=""
-                            >
-                            <mat-option
-                              *ngFor="let type of lstParameter"
-                              [value]="type.parameterValueId"
-                            >
-                              {{ type.parameterValue }}
-                            </mat-option>
-                          </mat-select>
-                        </td>
-                        <td>
-                          <input
-                         [(ngModel)]="row.noOfMonth"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                        <td>
-                           <input
-                          [(ngModel)]="row.noOfDays"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                          <td style="display:flex !important;
-                          justify-content:center!important;">
-                            <button
-                            *ngIf="(lstLessThanTermination.length-1)===i"
-                            id="Add"
-                            title="Add"
-                            class="add_btn"
-                            (click)="addRow('termination','lessThan')"
-                          >
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                          </button>
-                          <button
-                          style="margin-left: 6px;"
-                            id="delete"
-                            title="Delete"
-                            (click)="deleteRow(i,'termination','lessThan')"
-                            class="delete_btn mr-2"
-                          >
-                            <i
-                              class="fa fa-trash"
-                              style="color: cornflowerblue"
-                              aria-hidden="true"
-                            ></i>
-                            </button>
-                          </td>
-                      </tr>
-                  </tbody>
-                </table>
-           </div>
-            </mat-tab>
-            <mat-tab [disabled]="isFillTab1" label="Greater Than Five">
-              <div class="example-container mat-elevation-z8 mt-3">
-                <table class="table table-border" >
-                  <thead class="text-nowrap">
-                    <th>Parameter <span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Month<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>No of Days<span class="ui-column-resizer" dragableColumn> </span></th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                      <tr  *ngFor="let row of lstGreaterThanTermination ; let i =index">
-                        <td>
-                             <mat-select
-                             style="
-                             background-color: #f3f9fe;
-                             padding: 6px;
-                             border-radius: 10px;
-                             "
-                            [(ngModel)]="row.parameter"
-                              placeholder=""
-                            >
-                            <mat-option
-                              *ngFor="let type of lstParameter"
-                              [value]="type.parameterValueId"
-                            >
-                              {{ type.parameterValue }}
-                            </mat-option>
-                          </mat-select>
-                        </td>
-                        <td>
-                          <input
-                           [(ngModel)]="row.noOfMonth"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                        <td>
-                           <input
-                            [(ngModel)]="row.noOfDays"
-                            style="
-                            background-color: #f3f9fe;
-                            padding: 6px;
-                            border-radius: 10px;
-                            "
-                            matInput
-                            type="number"
-                            OnlyNumber="true"
-                            placeholder=""
-                          /></td>
-                          <td style="display:flex !important;
-                          justify-content:center!important;">
-                            <button
-                            *ngIf="(lstGreaterThanTermination.length-1)===i"
-                            id="Add"
-                            title="Add"
-                            class="add_btn"
-                            (click)="addRow('termination','greaterThan')"
-                          >
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                          </button>
-                          <button
-                          style="margin-left: 6px;"
-                            id="delete"
-                            title="Delete"
-                            (click)="deleteRow(i,'termination','greaterThan')"
-                            class="delete_btn mr-2"
-                          >
-                            <i
-                              class="fa fa-trash"
-                              style="color: cornflowerblue"
-                              aria-hidden="true"
-                            ></i>
-                            </button>
-                          </td>
-                      </tr>
-                  </tbody>
-                </table>
-              </div>
-            </mat-tab>
+        <!-- <h5>Excluded From Gross</h5> -->
+        <div class="col-md-4" *ngIf="calcBasedOnTermination === 2">
+          <mat-form-field appearance="outline">
+            <mat-label>Excluded From Gross</mat-label>
+            <mat-select
+              multiple
+              [(ngModel)]="particularsIdTermination"
+              placeholder=""
+            >
+              <mat-option
+                *ngFor="let type of lstParticular"
+                [value]="type.additionDeductionId"
+              >
+                {{ type.particulars }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Calculation Day</mat-label>
+            <mat-select [(ngModel)]="calcDayTermination" placeholder="">
+              <mat-option
+                *ngFor="let type of lstCalcDay"
+                [value]="type.CalculationDayID"
+              >
+                {{ type.CalculationDayDescription }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <label class="pr-box" style="margin-top: 20px">
+            <input
+              style="padding: 20px 22px; margin-right: 12px"
+              type="checkbox"
+              id=""
+              [(ngModel)]="isIncludeEligibleLeaveTermination"
+              value=""
+              checked="checked"
+            />
+            <span class="checkmark">Include Eligible Leave </span>
+          </label>
+        </div>
+      </div>
+      <hr />
+      &nbsp;
+      <div class="row" style="width: 100%">
+        <mat-tab-group
+          [(selectedIndex)]="selectedIndexOfTermination"
+          (selectedTabChange)="tabChanged($event, 'termination')"
+        >
+          <mat-tab label="Less Than Five">
+            <div class="example-container mat-elevation-z8 mt-3">
+              <table class="table table-border">
+                <thead class="text-nowrap">
+                  <th>
+                    Parameter
+                    <span class="ui-column-resizer" dragableColumn> </span>
+                  </th>
+                  <th>
+                    No of Month<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>
+                    No of Days<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of lstLessThanTermination; let i = index">
+                    <td>
+                      <mat-select
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        [(ngModel)]="row.parameter"
+                        placeholder=""
+                      >
+                        <mat-option
+                          *ngFor="let type of lstParameter"
+                          [value]="type.parameterValueId"
+                        >
+                          {{ type.parameterValue }}
+                        </mat-option>
+                      </mat-select>
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfMonth"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfDays"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td
+                      style="
+                        display: flex !important;
+                        justify-content: center !important;
+                      "
+                    >
+                      <button
+                        *ngIf="lstLessThanTermination.length - 1 === i"
+                        id="Add"
+                        title="Add"
+                        class="add_btn"
+                        (click)="addRow('termination', 'lessThan')"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                      <button
+                        style="margin-left: 6px"
+                        id="delete"
+                        title="Delete"
+                        (click)="deleteRow(i, 'termination', 'lessThan')"
+                        class="delete_btn mr-2"
+                      >
+                        <i
+                          class="fa fa-trash"
+                          style="color: cornflowerblue"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
+          <mat-tab [disabled]="isFillTab1" label="Greater Than Five">
+            <div class="example-container mat-elevation-z8 mt-3">
+              <table class="table table-border">
+                <thead class="text-nowrap">
+                  <th>
+                    Parameter
+                    <span class="ui-column-resizer" dragableColumn> </span>
+                  </th>
+                  <th>
+                    No of Month<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>
+                    No of Days<span class="ui-column-resizer" dragableColumn>
+                    </span>
+                  </th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let row of lstGreaterThanTermination; let i = index"
+                  >
+                    <td>
+                      <mat-select
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        [(ngModel)]="row.parameter"
+                        placeholder=""
+                      >
+                        <mat-option
+                          *ngFor="let type of lstParameter"
+                          [value]="type.parameterValueId"
+                        >
+                          {{ type.parameterValue }}
+                        </mat-option>
+                      </mat-select>
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfMonth"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td>
+                      <input
+                        [(ngModel)]="row.noOfDays"
+                        style="
+                          background-color: #f3f9fe;
+                          padding: 6px;
+                          border-radius: 10px;
+                        "
+                        matInput
+                        type="number"
+                        OnlyNumber="true"
+                        placeholder=""
+                      />
+                    </td>
+                    <td
+                      style="
+                        display: flex !important;
+                        justify-content: center !important;
+                      "
+                    >
+                      <button
+                        *ngIf="lstGreaterThanTermination.length - 1 === i"
+                        id="Add"
+                        title="Add"
+                        class="add_btn"
+                        (click)="addRow('termination', 'greaterThan')"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                      <button
+                        style="margin-left: 6px"
+                        id="delete"
+                        title="Delete"
+                        (click)="deleteRow(i, 'termination', 'greaterThan')"
+                        class="delete_btn mr-2"
+                      >
+                        <i
+                          class="fa fa-trash"
+                          style="color: cornflowerblue"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-tab>
         </mat-tab-group>
-        </div>
-        <div class="next-button">
-          <button *ngIf="selectedIndexOfTermination===1" color="primary" mat-raised-button class="btn save_btn m-r-10 m-t-20"  (click)="previousStep('termination')" type="button">Previous</button>
-          <button *ngIf="selectedIndexOfTermination===1" type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="nextStepOfStepper(stepper,'termination')">Next</button>
-          <button *ngIf="selectedIndexOfTermination===0" type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20"  (click)="nextStepOfMatTab('termination')">Next</button>
-
-        </div>
+      </div>
+      <div class="next-button">
+        <button
+          *ngIf="selectedIndexOfTermination === 1"
+          color="primary"
+          mat-raised-button
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="previousStep('termination')"
+          type="button"
+        >
+          Previous
+        </button>
+        <button
+          *ngIf="selectedIndexOfTermination === 1"
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="nextStepOfStepper(stepper, 'termination')"
+        >
+          Next
+        </button>
+        <button
+          *ngIf="selectedIndexOfTermination === 0"
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="btn save_btn m-r-10 m-t-20"
+          (click)="nextStepOfMatTab('termination')"
+        >
+          Next
+        </button>
+      </div>
     </mat-step>
   </mat-horizontal-stepper>
 </div>

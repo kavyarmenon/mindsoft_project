@@ -1,7 +1,19 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;padding: 23px;">
+<div
+  class="card"
+  style="background-color: #f3f9fe; border-radius: 22px; padding: 23px"
+>
   <div class="row">
-    <h3  style="color: black;" class="card-title">PF Policy List</h3>
-    <div style="margin-left: 72%;" ><button  type="button"  mat-raised-button color="primary" [routerLink]="['/pf-policy/add-pf-policy/']">Add</button></div>
+    <h3 style="color: black" class="card-title">PF Policy List</h3>
+    <div style="margin-left: 72%">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        [routerLink]="['/pf-policy/add-pf-policy/']"
+      >
+        Add
+      </button>
+    </div>
   </div>
 </div>
 
@@ -10,20 +22,20 @@
     <div class="example-container mat-elevation-z8 mt-3">
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="policyName">
-          <mat-header-cell class="minwidth10" *matHeaderCellDef
-            > Policy Name</mat-header-cell
+          <mat-header-cell class="minwidth10" *matHeaderCellDef>
+            Policy Name</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
-            >{{ row.leavePolicyName }}
+            >{{ row.pfPolicyName }}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="applicableFrom">
+        <ng-container matColumnDef="effectFrom">
           <mat-header-cell class="minwidth10" *matHeaderCellDef>
-            Applicable From</mat-header-cell
+            Effect From</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
-            >{{ row.applicableFrom }}
+            >{{ row.effectFrom }}
           </mat-cell>
         </ng-container>
 

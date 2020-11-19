@@ -6,34 +6,28 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatTableDataSource } from "@angular/material/table";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ServerService } from "src/app/server.service";
 import swal from "sweetalert2";
 @Component({
-  selector: "app-add-overtime-policy",
-  templateUrl: "./add-overtime-policy.component.html",
-  styleUrls: ["./add-overtime-policy.component.css"],
+  selector: "app-edit-overtime-policy",
+  templateUrl: "./edit-overtime-policy.component.html",
+  styleUrls: ["./edit-overtime-policy.component.css"],
 })
-export class AddOvertimePolicyComponent implements OnInit {
+export class EditOvertimePolicyComponent implements OnInit {
   overTimePolicy: FormGroup;
   lstCalcBasedOn = [];
   lstParticular = [];
   lstCalcDay = [];
-  time: FormControl = new FormControl(null, {
-    // updateOn: 'blur',
-    // validators: [Validators.required],
-  });
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     public router: Router,
     private toastr: ToastrService,
     private serverService: ServerService
-  ) {
-    // this.dataSource = new MatTableDataSource(this.lstTableData);
-  }
+  ) {}
+  overtimePolicyID = localStorage.getItem("overtimePolicyId");
   ngOnInit(): void {
     this.overTimePolicy = this.formBuilder.group({
       policyName: ["", Validators.required],
@@ -62,6 +56,33 @@ export class AddOvertimePolicyComponent implements OnInit {
       .subscribe((res: any[]) => {
         this.lstCalcDay = res["calculationDayList"];
       });
+    this.getEditData();
+  }
+  getEditData() {
+    console.log(this.overtimePolicyID);
+
+    this.serverService
+      .getData(
+        "api/OvertimePolicyAPI/getOTPolicyById?overtimePolicyId=" +
+          this.overtimePolicyID
+      )
+      .subscribe((res: any[]) => {
+        this.overTimePolicy
+          .get("policyName")
+          .setValue(res["overtimePolicyName"]);
+        this.overTimePolicy.get("calcDayId").setValue(res["isCompanyBasedOn"]);
+        this.overTimePolicy.get("calcBasedOnId").setValue(res["calculationId"]);
+        // res['isCalculationPercentage'])null.setValue(
+        this.overTimePolicy
+          .get("calcPercentage")
+          .setValue(res["calculationPercentage"]);
+        this.overTimePolicy.get("workingHour").setValue(res["workingHours"]);
+        this.overTimePolicy.get("isRateOnly").setValue(res["isRateOnly"]);
+        this.overTimePolicy.get("overtimeRate").setValue(res["overtimeRate"]);
+        this.overTimePolicy
+          .get("particularId")
+          .setValue(res["AdditionDeductionID"]);
+      });
   }
   saveDetail() {
     console.log(this.overTimePolicy, "overtime");
@@ -77,7 +98,7 @@ export class AddOvertimePolicyComponent implements OnInit {
       return false;
     } else {
       let dctData = {
-        overtimePolicyId: null,
+        overtimePolicyId: this.overtimePolicyID,
         overtimePolicyName: this.overTimePolicy.get("policyName").value,
         isCompanyBasedOn: this.overTimePolicy.get("calcDayId").value,
         calculationId: this.overTimePolicy.get("calcBasedOnId").value,

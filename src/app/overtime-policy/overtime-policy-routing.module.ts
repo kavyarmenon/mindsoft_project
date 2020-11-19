@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AddOvertimePolicyComponent } from "./add-overtime-policy/add-overtime-policy.component";
+import { EditOvertimePolicyComponent } from "./edit-overtime-policy/edit-overtime-policy.component";
 import { ListOvertimePolicyComponent } from "./list-overtime-policy/list-overtime-policy.component";
 
 const routes: Routes = [
@@ -12,10 +13,10 @@ const routes: Routes = [
     path: "list-overtime-policy",
     component: ListOvertimePolicyComponent,
   },
-  // {
-  //   path: "edit-shift-policy",
-  //   component: EditShiftPolicyComponent,
-  // },
+  {
+    path: "edit-overtime-policy",
+    component: EditOvertimePolicyComponent,
+  },
 ];
 
 @NgModule({

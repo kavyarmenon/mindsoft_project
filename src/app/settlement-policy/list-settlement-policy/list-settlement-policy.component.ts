@@ -66,7 +66,7 @@ export class ListSettlementPolicyComponent implements OnInit {
       )
       .subscribe(
         (res) => {
-          swal.fire("Success", "Data Saved Successfully", "success");
+          swal.fire("Success", "Data Deleted Successfully", "success");
           this.searchData();
         },
         (error) => {

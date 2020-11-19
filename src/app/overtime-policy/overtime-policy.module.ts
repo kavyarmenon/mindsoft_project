@@ -16,8 +16,9 @@ import { SharedModule } from "./../shared/shared.module";
 import { MatIconModule } from "@angular/material/icon";
 import { ListOvertimePolicyComponent } from "./list-overtime-policy/list-overtime-policy.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { EditOvertimePolicyComponent } from './edit-overtime-policy/edit-overtime-policy.component';
 @NgModule({
-  declarations: [AddOvertimePolicyComponent, ListOvertimePolicyComponent],
+  declarations: [AddOvertimePolicyComponent, ListOvertimePolicyComponent, EditOvertimePolicyComponent],
   imports: [
     CommonModule,
     OvertimePolicyRoutingModule,

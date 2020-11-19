@@ -181,12 +181,12 @@ export class AddWorkPolicyComponent implements OnInit {
 
     this.lstPolicyDetails.forEach((element) => {
       let dct = {};
-      if (element.workingDay) {
-        dct["DayID"] = element.dayId;
-        dct["WorkPolicyID"] = null;
-        dct["ShiftID"] = element.dayId;
-        dctData.workPolicyDetailList.push(dct);
-      }
+      // if (element.workingDay) {
+      dct["DayID"] = element.dayId;
+      dct["WorkPolicyID"] = null;
+      dct["ShiftID"] = element.dayId;
+      dctData.workPolicyDetailList.push(dct);
+      // }
     });
 
     this.lstPolicyConsequences.forEach((element) => {

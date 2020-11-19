@@ -1,21 +1,22 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black;" class="card-title">Edit PF Policy</h3>
+    <h3 style="color: black" class="card-title">Edit PF Policy</h3>
   </div>
-  <form   [formGroup]="pfPolicy" style="padding: 15px" (ngSubmit)="saveDetail()">
-   <div class="row">
+  <form [formGroup]="pfPolicy" style="padding: 15px" (ngSubmit)="saveDetail()">
+    <div class="row">
       <div class="col-md-3">
         <mat-form-field appearance="outline">
           <mat-label>Policy Name</mat-label>
-          <input matInput [formControl]="pfPolicy.controls['pfPolicyName']"
-        type="text" />
+          <input
+            matInput
+            [formControl]="pfPolicy.controls['pfPolicyName']"
+            type="text"
+          />
           <mat-error *ngIf="pfPolicy.controls['pfPolicyName'].errors"
-          ><span
-            *ngIf="pfPolicy.controls['pfPolicyName'].errors.required"
-          >
-            You must enter a Policy Name.</span
-          >
-        </mat-error>
+            ><span *ngIf="pfPolicy.controls['pfPolicyName'].errors.required">
+              You must enter a Policy Name.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -40,88 +41,104 @@
         <mat-form-field appearance="outline">
           <mat-label>Deduction</mat-label>
           <mat-select
-          [formControl]="pfPolicy.controls['deductionId']"
-              placeholder=""
+            [formControl]="pfPolicy.controls['deductionId']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstDeduction"
+              [value]="type.additionDeductionId"
             >
-              <mat-option
-                *ngFor="let type of lstDeduction"
-                [value]="type.additionDeductionId"
-              >
-                {{ type.particulars }}
-              </mat-option>
-            </mat-select>
+              {{ type.particulars }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
       <div class="col-md-3">
         <mat-form-field appearance="outline">
           <mat-label>Fixed Amount</mat-label>
-          <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['fixedAmount']"
-        type="text" />
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['fixedAmount']"
+            type="text"
+          />
           <mat-error *ngIf="pfPolicy.controls['fixedAmount'].errors"
-          ><span
-            *ngIf="pfPolicy.controls['fixedAmount'].errors.required"
-          >
-            You must enter a Fixed Amount.</span
-          >
-        </mat-error>
+            ><span *ngIf="pfPolicy.controls['fixedAmount'].errors.required">
+              You must enter a Fixed Amount.</span
+            >
+          </mat-error>
         </mat-form-field>
       </div>
-   </div>
-   <hr>
-   <span style="margin-left: 2px;">Deduct From</span>
-   <br>
-  <div class="row">
-      <div class="col-md-12" style="margin-top: 8px;">
-        <label >
-          <input type="radio" value="particular"  [formControl]="pfPolicy.controls['deductFrom']">
-            <span style="margin-left: 7px;">Particulars</span>
+    </div>
+    <hr />
+    <span style="margin-left: 2px">Deduct From</span>
+    <br />
+    <div class="row">
+      <div class="col-md-12" style="margin-top: 8px">
+        <label>
+          <input
+            type="radio"
+            value="particular"
+            [formControl]="pfPolicy.controls['deductFrom']"
+          />
+          <span style="margin-left: 7px">Particulars</span>
         </label>
-        <label style="margin-left: 20%;">
-          <input type="radio" value="fixedAmount"  [formControl]="pfPolicy.controls['deductFrom']">
-            <span  style="margin-left: 7px;">Fixed Amount</span>
+        <label style="margin-left: 20%">
+          <input
+            type="radio"
+            value="fixedAmount"
+            [formControl]="pfPolicy.controls['deductFrom']"
+          />
+          <span style="margin-left: 7px">Fixed Amount</span>
         </label>
-        <label style="margin-left: 20%;">
-          <input type="radio" value="rateOnly"  [formControl]="pfPolicy.controls['deductFrom']">
-            <span  style="margin-left: 7px;">Rate Only</span>
+        <label style="margin-left: 20%">
+          <input
+            type="radio"
+            value="rateOnly"
+            [formControl]="pfPolicy.controls['deductFrom']"
+          />
+          <span style="margin-left: 7px">Rate Only</span>
         </label>
-        <label style="margin-left: 20%;">
-          <input type="radio" value="fixedVariant"  [formControl]="pfPolicy.controls['deductFrom']">
-            <span  style="margin-left: 7px;">Fixed Variant</span>
+        <label style="margin-left: 20%">
+          <input
+            type="radio"
+            value="fixedVariant"
+            [formControl]="pfPolicy.controls['deductFrom']"
+          />
+          <span style="margin-left: 7px">Fixed Variant</span>
         </label>
       </div>
     </div>
-   <br>
-   <hr>
-   <div class="row">
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Parameter Name</mat-label>
-        <mat-select
-        [formControl]="pfPolicy.controls['parameterName']"
+    <br />
+    <hr />
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Parameter Name</mat-label>
+          <mat-select
+            [formControl]="pfPolicy.controls['parameterName']"
             placeholder=""
           >
             <mat-option
               *ngFor="let type of lstParameterName"
-              [value]="type.calculationbasedonId"
+              [value]="type.additionDeductionId"
             >
-              {{ type.calculationbasedon }}
+              {{ type.particulars }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="pfPolicy.controls['parameterName'].errors"
-          ><span
-            *ngIf="pfPolicy.controls['parameterName'].errors.required"
-          >
-            You must select Parameter Name .</span
-          >
-        </mat-error>
-      </mat-form-field>
-    </div>
+            ><span *ngIf="pfPolicy.controls['parameterName'].errors.required">
+              You must select Parameter Name .</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="col-md-4" >
-      <mat-form-field appearance="outline">
-        <mat-label>Parameter Value</mat-label>
-        <mat-select
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Parameter Value</mat-label>
+          <mat-select
             [formControl]="pfPolicy.controls['parameterValue']"
             placeholder=""
           >
@@ -129,168 +146,205 @@
               *ngFor="let type of lstParameterValue"
               [value]="type.parameterValueId"
             >
-              {{ type.parameterValue}}
+              {{ type.parameterValue }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="pfPolicy.controls['parameterValue'].errors"
-          ><span
-            *ngIf="pfPolicy.controls['parameterValue'].errors.required"
-          >
-            You must select Parameter Value .</span
-          >
-        </mat-error>
-      </mat-form-field>
+            ><span *ngIf="pfPolicy.controls['parameterValue'].errors.required">
+              You must select Parameter Value .</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['Amount']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['Amount'].errors"
+            ><span *ngIf="pfPolicy.controls['Amount'].errors.required">
+              You must enter a Amount.</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Amount</mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['Amount']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['Amount'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['Amount'].errors.required"
-        >
-          You must enter a Amount.</span
-        >
-      </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <hr *ngIf="pfPolicy.controls['deductFrom'].value==='particular'" >
-   <h5 *ngIf="pfPolicy.controls['deductFrom'].value==='particular'"  style="margin-left: 4px;color: #d10000;"><b>Deduct From</b></h5>
-   <div *ngIf="pfPolicy.controls['deductFrom'].value==='particular'" class="row" style="margin-top:8px">
+    <hr *ngIf="pfPolicy.controls['deductFrom'].value === 'particular'" />
+    <h5
+      *ngIf="pfPolicy.controls['deductFrom'].value === 'particular'"
+      style="margin-left: 4px; color: #d10000"
+    >
+      <b>Deduct From</b>
+    </h5>
+    <div
+      *ngIf="pfPolicy.controls['deductFrom'].value === 'particular'"
+      class="row"
+      style="margin-top: 8px"
+    >
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Calculation Based On</mat-label>
           <mat-select
-          [formControl]="pfPolicy.controls['calcBasedOnId']"
-              placeholder=""
+            [formControl]="pfPolicy.controls['calcBasedOnId']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstCalcBasedOn"
+              [value]="type.calculationbasedonId"
             >
-              <mat-option
-                *ngFor="let type of lstCalcBasedOn"
-                [value]="type.calculationbasedonId"
-              >
-                {{ type.calculationbasedon }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="pfPolicy.controls['calcBasedOnId'].errors"
-            ><span
-              *ngIf="pfPolicy.controls['calcBasedOnId'].errors.required"
-            >
+              {{ type.calculationbasedon }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="pfPolicy.controls['calcBasedOnId'].errors"
+            ><span *ngIf="pfPolicy.controls['calcBasedOnId'].errors.required">
               You must select Calculation Based On .</span
             >
           </mat-error>
         </mat-form-field>
       </div>
       <!-- Excluded from gross only for calc based on is gross salary-->
-      <div class="col-md-4" *ngIf="pfPolicy.get('calcBasedOnId').value===2">
+      <div class="col-md-4" *ngIf="pfPolicy.get('calcBasedOnId').value === 2">
         <mat-form-field appearance="outline">
           <mat-label>Excluded From Gross</mat-label>
           <mat-select
-              multiple
-              [formControl]="pfPolicy.controls['particularId']"
-              placeholder=""
+            multiple
+            [formControl]="pfPolicy.controls['particularId']"
+            placeholder=""
+          >
+            <mat-option
+              *ngFor="let type of lstParticular"
+              [value]="type.additionDeductionId"
             >
-              <mat-option
-                *ngFor="let type of lstParticular"
-                [value]="type.additionDeductionId"
-              >
-                {{ type.particulars}}
-              </mat-option>
-            </mat-select>
+              {{ type.particulars }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Employer Contribution (%)</mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['employerContribution']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['employerContribution'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['employerContribution'].errors.required"
-        >
-          You must enter a Employer Contribution.</span
-        >
-      </mat-error>
-      </mat-form-field>
+    <hr />
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Employer Contribution (%)</mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['employerContribution']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['employerContribution'].errors"
+            ><span
+              *ngIf="pfPolicy.controls['employerContribution'].errors.required"
+            >
+              You must enter a Employer Contribution.</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Employee Contribution (%) </mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['employeeContribution']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['employeeContribution'].errors"
+            ><span
+              *ngIf="pfPolicy.controls['employeeContribution'].errors.required"
+            >
+              You must enter a Employee Contribution.</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>EPS Employer (%) </mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['epsEmployer']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['epsEmployer'].errors"
+            ><span *ngIf="pfPolicy.controls['epsEmployer'].errors.required">
+              You must enter a EPS Employer (%).</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>EDLI (%) </mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['edli']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['edli'].errors"
+            ><span *ngIf="pfPolicy.controls['edli'].errors.required">
+              You must enter a EDLI (%).</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>EPF Admin (%) </mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['epfAdmin']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['epfAdmin'].errors"
+            ><span *ngIf="pfPolicy.controls['epfAdmin'].errors.required">
+              You must enter a EPF Admin (%).</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>EDLI Admin(%) </mat-label>
+          <input
+            matInput
+            OnlyNumber="true"
+            [formControl]="pfPolicy.controls['edliAdmin']"
+            type="text"
+          />
+          <mat-error *ngIf="pfPolicy.controls['edliAdmin'].errors"
+            ><span *ngIf="pfPolicy.controls['edliAdmin'].errors.required">
+              You must enter a EDLI Admin (%).</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Employee Contribution (%) </mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['employeeContribution']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['employeeContribution'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['employeeContribution'].errors.required"
-        >
-          You must enter a Employee Contribution.</span
-        >
-      </mat-error>
-      </mat-form-field>
+    <div class="col-md-12 row" style="margin-top: 50px; margin-left: 40%">
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        class="btn save_btn m-r-10 m-t-20"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        class="btn btn-secondary m-t-20"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
     </div>
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>EPS Employer (%) </mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['epsEmployer']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['epsEmployer'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['epsEmployer'].errors.required"
-        >
-          You must enter a EPS Employer (%).</span
-        >
-      </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>EDLI (%) </mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['edli']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['edli'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['edli'].errors.required"
-        >
-          You must enter a EDLI (%).</span
-        >
-      </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>EPF Admin (%) </mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['epfAdmin']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['epfAdmin'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['epfAdmin'].errors.required"
-        >
-          You must enter a EPF Admin  (%).</span
-        >
-      </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-md-4">
-      <mat-form-field appearance="outline">
-        <mat-label>EDLI Admin(%) </mat-label>
-        <input matInput OnlyNumber='true' [formControl]="pfPolicy.controls['edliAdmin']"
-      type="text" />
-        <mat-error *ngIf="pfPolicy.controls['edliAdmin'].errors"
-        ><span
-          *ngIf="pfPolicy.controls['edliAdmin'].errors.required"
-        >
-          You must enter a EDLI Admin (%).</span
-        >
-      </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-   <div class="col-md-12 row" style="margin-top: 50px;margin-left: 40%;">
-      <button type="submit"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" >Save</button>
-      <button type="button"  mat-raised-button class="btn btn-secondary m-t-20" (click)="cancel()">Cancel</button>
-   </div>
   </form>
 </div>

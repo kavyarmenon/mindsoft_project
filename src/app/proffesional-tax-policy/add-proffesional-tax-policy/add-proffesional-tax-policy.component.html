@@ -1,33 +1,30 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black;" class="card-title">Proffesional Tax Policy</h3>
+    <h3 style="color: black" class="card-title">Proffesional Tax Policy</h3>
   </div>
   <div style="padding: 15px">
-   <div class="row">
+    <div class="row">
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>State</mat-label>
           <mat-select
-          [(ngModel)]="stateId"
-          placeholder=""
-          (ngModelChange)="changeState()"
-        >
-          <mat-option
-            *ngFor="let type of lstState"
-            [value]="type.stateId"
+            [(ngModel)]="stateId"
+            placeholder=""
+            (ngModelChange)="changeState()"
           >
-            {{ type.state }}
-          </mat-option>
-        </mat-select>
+            <mat-option *ngFor="let type of lstState" [value]="type.stateId">
+              {{ type.state }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
   </div>
-<hr>
+  <hr />
   <div class="row" style="background-color: #f3f9fe">
     <div class="col-md-12" style="padding: 35px">
       <div class="example-container mat-elevation-z8 mt-3">
-        <table  class="mat-elevation-z8">
+        <table class="mat-elevation-z8">
           <tr>
             <th>Range</th>
             <th>Range From</th>
@@ -35,14 +32,27 @@
             <th>Amount</th>
             <th>Action</th>
           </tr>
-          <tr *ngFor="let row of lstTableData;let i=index">
+          <tr *ngFor="let row of lstTableData; let i = index">
             <td>
               <input
-              [(ngModel)]="row.range"
+                [(ngModel)]="row.range"
                 style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                matInput
+                OnlyNumber="true"
+                placeholder=""
+              />
+            </td>
+            <td>
+              <input
+                [(ngModel)]="row.rangeFrom"
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
                 "
                 matInput
                 type="number"
@@ -50,46 +60,42 @@
                 placeholder=""
               />
             </td>
-            <td><input
-              [(ngModel)]="row.rangeFrom"
-                style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
-                "
-                matInput
-                type="number"
-                OnlyNumber="true"
-                placeholder=""
-              /></td>
-            <td>  <input
-              [(ngModel)]="row.rangeTo"
-                style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
-                "
-                matInput
-                type="number"
-                OnlyNumber="true"
-                placeholder=""
-              /></td>
             <td>
               <input
-              [(ngModel)]="row.taxAmount"
+                [(ngModel)]="row.rangeTo"
                 style="
-                background-color: #f3f9fe;
-                padding: 6px;
-                border-radius: 10px;
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
                 "
                 matInput
                 type="number"
                 OnlyNumber="true"
                 placeholder=""
-              /></td>
-              <td style="display:flex !important;
-              justify-content:center!important;">
-                <button *ngIf="lstTableData.length-1===i"
+              />
+            </td>
+            <td>
+              <input
+                [(ngModel)]="row.taxAmount"
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                matInput
+                type="number"
+                OnlyNumber="true"
+                placeholder=""
+              />
+            </td>
+            <td
+              style="
+                display: flex !important;
+                justify-content: center !important;
+              "
+            >
+              <button
+                *ngIf="lstTableData.length - 1 === i"
                 id="Add"
                 title="Add"
                 class="add_btn"
@@ -98,7 +104,7 @@
                 <i class="fa fa-plus" aria-hidden="true"></i>
               </button>
               <button
-              style="margin-left: 6px;"
+                style="margin-left: 6px"
                 id="delete"
                 title="Delete"
                 (click)="deleteRow(i)"
@@ -109,14 +115,30 @@
                   style="color: cornflowerblue"
                   aria-hidden="true"
                 ></i>
-                </button>
-              </td>
+              </button>
+            </td>
           </tr>
         </table>
-   </div>
+      </div>
+    </div>
+    <div class="col-md-12 row" style="margin-top: 50px; margin-left: 40%">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        class="btn save_btn m-r-10 m-t-20"
+        (click)="saveDetail()"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        class="btn btn-secondary m-t-20"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
-  <div class="col-md-12 row" style="margin-top: 50px;margin-left: 40%;">
-    <button type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="saveDetail()">Save</button>
-    <button type="button"  mat-raised-button class="btn btn-secondary m-t-20" (click)="cancel()">Cancel</button>
-</div>
 </div>

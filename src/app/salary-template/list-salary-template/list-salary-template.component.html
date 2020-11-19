@@ -1,7 +1,19 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;padding: 23px;">
+<div
+  class="card"
+  style="background-color: #f3f9fe; border-radius: 22px; padding: 23px"
+>
   <div class="row">
-    <h3  style="color: black;" class="card-title">Salary Template List</h3>
-    <div style="margin-left: 72%;" ><button  type="button"  mat-raised-button color="primary" [routerLink]="['/salary-template/add-salary-template/']">Add</button></div>
+    <h3 style="color: black" class="card-title">Salary Template List</h3>
+    <div style="margin-left: 72%">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        [routerLink]="['/salary-template/add-salary-template/']"
+      >
+        Add
+      </button>
+    </div>
   </div>
 </div>
 
@@ -9,15 +21,15 @@
   <div class="card-body">
     <div class="example-container mat-elevation-z8 mt-3">
       <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="policyName">
-          <mat-header-cell class="minwidth10" *matHeaderCellDef
-            > Policy Name</mat-header-cell
+        <ng-container matColumnDef="templateName">
+          <mat-header-cell class="minwidth10" *matHeaderCellDef>
+            Template Name</mat-header-cell
           >
           <mat-cell *matCellDef="let row" class="minwidth10"
-            >{{ row.leavePolicyName }}
+            >{{ row.templateName }}
           </mat-cell>
         </ng-container>
-
+        <!--
         <ng-container matColumnDef="applicableFrom">
           <mat-header-cell class="minwidth10" *matHeaderCellDef>
             Applicable From</mat-header-cell
@@ -25,7 +37,7 @@
           <mat-cell *matCellDef="let row" class="minwidth10"
             >{{ row.applicableFrom }}
           </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>

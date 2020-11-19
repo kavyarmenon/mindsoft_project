@@ -17,7 +17,8 @@ export class EditSettlementPolicyComponent implements OnInit {
   lstLessThanNormal = [];
   lstGreaterThanTermination = [];
   lstLessThanTermination = [];
-  particularsId;
+  particularsIdNormal;
+  particularsIdTermination;
   lstCalcBasedOn = [];
   lstParticular = [];
   lstCalcDay = [];
@@ -49,6 +50,10 @@ export class EditSettlementPolicyComponent implements OnInit {
   isIncludeEligibleLeaveNormal: false;
 
   ngOnInit(): void {
+    this.serverService
+      .getData("api/MasterListAPI/ExcludeFromGrossList/")
+      .subscribe((res: any[]) => {});
+
     this.serverService
       .getData("api/DropDownBindingAPI/ddlCalculationBasedOn/")
       .subscribe((res: any[]) => {
@@ -339,7 +344,7 @@ export class EditSettlementPolicyComponent implements OnInit {
       gratuityPolicyFiveYr: [],
       gratuityPolicyTer: [],
       gratuityPolicyFiveYrTer: [],
-      excludedIDList: [],
+      excludedIDList: this.particularsIdNormal,
     };
     //Normal
     this.lstLessThanNormal.forEach((element) => {
@@ -392,7 +397,7 @@ export class EditSettlementPolicyComponent implements OnInit {
       .subscribe((res: any[]) => {
         if (res["Status"]) {
           swal.fire("Success", "Data Saved Successfully", "success");
-          this.router.navigate(["work-policy/list-work-policy/"]);
+          this.router.navigate(["settlement-policy/list-settlement-policy/"]);
         }
       });
   }

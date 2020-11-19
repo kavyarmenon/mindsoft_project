@@ -76,6 +76,9 @@ export class EditEncashPolicyComponent implements OnInit {
         this.encashPolicy
           .get("encashRate")
           .setValue(res["encashPolicy"]["encashRate"]);
+        this.encashPolicy
+          .get("particularId")
+          .setValue(res["encashPolicy"]["AdditionDeductionID"]);
       });
   }
   saveDetail() {
@@ -91,6 +94,7 @@ export class EditEncashPolicyComponent implements OnInit {
         calculationPercentage: null,
         isRateOnly: this.encashPolicy.get("isRatePerDay").value,
         encashRate: this.encashPolicy.get("encashRate").value,
+        AdditionDeductionID: this.encashPolicy.get("particularId").value,
       };
       this.serverService
         .postData("api/EncashPolicyAPI/Create/", dctData)
@@ -100,5 +104,7 @@ export class EditEncashPolicyComponent implements OnInit {
         });
     }
   }
-  cancel() {}
+  cancel() {
+    this.router.navigate(["encash-policy/list-encash-policy/"]);
+  }
 }
