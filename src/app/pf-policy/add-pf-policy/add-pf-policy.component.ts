@@ -29,7 +29,7 @@ export class AddPfPolicyComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.pfPolicy = this.formBuilder.group({
-      particularId: [null],
+      particularId: [],
       calcBasedOnId: [null],
       pfPolicyID: [null],
       pfPolicyName: [null, Validators.required],
@@ -57,6 +57,13 @@ export class AddPfPolicyComponent implements OnInit {
       .getData("api/DropDownBindingAPI/ddlDeductionList/")
       .subscribe((res: any[]) => {
         this.lstDeduction = res["particularsList"];
+        this.lstDeduction.forEach((element) => {
+          if (element.particulars === "PF") {
+            this.pfPolicy
+              .get("deductionId")
+              .setValue(element.additionDeductionId);
+          }
+        });
       });
     this.serverService
       .getData("api/DropDownBindingAPI/ddlExcludefromGrossSalary/")
@@ -81,25 +88,31 @@ export class AddPfPolicyComponent implements OnInit {
       return;
     }
 
-    let dctData = {
+    let dctData = {};
+    dctData["pfPolicyDet"] = this.pfPolicy.get("particularId").value;
+    dctData["pfPolicy"] = {
       pfPolicyID: null,
       pfPolicyName: this.pfPolicy.get("pfPolicyName").value,
       effectFrom: moment(this.pfPolicy.get("effectFrom").value)
         .format("DD/MM/YYYY")
         .toString(),
-      deductFrom: this.pfPolicy.get("deductFrom").value,
-      fixedAmount: this.pfPolicy.get("fixedAmount").value,
-      parameterName: this.pfPolicy.get("parameterName").value,
-      parameterValue: this.pfPolicy.get("parameterValue").value,
-      Amount: this.pfPolicy.get("Amount").value,
-      rateOnly: this.pfPolicy.get("rateOnly").value,
-      employerContribution: this.pfPolicy.get("employerContribution").value,
-      employeeContribution: this.pfPolicy.get("employeeContribution").value,
-      epsEmployer: this.pfPolicy.get("epsEmployer").value,
-      edli: this.pfPolicy.get("edli").value,
-      epfAdmin: this.pfPolicy.get("epfAdmin").value,
-      edliAdmin: this.pfPolicy.get("edliAdmin").value,
-      AdditionDeductionID: this.pfPolicy.get("particularId").value,
+      deductFrom: Number(this.pfPolicy.get("deductFrom").value),
+      fixedAmount: Number(this.pfPolicy.get("fixedAmount").value),
+      parameterName: Number(this.pfPolicy.get("parameterName").value),
+      parameterValue: Number(this.pfPolicy.get("parameterValue").value),
+      Amount: Number(this.pfPolicy.get("Amount").value),
+      rateOnly: Number(this.pfPolicy.get("rateOnly").value),
+      employerContribution: Number(
+        this.pfPolicy.get("employerContribution").value
+      ),
+      employeeContribution: Number(
+        this.pfPolicy.get("employeeContribution").value
+      ),
+      epsEmployer: Number(this.pfPolicy.get("epsEmployer").value),
+      edli: Number(this.pfPolicy.get("edli").value),
+      epfAdmin: Number(this.pfPolicy.get("epfAdmin").value),
+      edliAdmin: Number(this.pfPolicy.get("edliAdmin").value),
+      deduction: Number(this.pfPolicy.get("deductionId").value),
     };
     console.log("click save");
 

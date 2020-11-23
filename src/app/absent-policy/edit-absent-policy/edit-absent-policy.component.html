@@ -4,37 +4,22 @@
   </div>
   <div style="padding: 15px">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <mat-form-field appearance="outline">
           <mat-label>Policy Name</mat-label>
           <input matInput [(ngModel)]="policyName" type="text" />
         </mat-form-field>
       </div>
-
-      <div class="col-md-4">
-        <label class="pr-box" style="margin-top: 20px">
-          <input
-            style="padding: 20px 22px; margin-right: 12px"
-            type="checkbox"
-            id=""
-            [(ngModel)]="isAbsentPolicyOnly"
-            value=""
-          />
-          <span class="checkmark">Absent Policy Only </span>
+      <div class="col-lg-3" style="margin-top: 15px">
+        <label>
+          <input type="radio" value="1" [(ngModel)]="isAbsentPolicyOnly" />
+          <span style="margin-left: 7px">Absent Policy Only</span>
         </label>
       </div>
-
-      <div class="col-md-4">
-        <label class="pr-box" style="margin-top: 20px">
-          <input
-            style="padding: 20px 22px; margin-right: 12px"
-            type="checkbox"
-            id=""
-            [(ngModel)]="ismergeBoth"
-            value=""
-            checked="checked"
-          />
-          <span class="checkmark"
+      <div class="col-lg-6" style="margin-top: 15px">
+        <label style="margin-left: 20%">
+          <input type="radio" value="2" [(ngModel)]="isAbsentPolicyOnly" />
+          <span style="margin-left: 7px"
             >Merge Absent & Shortage Amount in Salary Slip</span
           >
         </label>
@@ -43,7 +28,7 @@
     <mat-tab-group>
       <mat-tab label="Absent">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!absentIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Based On</mat-label>
               <mat-select [(ngModel)]="absentCalcBasedOnId" placeholder="">
@@ -75,7 +60,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!absentIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Day</mat-label>
               <mat-select [(ngModel)]="absentCalcDayId" placeholder="">
@@ -86,19 +71,6 @@
                   {{ type.CalculationDayDescription }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Percentage</mat-label>
-              <input
-                OnlyNumber="true"
-                matInput
-                type="number"
-                [(ngModel)]="absentCalcPercentage"
-                type="text"
-              />
             </mat-form-field>
           </div>
 
@@ -124,6 +96,7 @@
                 [(ngModel)]="absentIsRateBasedOnHour"
                 value=""
                 checked="checked"
+                (ngModelChange)="absentIsRateOnly = false"
               />
               <span class="checkmark">Rate Based On Hour </span>
             </label>
@@ -138,20 +111,21 @@
                 [(ngModel)]="absentIsRateOnly"
                 value=""
                 checked="checked"
+                (ngModelChange)="absentIsRateBasedOnHour = false"
               />
               <span class="checkmark">Rate Only </span>
             </label>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!absentIsRateOnly">
             <mat-label>Hour Per Day</mat-label>
             <ngb-timepicker [(ngModel)]="absentHourPerDay"></ngb-timepicker>
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Shortage" *ngIf="!isAbsentPolicyOnly">
+      <mat-tab label="Shortage" *ngIf="isAbsentPolicyOnly === '2'">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!mergeIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Based On</mat-label>
               <mat-select [(ngModel)]="mergeCalcBasedOnId" placeholder="">
@@ -183,7 +157,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!mergeIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Day</mat-label>
               <mat-select [(ngModel)]="mergeCalcDayId" placeholder="">
@@ -194,19 +168,6 @@
                   {{ type.CalculationDayDescription }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Percentage</mat-label>
-              <input
-                OnlyNumber="true"
-                matInput
-                type="number"
-                [(ngModel)]="mergeCalcPercentage"
-                type="text"
-              />
             </mat-form-field>
           </div>
 
@@ -232,6 +193,7 @@
                 [(ngModel)]="mergeIsRateBasedOnHour"
                 value=""
                 checked="checked"
+                (ngModelChange)="mergeIsRateOnly = false"
               />
               <span class="checkmark">Rate Based On Hour </span>
             </label>
@@ -246,12 +208,12 @@
                 [(ngModel)]="mergeIsRateOnly"
                 value=""
                 checked="checked"
+                (ngModelChange)="mergeIsRateBasedOnHour = false"
               />
               <span class="checkmark">Rate Only </span>
             </label>
           </div>
-
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!mergeIsRateOnly">
             <mat-label>Hour Per Day</mat-label>
             <ngb-timepicker [(ngModel)]="mergeHourPerDay"></ngb-timepicker>
           </div>

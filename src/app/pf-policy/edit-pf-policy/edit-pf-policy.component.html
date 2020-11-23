@@ -41,6 +41,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Deduction</mat-label>
           <mat-select
+            disabled
             [formControl]="pfPolicy.controls['deductionId']"
             placeholder=""
           >
@@ -79,7 +80,7 @@
         <label>
           <input
             type="radio"
-            value="particular"
+            value="1"
             [formControl]="pfPolicy.controls['deductFrom']"
           />
           <span style="margin-left: 7px">Particulars</span>
@@ -87,7 +88,7 @@
         <label style="margin-left: 20%">
           <input
             type="radio"
-            value="fixedAmount"
+            value="2"
             [formControl]="pfPolicy.controls['deductFrom']"
           />
           <span style="margin-left: 7px">Fixed Amount</span>
@@ -95,7 +96,7 @@
         <label style="margin-left: 20%">
           <input
             type="radio"
-            value="rateOnly"
+            value="3"
             [formControl]="pfPolicy.controls['deductFrom']"
           />
           <span style="margin-left: 7px">Rate Only</span>
@@ -103,7 +104,7 @@
         <label style="margin-left: 20%">
           <input
             type="radio"
-            value="fixedVariant"
+            value="4"
             [formControl]="pfPolicy.controls['deductFrom']"
           />
           <span style="margin-left: 7px">Fixed Variant</span>
@@ -112,7 +113,7 @@
     </div>
     <br />
     <hr />
-    <div class="row">
+    <div class="row" *ngIf="pfPolicy.controls['deductFrom'].value != '2'">
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Parameter Name</mat-label>
@@ -173,15 +174,15 @@
         </mat-form-field>
       </div>
     </div>
-    <hr *ngIf="pfPolicy.controls['deductFrom'].value === 'particular'" />
+    <hr *ngIf="pfPolicy.controls['deductFrom'].value === '1'" />
     <h5
-      *ngIf="pfPolicy.controls['deductFrom'].value === 'particular'"
+      *ngIf="pfPolicy.controls['deductFrom'].value === '1'"
       style="margin-left: 4px; color: #d10000"
     >
       <b>Deduct From</b>
     </h5>
     <div
-      *ngIf="pfPolicy.controls['deductFrom'].value === 'particular'"
+      *ngIf="pfPolicy.controls['deductFrom'].value === '1'"
       class="row"
       style="margin-top: 8px"
     >
@@ -226,7 +227,7 @@
       </div>
     </div>
     <hr />
-    <div class="row">
+    <div class="row" *ngIf="pfPolicy.controls['deductFrom'].value != '2'">
       <div class="col-md-4">
         <mat-form-field appearance="outline">
           <mat-label>Employer Contribution (%)</mat-label>

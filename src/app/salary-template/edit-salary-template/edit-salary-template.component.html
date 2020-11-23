@@ -56,7 +56,7 @@
         <mat-select [(ngModel)]="overTimePolicy" placeholder="">
           <mat-option
             *ngFor="let type of lstOverTimePolicy"
-            [value]="type.overtimePolicyID"
+            [value]="type.overtimePolicyId"
           >
             {{ type.overtimePolicyName }}
           </mat-option>
@@ -160,10 +160,12 @@
       <table class="table table-border">
         <thead class="text-nowrap">
           <th>
-            Particular <span class="ui-column-resizer" dragableColumn> </span>
+            Deduction <span class="ui-column-resizer" dragableColumn> </span>
           </th>
+          <th>Amount<span class="ui-column-resizer" dragableColumn> </span></th>
           <th>
-            Percentage<span class="ui-column-resizer" dragableColumn> </span>
+            Deduction Policy<span class="ui-column-resizer" dragableColumn>
+            </span>
           </th>
           <th>Action<span class="ui-column-resizer" dragableColumn> </span></th>
         </thead>
@@ -176,11 +178,12 @@
                   padding: 6px;
                   border-radius: 10px;
                 "
-                placeholder=""
                 [(ngModel)]="row.particularId"
+                placeholder=""
+                (selectionChange)="changeParticular(row)"
               >
                 <mat-option
-                  *ngFor="let type of lstParticular"
+                  *ngFor="let type of lstDeduction"
                   [value]="type.additionDeductionId"
                 >
                   {{ type.particulars }}
@@ -198,6 +201,24 @@
                 placeholder=""
                 [(ngModel)]="row.percentage"
               />
+            </td>
+            <td>
+              <mat-select
+                style="
+                  background-color: #f3f9fe;
+                  padding: 6px;
+                  border-radius: 10px;
+                "
+                [(ngModel)]="row.deductionPolicyId"
+                placeholder=""
+              >
+                <mat-option
+                  *ngFor="let type of lstDeductionPolicy"
+                  [value]="type.deductionPolicyID"
+                >
+                  {{ type.deductionPolicyName }}
+                </mat-option>
+              </mat-select>
             </td>
             <td
               style="

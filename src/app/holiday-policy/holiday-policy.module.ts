@@ -15,10 +15,15 @@ import { MatButtonModule } from "@angular/material/button";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "./../shared/shared.module";
 import { MatIconModule } from "@angular/material/icon";
-import { EditHolidayPolicyComponent } from './edit-holiday-policy/edit-holiday-policy.component';
+import { EditHolidayPolicyComponent } from "./edit-holiday-policy/edit-holiday-policy.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
-  declarations: [AddHolidayPolicyComponent, ListHolidayPolicyComponent, EditHolidayPolicyComponent],
+  declarations: [
+    AddHolidayPolicyComponent,
+    ListHolidayPolicyComponent,
+    EditHolidayPolicyComponent,
+  ],
   imports: [
     CommonModule,
     HolidayPolicyRoutingModule,
@@ -34,6 +39,7 @@ import { EditHolidayPolicyComponent } from './edit-holiday-policy/edit-holiday-p
     MatButtonModule,
     ReactiveFormsModule,
     SharedModule,
+    NgbModule,
   ],
 })
 export class HolidayPolicyModule {}

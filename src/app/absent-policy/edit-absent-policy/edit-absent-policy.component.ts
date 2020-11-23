@@ -33,8 +33,10 @@ export class EditAbsentPolicyComponent implements OnInit {
   mergeIsRateBasedOnHour = false;
   mergeHourPerDay;
   mergeRate;
-  absentPolicyID = localStorage.getItem("absentPolicyID");
+  mergeRateBasedOnHour;
 
+  absentPolicyID = localStorage.getItem("absentPolicyID");
+  absentRateBasedOnHour;
   absentParticularId;
   absentCalcBasedOnId;
   absentCalcDayId;
@@ -47,7 +49,7 @@ export class EditAbsentPolicyComponent implements OnInit {
   absentRate;
 
   ismergeBoth = false;
-  isAbsentPolicyOnly = false;
+  isAbsentPolicyOnly = "1";
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -87,7 +89,11 @@ export class EditAbsentPolicyComponent implements OnInit {
         this.absentPolicyID = res["absentPolicyInfo"]["absentPolicyID"];
         this.policyName = res["absentPolicyInfo"]["absentPolicyName"];
         this.ismergeBoth = res["absentPolicyInfo"]["isMergeBoth"];
-
+        if (this.ismergeBoth) {
+          this.isAbsentPolicyOnly = "2";
+        } else {
+          this.isAbsentPolicyOnly = "1";
+        }
         this.absentCalcDayId = res["absentPolicyDetail"][0]["calculationID"];
         this.absentCalcBasedOnId =
           res["absentPolicyDetail"][0]["isCompanyBasedOn"];
@@ -124,15 +130,12 @@ export class EditAbsentPolicyComponent implements OnInit {
     if (!this.policyName) {
       this.toastr.error("Enter Policy Name", "Error!");
       return false;
-    } else if (!this.absentCalcBasedOnId) {
-      this.toastr.error("Select a Calculation Based On", "Error!");
-      return false;
     } else {
       let dctData = {
         absentPolicyInfo: {
           absentPolicyID: this.absentPolicyID,
           absentPolicyName: this.policyName,
-          isMergeBoth: this.ismergeBoth,
+          isMergeBoth: null,
         },
         absentPolicyDetail: [
           {
@@ -165,6 +168,11 @@ export class EditAbsentPolicyComponent implements OnInit {
           },
         ],
       };
+      if (this.isAbsentPolicyOnly == "1") {
+        dctData.absentPolicyInfo.isMergeBoth = false;
+      } else {
+        dctData.absentPolicyInfo.isMergeBoth = true;
+      }
       this.serverService
         .postData("api/AbsentPolicyAPI/Create/", dctData)
         .subscribe((res: any[]) => {

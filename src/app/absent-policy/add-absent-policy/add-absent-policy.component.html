@@ -1,226 +1,243 @@
-<div class="card" style="background-color: #f3f9fe; border-radius: 22px;">
+<div class="card" style="background-color: #f3f9fe; border-radius: 22px">
   <div class="card-body">
-    <h3 style="color: black;" class="card-title">Absent Policy</h3>
+    <h3 style="color: black" class="card-title">Absent Policy</h3>
   </div>
   <div style="padding: 15px">
-   <div class="row">
-      <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-3">
         <mat-form-field appearance="outline">
           <mat-label>Policy Name</mat-label>
-          <input matInput [(ngModel)]="policyName"
-        type="text" />
+          <input matInput [(ngModel)]="policyName" type="text" />
         </mat-form-field>
       </div>
-
-      <div class="col-md-4" >
-        <label class="pr-box" style="margin-top: 20px;">
-          <input style="padding: 20px 22px;
-          margin-right: 12px;" type="checkbox" id="" [(ngModel)]="isAbsentPolicyOnly" value="" >
-          <span class="checkmark">Absent Policy Only </span>
+      <div class="col-lg-3" style="margin-top: 15px">
+        <label>
+          <input type="radio" value="1" [(ngModel)]="isAbsentPolicyOnly" />
+          <span style="margin-left: 7px">Absent Policy Only</span>
         </label>
       </div>
-
-      <div class="col-md-4" >
-        <label class="pr-box" style="margin-top: 20px;">
-          <input style="padding: 20px 22px;
-          margin-right: 12px;" type="checkbox" id="" [(ngModel)]="ismergeBoth" value="" checked="checked">
-          <span class="checkmark">Merge Absent & Shortage Amount in Salary Slip</span>
+      <div class="col-lg-6" style="margin-top: 15px">
+        <label style="margin-left: 20%">
+          <input type="radio" value="2" [(ngModel)]="isAbsentPolicyOnly" />
+          <span style="margin-left: 7px"
+            >Merge Absent & Shortage Amount in Salary Slip</span
+          >
         </label>
       </div>
-
     </div>
     <mat-tab-group>
       <mat-tab label="Absent">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!absentIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Based On</mat-label>
-              <mat-select
-              [(ngModel)]="absentCalcBasedOnId"
-                  placeholder=""
+              <mat-select [(ngModel)]="absentCalcBasedOnId" placeholder="">
+                <mat-option
+                  *ngFor="let type of lstCalcBasedOn"
+                  [value]="type.calculationbasedonId"
                 >
-                  <mat-option
-                    *ngFor="let type of lstCalcBasedOn"
-                    [value]="type.calculationbasedonId"
-                  >
-                    {{ type.calculationbasedon }}
-                  </mat-option>
-                </mat-select>
+                  {{ type.calculationbasedon }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <!-- Excluded from gross only for calc based on is gross salary-->
-          <div class="col-md-4" *ngIf="absentCalcBasedOnId===2">
+          <div class="col-md-4" *ngIf="absentCalcBasedOnId === 2">
             <mat-form-field appearance="outline">
               <mat-label>Excluded From Gross</mat-label>
               <mat-select
-                  multiple
-                 [(ngModel)]="absentParticularId"
-                  placeholder=""
+                multiple
+                [(ngModel)]="absentParticularId"
+                placeholder=""
+              >
+                <mat-option
+                  *ngFor="let type of lstParticular"
+                  [value]="type.additionDeductionId"
                 >
-                  <mat-option
-                    *ngFor="let type of lstParticular"
-                    [value]="type.additionDeductionId"
-                  >
-                    {{ type.particulars}}
-                  </mat-option>
-                </mat-select>
+                  {{ type.particulars }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!absentIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Day</mat-label>
-              <mat-select
-             [(ngModel)]="absentCalcDayId"
-                  placeholder=""
+              <mat-select [(ngModel)]="absentCalcDayId" placeholder="">
+                <mat-option
+                  *ngFor="let type of lstCalcDay"
+                  [value]="type.CalculationDayID"
                 >
-                  <mat-option
-                    *ngFor="let type of lstCalcDay"
-                    [value]="type.CalculationDayID"
-                  >
-                    {{ type.CalculationDayDescription }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Percentage</mat-label>
-              <input OnlyNumber="true"  matInput type="number"[(ngModel)]="absentCalcPercentage"
-            type="text" />
+                  {{ type.CalculationDayDescription }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
           <div class="col-md-4">
             <mat-form-field appearance="outline">
               <mat-label>Absent Rate</mat-label>
-              <input OnlyNumber="true"  matInput type="number"[(ngModel)]="absentRate"
-            type="text" />
+              <input
+                OnlyNumber="true"
+                matInput
+                type="number"
+                [(ngModel)]="absentRate"
+                type="text"
+              />
             </mat-form-field>
           </div>
 
-          <div class="col-md-4" >
-            <label class="pr-box" style="margin-top: 20px;">
-              <input style="padding: 20px 22px;
-              margin-right: 12px;" type="checkbox" id="" [(ngModel)]="absentIsRateBasedOnHour" value="" checked="checked">
+          <div class="col-md-4">
+            <label class="pr-box" style="margin-top: 20px">
+              <input
+                style="padding: 20px 22px; margin-right: 12px"
+                type="checkbox"
+                id=""
+                [(ngModel)]="absentIsRateBasedOnHour"
+                value=""
+                checked="checked"
+                (ngModelChange)="absentIsRateOnly = false"
+              />
               <span class="checkmark">Rate Based On Hour </span>
             </label>
           </div>
 
-          <div class="col-md-4" >
-            <label class="pr-box" style="margin-top: 20px;">
-              <input style="padding: 20px 22px;
-              margin-right: 12px;" type="checkbox" id="" [(ngModel)]="absentIsRateOnly" value="" checked="checked">
+          <div class="col-md-4">
+            <label class="pr-box" style="margin-top: 20px">
+              <input
+                style="padding: 20px 22px; margin-right: 12px"
+                type="checkbox"
+                id=""
+                [(ngModel)]="absentIsRateOnly"
+                value=""
+                checked="checked"
+                (ngModelChange)="absentIsRateBasedOnHour = false"
+              />
               <span class="checkmark">Rate Only </span>
             </label>
           </div>
 
-
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!absentIsRateOnly">
             <mat-label>Hour Per Day</mat-label>
             <ngb-timepicker [(ngModel)]="absentHourPerDay"></ngb-timepicker>
-        </div>
+          </div>
         </div>
       </mat-tab>
-      <mat-tab label="Shortage" *ngIf="!isAbsentPolicyOnly">
+      <mat-tab label="Shortage" *ngIf="isAbsentPolicyOnly === '2'">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!mergeIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Based On</mat-label>
-              <mat-select
-              [(ngModel)]="mergeCalcBasedOnId"
-                  placeholder=""
+              <mat-select [(ngModel)]="mergeCalcBasedOnId" placeholder="">
+                <mat-option
+                  *ngFor="let type of lstCalcBasedOn"
+                  [value]="type.calculationbasedonId"
                 >
-                  <mat-option
-                    *ngFor="let type of lstCalcBasedOn"
-                    [value]="type.calculationbasedonId"
-                  >
-                    {{ type.calculationbasedon }}
-                  </mat-option>
-                </mat-select>
+                  {{ type.calculationbasedon }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <!-- Excluded from gross only for calc based on is gross salary-->
-          <div class="col-md-4" *ngIf="mergeCalcBasedOnId===2">
+          <div class="col-md-4" *ngIf="mergeCalcBasedOnId === 2">
             <mat-form-field appearance="outline">
               <mat-label>Excluded From Gross</mat-label>
               <mat-select
-                  multiple
-                 [(ngModel)]="mergeParticularId"
-                  placeholder=""
+                multiple
+                [(ngModel)]="mergeParticularId"
+                placeholder=""
+              >
+                <mat-option
+                  *ngFor="let type of lstParticular"
+                  [value]="type.additionDeductionId"
                 >
-                  <mat-option
-                    *ngFor="let type of lstParticular"
-                    [value]="type.additionDeductionId"
-                  >
-                    {{ type.particulars}}
-                  </mat-option>
-                </mat-select>
+                  {{ type.particulars }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!mergeIsRateOnly">
             <mat-form-field appearance="outline">
               <mat-label>Calculation Day</mat-label>
-              <mat-select
-             [(ngModel)]="mergeCalcDayId"
-                  placeholder=""
+              <mat-select [(ngModel)]="mergeCalcDayId" placeholder="">
+                <mat-option
+                  *ngFor="let type of lstCalcDay"
+                  [value]="type.CalculationDayID"
                 >
-                  <mat-option
-                    *ngFor="let type of lstCalcDay"
-                    [value]="type.CalculationDayID"
-                  >
-                    {{ type.CalculationDayDescription }}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Calculation Percentage</mat-label>
-              <input OnlyNumber="true"  matInput type="number"[(ngModel)]="mergeCalcPercentage"
-            type="text" />
+                  {{ type.CalculationDayDescription }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
           <div class="col-md-4">
             <mat-form-field appearance="outline">
               <mat-label>Absent Rate</mat-label>
-              <input OnlyNumber="true"  matInput type="number"[(ngModel)]="mergeRate"
-            type="text" />
+              <input
+                OnlyNumber="true"
+                matInput
+                type="number"
+                [(ngModel)]="mergeRate"
+                type="text"
+              />
             </mat-form-field>
           </div>
 
-
-          <div class="col-md-4" >
-            <label class="pr-box" style="margin-top: 20px;">
-              <input style="padding: 20px 22px;
-              margin-right: 12px;" type="checkbox" id="" [(ngModel)]="mergeIsRateBasedOnHour" value="" checked="checked">
+          <div class="col-md-4">
+            <label class="pr-box" style="margin-top: 20px">
+              <input
+                style="padding: 20px 22px; margin-right: 12px"
+                type="checkbox"
+                id=""
+                [(ngModel)]="mergeIsRateBasedOnHour"
+                value=""
+                checked="checked"
+                (ngModelChange)="mergeIsRateOnly = false"
+              />
               <span class="checkmark">Rate Based On Hour </span>
             </label>
           </div>
 
-          <div class="col-md-4" >
-            <label class="pr-box" style="margin-top: 20px;">
-              <input style="padding: 20px 22px;
-              margin-right: 12px;" type="checkbox" id="" [(ngModel)]="mergeIsRateOnly" value="" checked="checked">
+          <div class="col-md-4">
+            <label class="pr-box" style="margin-top: 20px">
+              <input
+                style="padding: 20px 22px; margin-right: 12px"
+                type="checkbox"
+                id=""
+                [(ngModel)]="mergeIsRateOnly"
+                value=""
+                checked="checked"
+                (ngModelChange)="mergeIsRateBasedOnHour = false"
+              />
               <span class="checkmark">Rate Only </span>
             </label>
           </div>
-
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="!mergeIsRateOnly">
             <mat-label>Hour Per Day</mat-label>
             <ngb-timepicker [(ngModel)]="mergeHourPerDay"></ngb-timepicker>
-         </div>
-
+          </div>
         </div>
       </mat-tab>
     </mat-tab-group>
-    <div class="col-md-12 row" style="margin-top: 50px;margin-left: 40%;">
-      <button type="button"  mat-raised-button color="primary" class="btn save_btn m-r-10 m-t-20" (click)="saveDetail()">Save</button>
-      <button type="button"  mat-raised-button class="btn btn-secondary m-t-20" (click)="cancel()">Cancel</button>
-   </div>
+    <div class="col-md-12 row" style="margin-top: 50px; margin-left: 40%">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        class="btn save_btn m-r-10 m-t-20"
+        (click)="saveDetail()"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        class="btn btn-secondary m-t-20"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
 </div>

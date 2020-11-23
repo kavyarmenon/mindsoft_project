@@ -37,10 +37,13 @@ export class EditSalaryTemplateComponent implements OnInit {
       particularId: null,
       particularName: "",
       percentage: null,
+      deductionPolicyId: null,
+      deductionPolicyName: "",
     },
   ];
   lstParticular = [];
-
+  lstDeduction = [];
+  lstDeductionPolicy = [];
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -76,6 +79,11 @@ export class EditSalaryTemplateComponent implements OnInit {
       .getData("api/DropDownBindingAPI/ddlExcludefromGrossSalary/")
       .subscribe((res: any[]) => {
         this.lstParticular = res["particularsList"];
+      });
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlDeductionList/")
+      .subscribe((res: any[]) => {
+        this.lstDeduction = res["particularsList"];
       });
     this.getEditData();
   }
@@ -114,10 +122,13 @@ export class EditSalaryTemplateComponent implements OnInit {
             particularId: null,
             particularName: "",
             percentage: null,
+            deductionPolicyId: null,
+            deductionPolicyName: "",
           };
-          dct.particularId = element.SalaryTemplateParticularsID;
-          dct.percentage = element.SalaryTemplatePercentage;
+          dct.particularId = element.SalaryTemplateParticularsDedID;
+          dct.percentage = element.Amount;
           dct.particularName = "";
+          dct.deductionPolicyId = element.PolicyID;
           this.lstDeductionDetails.push(dct);
         });
       });
@@ -125,7 +136,16 @@ export class EditSalaryTemplateComponent implements OnInit {
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.selectedIndex = tabChangeEvent.index;
   }
-
+  changeParticular(row) {
+    this.serverService
+      .getData(
+        "api/DropDownBindingAPI/ddlDeductionPolicyList?DeductionID=" +
+          row.particularId
+      )
+      .subscribe((res: any[]) => {
+        this.lstDeductionPolicy = res["deductionPolicyList"];
+      });
+  }
   public nextStep() {
     let isValid = true;
     if (!this.name) {
@@ -159,6 +179,8 @@ export class EditSalaryTemplateComponent implements OnInit {
       particularId: null,
       particularName: "",
       percentage: null,
+      deductionPolicyId: null,
+      deductionPolicyName: "",
     };
     if (type == "addition") {
       this.lstAdditionDetails.push(dctData);
@@ -202,16 +224,17 @@ export class EditSalaryTemplateComponent implements OnInit {
     this.lstAdditionDetails.forEach((element) => {
       let dct = {};
       dct["SalaryTemplateParticularsID"] = element.particularId;
-      dct["SalaryTemplatePercentage"] = element.percentage;
+      dct["SalaryTemplatePercentage"] = Number(element.percentage);
       dctData.additionList.push(dct);
     });
     this.lstDeductionDetails.forEach((element) => {
       let dct = {};
-      dct["SalaryTemplateParticularsID"] = element.particularId;
-      dct["SalaryTemplatePercentage"] = element.percentage;
+      dct["SalaryTemplateParticularsDedID"] = element.particularId;
+      dct["Amount"] = Number(element.percentage);
+      dct["PolicyID"] = element.deductionPolicyId;
+
       dctData.deductionList.push(dct);
     });
-
     if (isValid) {
       this.serverService
         .postData("api/SalaryTemplateAPI/Create/", dctData)

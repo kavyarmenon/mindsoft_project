@@ -33,6 +33,7 @@ export class AddAbsentPolicyComponent implements OnInit {
   mergeIsRateBasedOnHour = false;
   mergeHourPerDay;
   mergeRate;
+  mergeRateBasedOnHour;
 
   absentParticularId = [];
   absentCalcBasedOnId;
@@ -44,9 +45,9 @@ export class AddAbsentPolicyComponent implements OnInit {
   absentIsRateBasedOnHour = false;
   absentHourPerDay;
   absentRate;
-
+  absentRateBasedOnHour;
   ismergeBoth = false;
-  isAbsentPolicyOnly = false;
+  isAbsentPolicyOnly = "1";
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -80,9 +81,6 @@ export class AddAbsentPolicyComponent implements OnInit {
 
     if (!this.policyName) {
       this.toastr.error("Enter Policy Name", "Error!");
-      return false;
-    } else if (!this.absentCalcBasedOnId) {
-      this.toastr.error("Select a Calculation Based On", "Error!");
       return false;
     } else {
       let dctData = {
@@ -122,6 +120,11 @@ export class AddAbsentPolicyComponent implements OnInit {
           },
         ],
       };
+      if (this.isAbsentPolicyOnly == "1") {
+        dctData.absentPolicyInfo.isMergeBoth = false;
+      } else {
+        dctData.absentPolicyInfo.isMergeBoth = true;
+      }
       this.serverService
         .postData("api/AbsentPolicyAPI/Create/", dctData)
         .subscribe((res: any[]) => {

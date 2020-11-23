@@ -29,17 +29,17 @@ export class EditDeductionPolicyComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.deductionPolicy = this.formBuilder.group({
-      particularId: [null],
+      particularId: [],
       deductionPolicyID: [null],
       deductionPolicyName: [null, Validators.required],
       effectFromstr: [null],
       effectFrom: [null],
       deductFrom: [null],
       deductionId: [null],
-      basedOn: [null],
+      basedOn: ["1"],
       parameterName: [null],
-      parameterValue: [null, Validators.required],
-      Amount: [null, Validators.required],
+      parameterValue: [null],
+      Amount: [null],
       employerContribution: [null, Validators.required],
       employeeContribution: [null, Validators.required],
     });
@@ -116,7 +116,9 @@ export class EditDeductionPolicyComponent implements OnInit {
       return;
     }
 
-    let dctData = {
+    let dctData = {};
+    dctData["deductFromList"] = this.deductionPolicy.get("particularId").value;
+    dctData["deductionInfo"] = {
       deductionPolicyID: this.deductionPolicyID,
       deductionPolicyName: this.deductionPolicy.get("deductionPolicyName")
         .value,
@@ -125,15 +127,16 @@ export class EditDeductionPolicyComponent implements OnInit {
         .format("DD/MM/YYYY")
         .toString(),
       deductionId: this.deductionPolicy.get("deductionId").value,
-      basedOn: this.deductionPolicy.get("basedOn").value,
+      basedOn: Number(this.deductionPolicy.get("basedOn").value),
       parameterName: this.deductionPolicy.get("parameterName").value,
       parameterValue: this.deductionPolicy.get("parameterValue").value,
-      Amount: this.deductionPolicy.get("Amount").value,
-      employerContribution: this.deductionPolicy.get("employerContribution")
-        .value,
-      employeeContribution: this.deductionPolicy.get("employeeContribution")
-        .value,
-      AdditionDeductionID: this.deductionPolicy.get("particularId").value,
+      Amount: Number(this.deductionPolicy.get("Amount").value),
+      employerContribution: Number(
+        this.deductionPolicy.get("employerContribution").value
+      ),
+      employeeContribution: Number(
+        this.deductionPolicy.get("employeeContribution").value
+      ),
     };
 
     this.serverService

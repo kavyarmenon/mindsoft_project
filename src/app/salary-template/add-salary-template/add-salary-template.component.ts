@@ -19,7 +19,8 @@ export class AddSalaryTemplateComponent implements OnInit {
   overTimePolicy;
   holidayPolicy;
   encashPolicy;
-
+  lstDeduction = [];
+  lstDeductionPolicy = [];
   lstAbsentPolicy = [];
   lstOverTimePolicy = [];
   lstHolidayPolicy = [];
@@ -36,6 +37,8 @@ export class AddSalaryTemplateComponent implements OnInit {
       particularId: null,
       particularName: "",
       percentage: null,
+      deductionPolicyId: null,
+      deductionPolicyName: "",
     },
   ];
   lstParticular = [];
@@ -60,12 +63,17 @@ export class AddSalaryTemplateComponent implements OnInit {
       .subscribe((res: any[]) => {
         this.lstEncashPolicy = res["encashPolicyList"];
       });
-
+    this.serverService
+      .getData("api/DropDownBindingAPI/ddlDeductionList/")
+      .subscribe((res: any[]) => {
+        this.lstDeduction = res["particularsList"];
+      });
     this.serverService
       .getData("api/DropDownBindingAPI/ddlOvertimePolicy/")
       .subscribe((res: any[]) => {
         this.lstOverTimePolicy = res["overtimePolicyList"];
       });
+
     this.serverService
       .getData("api/DropDownBindingAPI/ddlHolidayPolicy/")
       .subscribe((res: any[]) => {
@@ -81,6 +89,16 @@ export class AddSalaryTemplateComponent implements OnInit {
     this.selectedIndex = tabChangeEvent.index;
   }
 
+  changeParticular(row) {
+    this.serverService
+      .getData(
+        "api/DropDownBindingAPI/ddlDeductionPolicyList?DeductionID=" +
+          row.particularId
+      )
+      .subscribe((res: any[]) => {
+        this.lstDeductionPolicy = res["deductionPolicyList"];
+      });
+  }
   public nextStep() {
     let isValid = true;
     if (!this.name) {
@@ -114,6 +132,8 @@ export class AddSalaryTemplateComponent implements OnInit {
       particularId: null,
       particularName: "",
       percentage: null,
+      deductionPolicyId: null,
+      deductionPolicyName: "",
     };
     if (type == "addition") {
       this.lstAdditionDetails.push(dctData);
@@ -157,13 +177,15 @@ export class AddSalaryTemplateComponent implements OnInit {
     this.lstAdditionDetails.forEach((element) => {
       let dct = {};
       dct["SalaryTemplateParticularsID"] = element.particularId;
-      dct["SalaryTemplatePercentage"] = element.percentage;
+      dct["SalaryTemplatePercentage"] = Number(element.percentage);
       dctData.additionList.push(dct);
     });
     this.lstDeductionDetails.forEach((element) => {
       let dct = {};
-      dct["SalaryTemplateParticularsID"] = element.particularId;
-      dct["SalaryTemplatePercentage"] = element.percentage;
+      dct["SalaryTemplateParticularsDedID"] = element.particularId;
+      dct["Amount"] = Number(element.percentage);
+      dct["PolicyID"] = element.deductionPolicyId;
+
       dctData.deductionList.push(dct);
     });
 

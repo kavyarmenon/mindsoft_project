@@ -107,7 +107,7 @@
         </mat-form-field>
       </div>
 
-      <!-- <div class="col-md-4">
+      <div class="col-md-4">
         <label class="pr-box" style="margin-top: 20px">
           <input
             style="padding: 20px 22px; margin-right: 12px"
@@ -119,28 +119,14 @@
           />
           <span class="checkmark">Hour Per Day</span>
         </label>
-      </div> -->
-
-      <div class="col-md-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Hour Per Day</mat-label>
-          <input
-            matInput
-            type="number"
-            OnlyNumber="true"
-            [formControl]="holidayPolicy.controls['hoursPerDay']"
-            type="text"
-          />
-          <mat-error *ngIf="holidayPolicy.controls['hoursPerDay'].errors"
-            ><span
-              *ngIf="holidayPolicy.controls['hoursPerDay'].errors.required"
-            >
-              You must enter a Hour Per Day.</span
-            >
-          </mat-error>
-        </mat-form-field>
       </div>
-      <!--
+      <div class="col-md-4" *ngIf="holidayPolicy.get('isHourPerDay').value">
+        <mat-label>Hour Per Day</mat-label>
+        <ngb-timepicker
+          [formControl]="holidayPolicy.controls['hoursPerDay']"
+        ></ngb-timepicker>
+      </div>
+
       <div class="col-md-4">
         <label class="pr-box" style="margin-top: 20px">
           <input
@@ -153,8 +139,8 @@
           />
           <span class="checkmark">Holiday Rate </span>
         </label>
-      </div> -->
-      <div class="col-md-4">
+      </div>
+      <div class="col-md-4" *ngIf="holidayPolicy.get('isHolidayRate').value">
         <mat-form-field appearance="outline">
           <mat-label>Holiday Rate </mat-label>
           <input
